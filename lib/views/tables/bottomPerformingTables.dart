@@ -1,16 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers_vm/generateOtp_provider.dart';
-import '../utils/CommonFunctions.dart';
-import '../utils/app_colors.dart';
+import '../../providers_vm/generateOtp_provider.dart';
+import '../../utils/CommonFunctions.dart';
+import '../../utils/app_colors.dart';
 
 class BottomPerformingTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logInProvider = Provider.of<APIProvider>(context);
     logInProvider.getperformingstationsBottom(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -25,7 +28,10 @@ class BottomPerformingTable extends StatelessWidget {
         backgroundColor: AppColors.meruWhite,
         leading: IconButton(
           icon: Icon(Icons.arrow_circle_left_sharp, color: AppColors.meruRed),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            logInProvider.stationListBottom.clear();
+            Navigator.pop(context); // Navigate back
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -127,11 +133,11 @@ class BottomPerformingTable extends StatelessWidget {
                     ),
                     // Dynamically generated rows
                     ...logInProvider.stationListBottom.map((station) {
-                      double avgScore = logInProvider.avgScoreDB;
-                      // double avgscore = station.avgScore;
-
-                      // String roundoff_avgScore = CommonFunctions.roundDoubleToString(avgScore) as String;
-                      String roundoff_avgScore = CommonFunctions.roundDoubleToString(avgScore) as String;
+                      String avg = station.avgScore.toString();
+                      double avgScore = station.avgScore;
+                      String roundoff_avgScore =
+                          CommonFunctions.roundDoubleToString(avgScore)
+                              as String;
                       return TableRow(
                         children: [
                           Padding(
@@ -161,7 +167,7 @@ class BottomPerformingTable extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "$roundoff_avgScore",
+                              roundoff_avgScore,
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: AppColors.meruBlack,
@@ -183,8 +189,6 @@ class BottomPerformingTable extends StatelessWidget {
     );
   }
 }
-
-
 
 /*class BottomPerformingTable extends StatelessWidget {
   @override
@@ -447,10 +451,3 @@ class BottomPerformingTable extends StatelessWidget {
     );
   }
 }*/
-
-
-
-
-
-
-

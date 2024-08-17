@@ -7,3 +7,32 @@ class CommonFunctions {
     return roundedValue.toString();
   }
 }
+
+// void sendData(context) {
+//
+//   final logInProvider = Provider.of<APIProvider>(context);
+//   print("Before creating data map");
+//   Map<String, dynamic> data = {
+//     "ERB_Audit_StagingDTO": [
+//       {
+//         "audit_id": "10000000001",
+//         "totalscore": "1",
+//         "header": "1",
+//         "subheader": "1",
+//         "additionalnotes": "0",
+//         "question": "3",
+//         "obtained_score": "1",
+//         "remarks": "Test",
+//         "comments": "",
+//         "pic_submitted_filename": "",
+//         "pic_submitted_filepath": ""
+//       }
+//     ]
+//   };
+//   print("After creating data map");
+//
+//   String jsonData = jsonEncode(data);
+//   print(jsonData);
+//
+//   logInProvider.postAuditData(jsonData, context);
+// }

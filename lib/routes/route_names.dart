@@ -11,6 +11,7 @@ class Routenames {
   static const String ERBScreen_Tech = '/ERBScreen_Tech';
   static const String evaluationScorePage = '/evaluationScorePage';
   static const String evaluationPreview = '/evaluationPreview';
+  static const String reviewDialog = '/reviewDialog';
 
   //tables routing
   static const String averageScoreTable = '/averageScoreTable';

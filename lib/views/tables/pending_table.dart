@@ -249,7 +249,7 @@ class PendingTable extends StatelessWidget {
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () {
+                                      onTap: () async {
 
                                        /* String auditId = audit.auditid;
                                         late Future<void> auditLoadData;
@@ -271,20 +271,42 @@ class PendingTable extends StatelessWidget {
                                         switch (audit.audittype) {
                                           case ConstantStrings.ERBTECH:
 
+                                            final apiProvider = Provider.of<APIProvider>(context, listen: false);
+                                            GlobalVariables gb = GlobalVariables();
+                                            String auditId = gb.auditId_gb;
+                                            Map<String, dynamic> data = {
+                                              "id": "$auditId",
+                                            };
+                                            // Map<String, dynamic> data = {"id": "250720240001"};
+                                            String jsonData = jsonEncode(data);
+                                            await apiProvider.getAuditScreenData(jsonData, context);
+
                                             Navigator.pushNamed(
                                                 context, Routenames.ERBScreen_Tech);
-
+                                            break;
                                           case ConstantStrings.FUEL:
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(
                                                     content: Text(
                                                         "Under Development")));
+                                            break;
                                           case ConstantStrings.HSE:
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(
                                                     content: Text(
                                                         "Under Development")));
+                                            break;
                                           case ConstantStrings.ERBCONA:
+
+                                            final apiProvider = Provider.of<APIProvider>(context, listen: false);
+                                            GlobalVariables gb = GlobalVariables();
+                                            String auditId = gb.auditId_gb;
+                                            Map<String, dynamic> data = {
+                                              "id": "$auditId",
+                                            };
+                                            // Map<String, dynamic> data = {"id": "250720240001"};
+                                            String jsonData = jsonEncode(data);
+                                            await apiProvider.getAuditScreenData(jsonData, context);
 
                                             Navigator.pushNamed(
                                                 context, Routenames.ERBScreen);

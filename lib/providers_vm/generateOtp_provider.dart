@@ -155,6 +155,48 @@ class APIProvider with ChangeNotifier {
   String get statusOfUser => _statusOfUser;
   List<User> _statusResponse = [];
   List<User> get statusResponse => _statusResponse;
+  bool _isButtonEnabled = false;
+  bool get isButtonEnabled => _isButtonEnabled;
+
+  // Future<void> prevalidateUser(String jsonData, BuildContext context) async {
+  //   setLoading(true);
+  //
+  //   Map<String, dynamic> data = jsonDecode(jsonData);
+  //
+  //   try {
+  //     var response = await _appRepository.prevalidateUser(data);
+  //     setLoading(false);
+  //
+  //     if (response != null) {
+  //       print("User pre-validated successfully: $response");
+  //       _isButtonEnabled = true;
+  //       notifyListeners(); // Notify listeners about the state change
+  //
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text("User pre-validated successfully"))
+  //       );
+  //     } else {
+  //       print("Error pre-validating user");
+  //       _isButtonEnabled = false;
+  //       notifyListeners(); // Notify listeners about the state change
+  //
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text("Error pre-validating user"))
+  //       );
+  //     }
+  //   } catch (e) {
+  //     setLoading(false);
+  //     print("Error pre-validating user: $e");
+  //
+  //     _isButtonEnabled = false;
+  //     notifyListeners(); // Notify listeners about the state change
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text("Error pre-validating user"))
+  //     );
+  //   }
+  // }
+
   Future<void> prevalidateUser(String jsonData, BuildContext context) async {
     setLoading(true);
 
@@ -194,12 +236,12 @@ class APIProvider with ChangeNotifier {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP Validation successful.")));
       } else {
         print("Error pre-validating user");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid OTP")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
       }
     } catch (e) {
       setLoading(false);
       print("Error pre-validating user: $e");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid OTP")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
     }
   }
 
@@ -429,6 +471,7 @@ class APIProvider with ChangeNotifier {
       setLoading(false);
 
       if (response != null) {
+        gb.loaded = true;
 
         var scoreCardResponse = ScoreCardResponse.fromJson(response);
         _heading = scoreCardResponse.heading.toString();
@@ -493,30 +536,48 @@ class APIProvider with ChangeNotifier {
 
   }
 
-
   Future<void> postAuditData(String jsonData, BuildContext context) async {
     setLoading(true);
 
     Map<String, dynamic> data = jsonDecode(jsonData);
 
-    try {
+
       var response = await _appRepository.postAuditData(data);
       setLoading(false);
 
       if (response != null) {
-        print("VISHAL888 Data send: $response");
-        gb.isButtonEnabled_gb = true;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Data send ")));
+        print("User pre-validated successfully: $response");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP Validation successful.")));
       } else {
-        print("VISHAL888 Error pre-validating user");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Error sending data")));
+        print("Error pre-validating user");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
       }
-    } catch (e) {
-      setLoading(false);
-      print("VISHAL888 Error pre-validating user: $e");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Error sending data")));
-    }
   }
+
+
+  // Future<void> postAuditData(String jsonData, BuildContext context) async {
+  //   setLoading(true);
+  //
+  //   Map<String, dynamic> data = jsonDecode(jsonData);
+  //
+  //   try {
+  //     var response = await _appRepository.postAuditData(data);
+  //     setLoading(false);
+  //
+  //     if (response != null) {
+  //       print("VISHAL888 Data send: $response");
+  //       gb.isButtonEnabled_gb = true;
+  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Data send ")));
+  //     } else {
+  //       print("VISHAL888 Error pre-validating user");
+  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Error sending data")));
+  //     }
+  //   } catch (e) {
+  //     setLoading(false);
+  //     print("VISHAL888 Error pre-validating user: $e");
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Error sending data")));
+  //   }
+  // }
 
 
 

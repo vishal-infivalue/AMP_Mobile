@@ -15,14 +15,21 @@ class _DialogWithFormState extends State<DialogWithForm> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter your text'),
+          title: Text(
+            "Review",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content: Form(
             key: _formKey,
             child: TextFormField(
               controller: _textController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
+                  return 'Write your Review';
                 }
                 return null;
               },
@@ -30,7 +37,14 @@ class _DialogWithFormState extends State<DialogWithForm> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Submit'),
+              child: Text(
+                "Submit",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 if (_formKey.currentState?.validate() ?? false) {
                   // Do something with the input

@@ -55,6 +55,7 @@ dependencies:
   syncfusion_flutter_gauges: ^25.2.7
   syncfusion_flutter_signaturepad: ^25.2.7
   pie_chart: ^5.1.0
+  dropdown_button2: ^2.3.8
 
   tap_to_expand: ^0.7.2
 

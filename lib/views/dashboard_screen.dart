@@ -120,25 +120,32 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
           child: IconButton(
             icon: Image.asset("assets/images/menu_logo.png"),
             iconSize: 40, // Set the size of the IconButton
-            onPressed: () => Navigator.pop(context), // Handle back button press
+            onPressed: () =>     Navigator.pushNamed(context,
+                Routenames.profileScreen) // Handle back button press
           ),
         ),
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 16.0),
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.red, // Background color of the circle
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                '$initials',
-                style: TextStyle(
-                  color: Colors.white, // Text color
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context,
+                  Routenames.profileScreen);
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 16.0),
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.red, // Background color of the circle
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  '$initials',
+                  style: TextStyle(
+                    color: Colors.white, // Text color
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
                 ),
               ),
             ),
@@ -360,11 +367,12 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                         const EdgeInsets.all(
                                                             8.0),
                                                     child: Text(
-                                                      '\n\n\n\nAverage Score : $roundoff_avgScore\nAverage Grade : $gradeValue',
+                                                      '\n\n\n\nAverage Score : $roundoff_avgScore%\nAverage Grade : $gradeValue',
                                                       style: TextStyle(
                                                         fontFamily: 'Poppins',
                                                         color: Colors.black,
-                                                        fontSize: 14.0,
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight.bold,
                                                         letterSpacing: 2,
                                                         fontStyle:
                                                             FontStyle.normal,
@@ -507,21 +515,22 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                               Center(
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, Routenames.pendingTable);
+                                    Navigator.pushNamed(context, Routenames.pendingTable);
                                   },
                                   child: Text(
-                                    "Tap to open",
+                                    AppStrings.tapView,
                                     style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       color: AppColors.meruBlack,
                                       fontSize: 12.0,
                                       fontStyle: FontStyle.normal,
+                                      decoration: TextDecoration.underline, // Underline the text
                                     ),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
-                              ),
+                              )
+
                             ],
                           ),
                         ),
@@ -674,6 +683,23 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                           ),
                                         ),
                                       ),
+                                      Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 10, 10, 2),
+                                          child: Text(
+                                            "Number of NCs - 0",
+                                            style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              color: AppColors.meruBlack,
+                                              fontSize: 12.0,
+                                              letterSpacing: 1,
+                                              fontStyle: FontStyle.normal,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      ),
 
                                       Center(
                                         child: GestureDetector(
@@ -684,13 +710,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              "Tap to open",
+                                              "Tap to View Details",
                                               style: TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 color: AppColors.meruBlack,
                                                 fontSize: 12.0,
                                                 letterSpacing: 1,
                                                 fontStyle: FontStyle.normal,
+                                                decoration: TextDecoration.underline,
                                               ),
                                               textAlign: TextAlign.left,
                                             ),
@@ -829,13 +856,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                 Routenames.nonComplianceTable);
                                           },
                                           child: Text(
-                                            AppStrings.clickNCText,
+                                            AppStrings.tapDetails,
                                             style: TextStyle(
                                               fontFamily: 'Montserrat',
                                               color: AppColors.meruBlack,
                                               fontSize: 12.0,
                                               letterSpacing: 1,
                                               fontStyle: FontStyle.normal,
+                                              decoration: TextDecoration.underline,
                                             ),
                                             textAlign: TextAlign.left,
                                           ),
@@ -1050,6 +1078,25 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                   ),
                                                 ),
                                               ),
+
+                                              Center(
+                                                child: GestureDetector(
+                                                  onTap: () {
+
+                                                  },
+                                                  child: Text(
+                                                    AppStrings.tapView,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Montserrat',
+                                                      color: AppColors.meruBlack,
+                                                      fontSize: 12.0,
+                                                      fontStyle: FontStyle.normal,
+                                                      decoration: TextDecoration.underline, // Underline the text
+                                                    ),
+                                                    textAlign: TextAlign.left,
+                                                  ),
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ),

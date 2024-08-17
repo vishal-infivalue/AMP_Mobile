@@ -1,5 +1,6 @@
 import 'package:amp/routes/route_names.dart';
-import 'package:amp/views/bottomPerformingTables.dart';
+import 'package:amp/views/dialogs/review_dialog.dart';
+import 'package:amp/views/tables/bottomPerformingTables.dart';
 import 'package:amp/views/forms/technical_checklist.dart';
 import 'package:amp/views/login/audit_login.dart';
 import 'package:amp/views/login/otp_validation_screen.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 
 import '../views/cm_dashboard_screen.dart';
 import '../views/dashboard_screen.dart';
+import '../views/dialogs/form_text_dialog.dart';
 import '../views/evaluation_preview.dart';
 import '../views/evaluation_score_summary.dart';
 import '../views/forms/erb_technical_checklist.dart';
@@ -47,6 +49,12 @@ class Routes {
         case Routenames.cmDashboardScreen:
         return MaterialPageRoute(
             builder: (globalContext) =>  DM_DashboardScreen());
+
+        case Routenames.reviewDialog:
+        return MaterialPageRoute(
+            builder: (globalContext) =>
+                // ReviewDialog());
+    DialogWithForm());
 
         case Routenames.dmDashboardScreen:
         return MaterialPageRoute(

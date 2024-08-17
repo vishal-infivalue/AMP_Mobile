@@ -17,6 +17,7 @@ class GlobalVariables {
   // Define global variables
   String globalString = "Hello, World!";
   bool globalBoolean = true;
+  bool loaded = false;
   bool isButtonEnabled_gb = false;
   int globalInteger = 42;
   double globalDouble = 3.14;
@@ -24,6 +25,8 @@ class GlobalVariables {
   // Define a global list variable
   List<Station> topStationList = [];
   List<Station> bottomStationList = [];
+
+  int savedScore_gb = 0;
 
   Map<String, List<Map<String, dynamic>>>? selection_audit_gb;
 

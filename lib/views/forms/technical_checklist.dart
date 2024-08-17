@@ -1,7 +1,8 @@
+/*
+
 import 'dart:convert';
 
-import 'package:amp/utils/constant_strings.dart';
-import 'package:amp/utils/global_values.dart';
+import 'package:amp/views/forms/technical_test.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../providers_vm/generateOtp_provider.dart';
 import '../../routes/route_names.dart';
 import '../../utils/app_colors.dart';
+import '../../utils/global_values.dart';
 
 class ERBConsumer extends StatefulWidget {
   const ERBConsumer({Key? key}) : super(key: key);
@@ -28,16 +30,20 @@ class _ERBConsumerState extends State<ERBConsumer> {
   // Fetch data from API and store it in SharedPreferences if not available
   void _loadAndFetchData(APIProvider apiProvider) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? responseJson = prefs.getString(ConstantStrings.ERBCustomerCheckListResponse);
+    String? responseJson = prefs.getString('ERBCustomerCheckListResponse');
     String content = "No response data available";
 
-    GlobalVariables gb = GlobalVariables();
-    String audit_id = gb.auditId_gb;
-
-    if (responseJson == null &&
-        apiProvider.erbCustomerCheckListResponse.isEmpty &&
+    if (
+    apiProvider.erbCustomerCheckListResponse.isEmpty &&
         !apiProvider.loading) {
-      Map<String, dynamic> data = {"id": "250720240001"};
+
+      GlobalVariables gb = GlobalVariables();
+      String auditId = gb.auditId_gb;
+      Map<String, dynamic> data = {
+        "id": "$auditId",
+      };
+
+      // Map<String, dynamic> data = {"id": "250720240001"};
       String jsonData = jsonEncode(data);
       await apiProvider.getAuditScreenData(jsonData, context);
 
@@ -98,204 +104,121 @@ class _ERBConsumerState extends State<ERBConsumer> {
     return result;
   }
 
-  // Extract selections organized by type
-/*  Map<String, List<Map<String, dynamic>>>
-  _extractSelectionsByType(List<dynamic>? selections) {
-    final Map<String, List<Map<String, dynamic>>> result = {};
-
-    if (selections == null) return result;
-
-    for (var selection in selections) {
-      final type = selection['type']?.toString() ?? '';
-      final value = selection['value'] ?? '';
-      final placeholder1 = selection['placeholder_1'] ?? '';
-      final placeholder2 = selection['placeholder_2'] ?? '';
-      final placeholder3 = selection['placeholder_3'] ?? '';
-
-      if (!result.containsKey(type)) {
-        result[type] = [];
-      }
-
-      result[type]!.add({
-        'value': value,
-        'placeholder_1': placeholder1,
-        'placeholder_2': placeholder2,
-        'placeholder_3': placeholder3,
-      });
-    }
-
-    return result;
-  }*/
-
-
   // Dropdown values for each description
   Map<String, int?> dropdownValues = {};
 
 
-
-
   Widget _buildStatutoryRow(String? description, int points) {
-    GlobalVariables gb = GlobalVariables();
-    gb.selection_audit_gb;
     return Card(
-      elevation: 2,
+      margin: EdgeInsets.zero,
+      elevation: 0,
+      color: AppColors.meruWhite,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: Colors.grey, // Border color
+          width: 0.4, // Border width
+        ),
+        borderRadius:
+        BorderRadius.circular(8.0),
       ),
-      margin: EdgeInsets.all(2),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // Center the entire column vertically
               children: [
-                Expanded(
-                  child: Text(
-                    '$description ($points)',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      color: AppColors.meruBlack,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.bold,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // Center the entire row horizontally
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // Align items in the row to the center
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // Center content within the column
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        // Center align text within the column
+                        children: [
+                          Text(
+                            '$description',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign:
+                            TextAlign.start, // Center the text itself
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
 
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(6.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle, // Make the background circular
+                              border: Border.all(
+                                color: Colors.grey, // Grey border color
+                                width: 1.0, // Border width
+                              ),
+                            ),
+                            child: Text(
+                              "$points",
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey, // Text color
+                              ),
+                              textAlign: TextAlign.center, // Center the text itself
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
                 DropdownButton<int?>(
                   value: dropdownValues[description],
-                  menuMaxHeight: 550,
-                  hint: Text("Select"),
-                  items: [
-                    DropdownMenuItem<int?>(
-                      value: -3,
-                      child: Text(
-                        'Select',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.meruBlack,
-                          fontSize: 12.0,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 1,
-                      child: Text(
-                        'Yes',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.meruBlack,
-                          fontSize: 12.0,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text(
-                        'No',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.meruBlack,
-                          fontSize: 12.0,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: -1,
-                      child: Text(
-                        'Partial',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.meruBlack,
-                          fontSize: 12.0,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: -2,
-                      child: Text(
-                        'NA',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.meruBlack,
-                          fontSize: 12.0,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      dropdownValues["description"] = value;
-
-                    });
-
-                    final logInProvider = Provider.of<APIProvider>(context);
-                    logInProvider.getclusteravgscore(context);
-                    Map<String, dynamic> data = {
-                      "ERB_Audit_StagingDTO": {
-                        "audit_id": "10000000001",
-                        "totalscore": "1",
-                        "header": "1",
-                        "subheader": "1",
-                        "additionalnotes": "0",
-                        "question": "3",
-                        "obtained_score": "1",
-                        "remarks": "Test",
-                        "comments": "",
-                        "pic_submitted_filename": "",
-                        "pic_submitted_filepath": "",
-                      }
-                    };
-
-                    String jsonData = jsonEncode(data);
-                    print(jsonData);
-
-                    Future<void> someData = logInProvider.postAuditData(jsonData, context);
-                    if(someData != null){
-                      print("VISHAL888 Successfully done");
-                    }else{
-                      print("VISHAL888 Error");
-                    }
-                  },
-                ),
-
-
-
-
-
-                /*DropdownButton<int?>(
-                  value: gb.selection_audit_gb,
-                  hint: Text(gb.selection_audit_gb[0].value),
+                  hint: Text('Select'),
                   items: [
                     DropdownMenuItem<int?>(
                       value: null,
-                      child: Text(gb.selection_audit_gb[0].value),
+                      child: Text('Select'),
                     ),
                     DropdownMenuItem<int>(
                       value: 1,
-                      child: Text(gb.selection_audit_gb[1].value),
+                      child: Text('Yes'),
                     ),
                     DropdownMenuItem<int>(
                       value: 0,
-                      child: Text(gb.selection_audit_gb[2].value),
+                      child: Text('No'),
                     ),
                     DropdownMenuItem<int>(
                       value: 2,
-                      child: Text(gb.selection_audit_gb[3].value),
+                      child: Text('Partial'),
                     ),
                     DropdownMenuItem<int>(
                       value: 3,
-                      child: Text(gb.selection_audit_gb[4].value),
+                      child: Text('Not Applicable'),
                     ),
                   ],
                   onChanged: (value) {
@@ -304,8 +227,17 @@ class _ERBConsumerState extends State<ERBConsumer> {
                     });
                     // Handle dropdown value change event here
                   },
-                ),*/
-                SizedBox(width: 5),
+                ),
+                SizedBox(width: 15),
+                Text(
+                  "-",
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
@@ -313,18 +245,18 @@ class _ERBConsumerState extends State<ERBConsumer> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
-                    minimumSize: Size(15.0, 10.0),
+                    minimumSize: Size(25.0, 25.0),
                   ),
                   child: Icon(
                     Icons.upload,
                     color: AppColors.meruWhite,
-                    size: 14.0,
+                    size: 16.0,
                   ),
                   onPressed: () {
                     // Handle upload button press
                   },
                 ),
-                SizedBox(width: 5),
+                SizedBox(width: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.yellow,
@@ -332,15 +264,15 @@ class _ERBConsumerState extends State<ERBConsumer> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
-                    minimumSize: Size(15.0, 10.0),
+                    minimumSize: Size(25.0, 25.0),
                   ),
                   child: Icon(
                     Icons.add_comment,
                     color: AppColors.meruWhite,
-                    size: 14.0,
+                    size: 16.0,
                   ),
                   onPressed: () {
-                    // Handle remark button press
+                    // Handle upload button press
                   },
                 ),
               ],
@@ -357,7 +289,7 @@ class _ERBConsumerState extends State<ERBConsumer> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'ERB Consumer Audits ',
+          'ERB Consumer Audits2',
           style: TextStyle(
             fontFamily: 'Montserrat',
             color: AppColors.meruRed,
@@ -386,13 +318,6 @@ class _ERBConsumerState extends State<ERBConsumer> {
             final questionsByHeader =
             _extractQuestionsByHeader(response['questions']);
 
-            // final selections =
-            // _extractSelectionsByType(response['selection']);
-
-            GlobalVariables gb = GlobalVariables();
-            // gb.selection_audit_gb = selections;
-
-
             return ListView(
               children: questionsByHeader.keys.map((header) {
                 final subheaders = questionsByHeader[header]!;
@@ -400,85 +325,122 @@ class _ERBConsumerState extends State<ERBConsumer> {
                 final firstQuestion = subheaders[firstSubheader]!.first;
                 final headerDescription = firstQuestion['description'];
 
-                return ExpansionTile(
-                  title: Row(
-                    children: [
-                      Container(
-                        color: AppColors.meruYellow,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.ac_unit_sharp, color: AppColors.meruBlack),
-                        ),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    margin: EdgeInsets.zero,
+                    elevation: 0,
+                    color: AppColors.meruWhite,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.grey, // Border color
+                        width: 0.4, // Border width
                       ),
-                      Expanded(
-                        child: Text(
-                          '$headerDescription',
-                          style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  children:
-                  subheaders.keys.toList().asMap().entries.where((entry) {
-                    return entry.key != 0; // Exclude the 0th value
-                  }).map((entry) {
-
-                    final subheader = entry.value;
-                    final questions = subheaders[subheader]!;
-                    final firstQuestionInSubheader = questions.first;
-                    final subheaderDescription =
-                    firstQuestionInSubheader['description'];
-
-                    return ExpansionTile(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: ExpansionTile(
                       title: Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(12.0),
-                            decoration: BoxDecoration(
-                              color: AppColors.meruYellow,
-                              border: Border.all(
-                                color: AppColors.meruYellow, // Yellow border color
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Text(
-                              '$subheader',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                            color: AppColors.meruYellow,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.ac_unit_sharp, color: AppColors.meruBlack),
                             ),
                           ),
                           Expanded(
-                            child: Text(
-                              '$subheaderDescription',
-                              style: const TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 8, 8, 8),
+                              child: Text(
+                                '$headerDescription',
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12,
+                                ),
+                                overflow: TextOverflow.ellipsis, // Handles overflow with ellipsis
+                                maxLines: 2, // Limits the text to 2 lines, you can adjust this as needed
                               ),
                             ),
                           ),
                         ],
                       ),
-                      children: questions.asMap().entries.where((entry) {
+                      children: subheaders.keys.toList().asMap().entries.where((entry) {
                         return entry.key != 0; // Exclude the 0th value
                       }).map((entry) {
-                        final question = entry.value;
-                        return _buildStatutoryRow(
-                            question['description'],
-                            question['points']
+                        final subheader = entry.value;
+                        final questions = subheaders[subheader]!;
+                        final firstQuestionInSubheader = questions.first;
+                        final subheaderDescription = firstQuestionInSubheader['description'];
+
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Card(
+                            margin: EdgeInsets.zero,
+                            elevation: 0,
+                            color: AppColors.meruWhite,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                color: Colors.grey, // Border color
+                                width: 0.4, // Border width
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: ExpansionTile(
+                              title: Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(12.0),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.meruYellow,
+                                      border: Border.all(
+                                        color: AppColors.meruYellow, // Yellow border color
+                                      ),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Text(
+                                      '$subheader',
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: Text(
+                                        '$subheaderDescription',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 4,
+                                        ),
+                                        overflow: TextOverflow.ellipsis, // Handles overflow with ellipsis
+                                        maxLines: 2, // Limits the text to 2 lines, you can adjust this as needed
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              children: questions.asMap().entries.where((entry) {
+                                return entry.key != 0 && entry.key != 1; // Exclude the 0th and 1st values
+                              }).map((entry) {
+                                final question = entry.value;
+                                return _buildStatutoryRow(
+                                  question['description'],
+                                  question['points'],
+                                );
+                              }).toList(),
+                            ),
+                          ),
                         );
                       }).toList(),
-                    );
-                  }).toList(),
+                    ),
+                  ),
                 );
+
               }).toList(),
             );
           }
@@ -535,12 +497,34 @@ class _ERBConsumerState extends State<ERBConsumer> {
           ),
         ),
         onPressed: () {
+          switch(label){
+            case "Delete":
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ERBConsumer()),
+            );
+            break;
+
+            case "Save":
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(
+                  content: Text(
+                      "Data Saved.")));
+              break;
+
+            default:
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(
+                  content: Text(
+                      "Under Development")));
+          }
           // Add action for buttons here
         },
       ),
     );
   }
-
-
 }
 
+
+*/

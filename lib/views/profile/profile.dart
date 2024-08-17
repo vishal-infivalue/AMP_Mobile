@@ -1,4 +1,5 @@
 import 'package:amp/views/dashboard_screen.dart';
+import 'package:amp/views/login/audit_login.dart';
 import 'package:flutter/material.dart';
 
 import '../../response/validateUserOtp.dart';
@@ -159,19 +160,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
+                  CircleAvatar(
+                    radius: 40.0,
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      "$initials",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   Text('Name: ${user!.firstName} ${user!.lastName}'),
                   Text('Email: ${user!.email}'),
                   Text('Phone: ${user!.phone1}'),
                   Text('Designation: ${user!.designation}'),
                   SizedBox(height: 20),
-                  Text(
-                    'Initials: $initials',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                    ),
-                  ),
+
                 ],
               ),
             ),
@@ -182,39 +188,173 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildSmallScreenLayout(BuildContext context) {
+    bool _showLoadingSubmit = false;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: Container(
-          width: 60, // Set your desired width
-          height: 60, // Set your desired height
-          child: IconButton(
-            icon: Image.asset("assets/images/menu_logo.png"),
-            iconSize: 40, // Set the size of the IconButton
-            onPressed: () => Navigator.pop(context), // Handle back button press
+        title: Text(
+          'Profile',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            color: AppColors.meruWhite,
+            fontSize: 14.0,
+            fontStyle: FontStyle.normal,
           ),
         ),
-        actions: [
-          Container(
-            margin: EdgeInsets.only(right: 16.0),
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.red, // Background color of the circle
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                '$initials',
-                style: TextStyle(
-                  color: Colors.white, // Text color
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
+        backgroundColor: AppColors.meruRed,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_circle_left_sharp, color: Colors.white), // Blue icon
+          onPressed: () => Navigator.pop(context), // Handle back button press
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: user == null
+            ? Center(child: CircularProgressIndicator())
+            : Center(  // Center the entire content
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
+            children: [
+              // Profile circular avatar with initials
+              CircleAvatar(
+                radius: 50.0,
+                backgroundColor: Colors.red,
+                child: Text(
+                  '$initials',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
+              SizedBox(height: 20.0),
+
+              // Profile details
+              Text(
+                "Name : ${user!.firstName} ${user!.lastName}",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.black87,
+                ),
+              ),
+              Text(
+                'User Id : ${user!.id}',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                "Email : ${user!.email}",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.grey[700],
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                "Phone : ${user!.phone1}",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.grey[700],
+                ),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                'Designation : ${user!.designation}',
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.grey[700],
+                ),
+              ),
+
+              SizedBox(height: 120.0),
+
+              // Logout button
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.meruRed,
+                  foregroundColor: AppColors.meruWhite,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.all(Radius.circular(8.0)),
+                  ),
+                ),
+                label: _showLoadingSubmit
+                    ? CircularProgressIndicator(
+                  color: AppColors.meruYellow,
+                  strokeWidth: 1.0,
+                )
+                    : Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.normal,
+                    color: AppColors.meruWhite,
+                    fontSize: 12.0,
+                    fontStyle: FontStyle.normal,
+                  ),
+                ),
+                onPressed: () async {
+                  setState(() {
+                    _showLoadingSubmit = true;
+                  });
+                  await Future.delayed(const Duration(seconds: 2));
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => AuditLogin(args: {},)), // Replace with your new route
+                        (route) => false, // This condition removes all routes
+                  );
+                  setState(() {
+                    _showLoadingSubmit = false;
+                  });
+                },
+              ),
+              SizedBox(height: 20.0),
+
+              Center(
+                child: Text(
+                  ' © MERU AUDIT PLATFORM 2024 ',
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    color: Colors.grey,
+                    fontSize: 11.0,
+                    letterSpacing: 0.5,
+                    fontStyle: FontStyle.normal,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
+      ),
+    );
+  }
+
+
+/* Widget _buildSmallScreenLayout(BuildContext context) {
+    bool _showLoadingSubmit = false;
+    return Scaffold(
+      appBar: AppBar(
+        title:
+        Text('Profile',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: AppColors.meruWhite,
+              fontSize: 14.0,
+              fontStyle: FontStyle.normal,
+            )
+        ),
+        backgroundColor: AppColors.meruRed,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_circle_left_sharp, color: Colors.white), // Blue icon
+          onPressed: () => Navigator.pop(context), // Handle back button press
+        ),
       ),
       backgroundColor: Colors.white,
       body: Padding(
@@ -222,15 +362,130 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: user == null
             ? Center(child: CircularProgressIndicator())
             : Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
+            // Spacer to push content towards the top
+            Spacer(flex: 2),
+
+            // Profile circular avatar with initials
+            CircleAvatar(
+              radius: 50.0,
+              backgroundColor: Colors.red,
+              child: Text(
+                '$initials',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0),
+
+            // Profile details
             Text(
-              'Profile',
+              "Name : ${user!.firstName} ${user!.lastName}",
               style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+                fontSize: 18.0,
+                color: Colors.black87,
+              ),
+            ),
+            Text(
+              'User Id : ${user!.id}',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.grey[700],
+                fontWeight: FontWeight.bold
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              "Email : ${user!.email}",
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              "Phone : ${user!.phone1}",
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Text(
+              'Designation : ${user!.designation}',
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Colors.grey[700],
+              ),
+            ),
+
+
+            // Spacer to push content upwards
+            Spacer(flex: 3),
+
+            // Logout button
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.meruRed,
+                foregroundColor: AppColors.meruWhite,
+                shape: const RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(8.0)),
+                ),
+              ),
+              label: _showLoadingSubmit
+                  ? CircularProgressIndicator(
+                color: AppColors.meruYellow,
+                strokeWidth: 1.0,
+              )
+                  : Text(
+                "Logout",
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.meruWhite,
+                  fontSize: 12.0,
+                  fontStyle: FontStyle.normal,
+                ),
+              ),
+              onPressed: () async {
+                setState(() {
+                  _showLoadingSubmit = true;
+                });
+                await Future.delayed(const Duration(seconds: 2));
+                Navigator.pushNamed(
+                    context, Routenames.witnessSignature);
+                setState(() {
+                  _showLoadingSubmit = false;
+                });
+              },
+            ),
+
+            // Spacer to adjust the overall layout
+            Spacer(flex: 2),
+          ],
+        )
+        *//*Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+
+        SizedBox(height: 20),
+            CircleAvatar(
+              radius: 40.0,
+              backgroundColor: Colors.blue,
+              child: Text(
+                "$initials",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -247,78 +502,120 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontSize: 18.0,
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                // Handle logout action
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Logged out')),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              child: Text(
+                'Logout',
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
+              ),
+            ),
+          ],
+        ),*//*
+      ),
+      // bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 2),
+    );
+  }*/
+}
+
+
+
+/*class ProfileScreen2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Circular design with initials
+            CircleAvatar(
+              radius: 40.0,
+              backgroundColor: Colors.blue,
+              child: Text(
+                'EP',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0),
+            // Profile details
+            Text(
+              'Name: Esau Phiri',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              'Email: vishal.v@infini.com',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              'Phone: 2600020020',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              'Designation: Cluster Manager',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.grey[700],
+              ),
+            ),
+            Spacer(),
+            // Logout button
+            ElevatedButton(
+              onPressed: () {
+                // Handle logout action
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Logged out')),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 15.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+              ),
+              child: Text(
+                'Logout',
+                style: TextStyle(
+                  fontSize: 18.0,
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 2),
-      /*bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Adjust currentIndex as needed
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pushNamed(context, Routenames.dmDashboardScreen);
-              break;
-            case 1:
-            // Handle navigation to Stations
-              break;
-            case 2:
-            // Current screen (Profile)
-              break;
-            case 3:
-            // message = "Notifications tapped";
-              final List<NotificationItem> notifications = [
-                NotificationItem(
-                  title: 'New Order Received',
-                  content: 'You have a new order #12345 from John Doe.',
-                  dateTime:
-                  DateTime.now().subtract(const Duration(hours: 2)),
-                ),
-                NotificationItem(
-                  title: 'Reminder: Weekly Meeting',
-                  content: 'Your weekly team meeting is today at 2 PM.',
-                  dateTime:
-                  DateTime.now().subtract(const Duration(days: 1)),
-                ),
-                NotificationItem(
-                  title: 'App Update Available',
-                  content:
-                  'A new update for your app is available. Please update to enjoy the latest features.',
-                  dateTime:
-                  DateTime.now().subtract(const Duration(days: 3)),
-                  isNew: true,
-                ),
-              ];
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotificationScreen(
-                      notifications: notifications, currentIndex: index),
-                ),
-              );
-              break;
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
-            label: 'Stations',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-          ),
-        ],
-      ),*/
     );
   }
-}
+}*/
 
 

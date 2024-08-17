@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers_vm/generateOtp_provider.dart';
+import '../../utils/CommonFunctions.dart';
 import '../../utils/app_colors.dart';
 
 class TopPerformingTable extends StatelessWidget {
@@ -25,7 +26,10 @@ class TopPerformingTable extends StatelessWidget {
         backgroundColor: AppColors.meruWhite,
         leading: IconButton(
           icon: Icon(Icons.arrow_circle_left_sharp, color: AppColors.meruRed),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            logInProvider.stationList.clear();
+            Navigator.pop(context); // Navigate back
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -127,6 +131,8 @@ class TopPerformingTable extends StatelessWidget {
                     ),
                     // Dynamically generated rows
                     ...logInProvider.stationList.map((station) {
+                      double avgScore = station.avgScore;
+                      String roundoff_avgScore = CommonFunctions.roundDoubleToString(avgScore) as String;
                       double avgscore = station.avgScore;
                       return TableRow(
                         children: [
@@ -157,7 +163,7 @@ class TopPerformingTable extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "$avgscore",
+                              "$roundoff_avgScore",
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: AppColors.meruBlack,

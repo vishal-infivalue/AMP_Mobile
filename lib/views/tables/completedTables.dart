@@ -614,12 +614,15 @@ class CompletedTable extends StatelessWidget {
                                 onTap: () {
 
                                   gb.completed_auditId_gb = audit.auditid;
+                                  String sud = gb.completed_auditId_gb;
 
                                   // Handle the tap event here
                                  switch(audit.audittype){
+
                                    case ConstantStrings.ERBTECH:
                                      Navigator.pushNamed(
                                          context, Routenames.evaluationScorePage);
+                                     break;
 
                                    case ConstantStrings.ERBCONA:
                                      Navigator.pushNamed(

@@ -86,8 +86,11 @@ class AppStrings {
   static const String txtCompletedAudits = 'Summary of Audits Completed in Last 15 days';
 
   static const String clickNCText = 'Click on the bar to see detailed Non Compliance Ageing status';
-  static const String titleNCText = 'Number of open NCs';
+  static const String titleNCText = 'Number of open NCs by age';
   static const String ncText = 'NC Aging';
+
+  static const String tapDetails = 'Tap to view details';
+  static const String tapView = 'Tap to view details';
 
   static const String clickAuditScore = 'Tap to view details';
   static const String auditScoreText = 'Overall Audit Score for your cluster over last 60 days';
