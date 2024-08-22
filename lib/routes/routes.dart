@@ -23,6 +23,7 @@ import '../views/evaluation_score_summary.dart';
 import '../views/forms/erb_technical_checklist.dart';
 import '../views/forms/technical_checklist_tech.dart';
 import '../views/forms/technical_test.dart';
+import '../views/nc_details.dart';
 import '../views/profile/profile.dart';
 import '../views/signature_pad/signature_pad.dart';
 import '../views/splash_screen.dart';
@@ -100,6 +101,11 @@ class Routes {
         case Routenames.bottomPerformingTable:
         return MaterialPageRoute(
             builder: (globalContext) =>  BottomPerformingTable());
+
+        case Routenames.ncDetailPage:
+        return MaterialPageRoute(
+            builder: (globalContext) =>  NCDetailPage(address: '',contacts: '',grading: '',ocr: '',
+    omc: '',site: ''));
 
         case Routenames.nonComplianceTable:
         return MaterialPageRoute(

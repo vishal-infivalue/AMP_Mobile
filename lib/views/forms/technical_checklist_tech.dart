@@ -17,9 +17,12 @@ class ERB_Audit_Tech extends StatefulWidget {
 }
 
 class _ERB_AuditState extends State<ERB_Audit_Tech> {
+  String auditId = "";
+
   @override
   void initState() {
     super.initState();
+    setState(() {});
     final apiProvider = Provider.of<APIProvider>(context, listen: false);
     _loadAndFetchData(apiProvider);
   }
@@ -34,21 +37,18 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
         apiProvider.erbCustomerCheckListResponse.isEmpty &&
         !apiProvider.loading) {
       GlobalVariables gb = GlobalVariables();
-      String auditId = gb.auditId_gb;
+      auditId = gb.auditId_gb;
       Map<String, dynamic> data = {
         "id": "$auditId",
       };
 
-      // Map<String, dynamic> data = {"id": "250720240001"};
       String jsonData = jsonEncode(data);
       await apiProvider.getAuditScreenData(jsonData, context);
 
-      // Save fetched data to SharedPreferences
       responseJson = jsonEncode(apiProvider.erbCustomerCheckListResponse);
       await prefs.setString('ERBCustomerCheckListResponse', responseJson);
 
       content = responseJson;
-
       print("VALUE IS $content");
     }
   }
@@ -70,9 +70,8 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     }
   }
 
-  // Extract questions organized by header and subheader
   Map<String, Map<String, List<Map<String, dynamic>>>>
-  _extractQuestionsByHeader(List<dynamic>? questions) {
+      _extractQuestionsByHeader(List<dynamic>? questions) {
     final Map<String, Map<String, List<Map<String, dynamic>>>> result = {};
 
     if (questions == null) return result;
@@ -100,15 +99,14 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     return result;
   }
 
-  // Dropdown values for each description
   Map<String, int?> dropdownValues = {};
   Map<String, int?> savedScoreInternal = {};
 
   Map<String, int?> _cumusummary = {};
+
   Map<String, int?> get cumusummary => _cumusummary;
 
   GlobalVariables gb = GlobalVariables();
-  int _currentStep = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -142,17 +140,15 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
           } else {
             Map<String, dynamic> response = snapshot.data!;
             final questionsByHeader =
-            _extractQuestionsByHeader(response['questions'] ?? {});
+                _extractQuestionsByHeader(response['questions'] ?? {});
 
             final totalHeaders = 7;
 
-            // Determine the progress value based on the current header index
-            final progress = totalHeaders > 0 ? (3 / 7).toDouble() : 0.0;
+            final progress = totalHeaders > 0 ? (2 / 7).toDouble() : 0.0;
 
-            // Set the progress to 1/7 of total progress if null or less than zero
             final progressValue = progress != null
                 ? (progress > 1.0 ? 1.0 : progress)
-                : (1.0 / 7.0); // 7 distinct values
+                : (1.0 / 7.0);
 
             return Column(
               children: [
@@ -169,7 +165,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                     itemCount: questionsByHeader.keys.length,
                     itemBuilder: (context, headerIndex) {
                       final header =
-                      questionsByHeader.keys.elementAt(headerIndex);
+                          questionsByHeader.keys.elementAt(headerIndex);
                       final subheaders = questionsByHeader[header] ?? {};
                       final firstSubheader = subheaders.keys.isNotEmpty
                           ? subheaders.keys.first
@@ -178,6 +174,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                           subheaders[firstSubheader]?.first ?? {};
                       final headerDescription =
                           firstQuestion['description'] ?? '';
+                      final questionIndex = firstQuestion['question'] ?? '';
 
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -206,7 +203,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                 Expanded(
                                   child: Padding(
                                     padding:
-                                    const EdgeInsets.fromLTRB(20, 8, 8, 8),
+                                        const EdgeInsets.fromLTRB(20, 8, 8, 8),
                                     child: Text(
                                       headerDescription,
                                       style: const TextStyle(
@@ -226,14 +223,18 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                 .asMap()
                                 .entries
                                 .where((entry) {
-                              return entry.key != 0; // Exclude the 0th value
+                              return
+                                  // entry.key == 0; // Exclude the 0th value
+                                  entry.key != 0; // Exclude the 0th value
                             }).map((entry) {
                               final subheader = entry.value;
                               final questions = subheaders[subheader] ?? [];
                               final firstQuestionInSubheader =
-                              questions.isNotEmpty ? questions.first : {};
+                                  questions.isNotEmpty ? questions.first : {};
                               final subheaderDescription =
                                   firstQuestionInSubheader['description'] ?? '';
+                              final sub_questionIndex =
+                                  firstQuestion['question'] ?? '';
 
                               return Padding(
                                 padding: const EdgeInsets.all(4.0),
@@ -259,7 +260,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                               color: AppColors.meruYellow,
                                             ),
                                             borderRadius:
-                                            BorderRadius.circular(8.0),
+                                                BorderRadius.circular(8.0),
                                           ),
                                           child: Text(
                                             subheader,
@@ -299,8 +300,13 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                     }).map((entry) {
                                       final question = entry.value;
                                       return _buildStatutoryRow(
+                                        questionIndex,
+                                        header,
+                                        subheader,
                                         question['description'] ?? '',
                                         question['points'] ?? '',
+                                        question['savedscore'] ?? '-',
+                                        question['savedremark'] ?? '',
                                       );
                                     }).toList(),
                                   ),
@@ -347,7 +353,9 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     );
   }
 
-  Widget _buildStatutoryRow(String? description, int points) {
+  /* Widget _buildStatutoryRow(String? description, int points, String? savedScore, String? savedremark) {
+    ValueNotifier<int?> selectedValueNotifier = ValueNotifier<int?>(dropdownValues[description]);
+
     return Card(
       margin: EdgeInsets.zero,
       elevation: 0,
@@ -417,49 +425,246 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                DropdownButton<int?>(
-                  value: dropdownValues[description],
-                  hint: Text('Select'),
-                  items: [
-                    DropdownMenuItem<int?>(
-                      value: null,
-                      child: Text('Select'),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 1,
-                      child: Text('Yes'),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 0,
-                      child: Text('No'),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 2,
-                      child: Text('Partial'),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 3,
-                      child: Text('Not Applicable'),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      dropdownValues[description!] = value;
-                      _cumusummary[description!] = value!;
-                      // value=savedScoreInternal[description];
-                      // gb.savedScore_gb = savedScoreInternal[description]!;
-                    });
-                    // Handle dropdown value change event here
+                ValueListenableBuilder<int?>(
+                  valueListenable: selectedValueNotifier,
+                  builder: (context, selectedValue, child) {
+                    return DropdownButton<int?>(
+                      value: selectedValue,
+                      hint: Text('Select'),
+                      items: [
+                        DropdownMenuItem<int?>(
+                          value: null,
+                          child: Text('Select'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 1,
+                          child: Text('Yes'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 0,
+                          child: Text('No'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: -1,
+                          child: Text('Partial'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: -2,
+                          child: Text('Not Applicable'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        selectedValueNotifier.value = value;
+                        dropdownValues[description!] = value;
+                        sendData(context); // Call sendData with the correct context
+                      },
+                    );
                   },
                 ),
                 SizedBox(width: 15),
-                Text(
-                  cumusummary[description!].toString(),
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                ValueListenableBuilder<int?>(
+                  valueListenable: selectedValueNotifier,
+                  builder: (context, selectedValue, child) {
+                    return Text(
+                      selectedValue != null ? selectedValue.toString() : '-',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(width: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: AppColors.meruWhite,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    minimumSize: Size(25.0, 25.0),
                   ),
+                  child: Icon(
+                    Icons.upload,
+                    color: AppColors.meruWhite,
+                    size: 16.0,
+                  ),
+                  onPressed: () {
+                    // Handle upload button press
+                  },
+                ),
+                SizedBox(width: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.yellow,
+                    foregroundColor: AppColors.meruWhite,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    minimumSize: Size(25.0, 25.0),
+                  ),
+                  child: Icon(
+                    Icons.add_comment,
+                    color: AppColors.meruWhite,
+                    size: 16.0,
+                  ),
+                  onPressed: _showDialog,
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+          ],
+        ),
+      ),
+    );
+  }*/
+
+  Widget _buildStatutoryRow(
+      String question,
+      String header,
+      String subheader,
+      String? description,
+      int points,
+      String? savedScore,
+      String? savedremark) {
+    ValueNotifier<int?> selectedValueNotifier =
+        ValueNotifier<int?>(dropdownValues[description]);
+
+    return Card(
+      margin: EdgeInsets.zero,
+      elevation: 0,
+      color: AppColors.meruWhite,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Colors.grey, // Border color
+          width: 0.4, // Border width
+        ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$description',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Text(
+                          "$points",
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ValueListenableBuilder<int?>(
+                  valueListenable: selectedValueNotifier,
+                  builder: (context, selectedValue, child) {
+                    return DropdownButton<int?>(
+                      value: selectedValue,
+                      hint: Text('Select'),
+                      items: [
+                        DropdownMenuItem<int?>(
+                          value: null,
+                          child: Text('Select'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 1,
+                          child: Text('Yes'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: 0,
+                          child: Text('No'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: -1,
+                          child: Text('Partial'),
+                        ),
+                        DropdownMenuItem<int>(
+                          value: -2,
+                          child: Text('Not Applicable'),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        selectedValueNotifier.value = value;
+                        dropdownValues[description!] = value;
+                        sendData(
+                            context,
+                            header,
+                            subheader,
+                            points.toString(),
+                            value.toString(),
+                            savedremark
+                                .toString()); // Call sendData with the correct context
+                      },
+                    );
+                  },
+                ),
+                SizedBox(width: 15),
+                ValueListenableBuilder<int?>(
+                  valueListenable: selectedValueNotifier,
+                  builder: (context, selectedValue, child) {
+                    String displayText;
+                    if (selectedValue == -1) {
+                      displayText = "P";
+                    } else if (selectedValue == -2) {
+                      displayText = "NA";
+                    } else {
+                      displayText = selectedValue?.toString() ?? '-';
+                    }
+
+                    return Text(
+                      displayText,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(width: 20),
                 ElevatedButton(
@@ -506,8 +711,39 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     );
   }
 
+  void sendData(BuildContext context, String header, String subheader,
+      String points, String value, String savedremark) {
+    final logInProvider = Provider.of<APIProvider>(context, listen: false);
+
+    print("Before creating data map");
+    Map<String, dynamic> data = {
+      "ERB_Audit_StagingDTO": [
+        {
+          "audit_id": gb.auditId_gb,
+          "totalscore": points,
+          "header": header,
+          "subheader": subheader,
+          "additionalnotes": "0",
+          "question": "1",
+          "obtained_score": value,
+          "remarks": savedremark,
+          "comments": "",
+          "pic_submitted_filename": "",
+          "pic_submitted_filepath": ""
+        }
+      ]
+    };
+    print("After creating data map");
+
+    String jsonData = jsonEncode(data);
+    print(jsonData);
+
+    logInProvider.postAuditData(jsonData, context);
+  }
+
   final _formKey = GlobalKey<FormState>();
   final _textController = TextEditingController();
+  final _textController2 = TextEditingController();
 
   void _showDialog() {
     showDialog(
@@ -515,7 +751,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            "Review",
+            "Write a Review",
             style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 16,
@@ -540,7 +776,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                 "Submit",
                 style: TextStyle(
                   fontFamily: 'Poppins',
-                  fontSize: 16,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -591,8 +827,9 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
               break;
 
             case "Save":
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("Invalid Json parsing. Object{} structure needs to be render correctly.")));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                      "Invalid Json parsing. Object{} structure needs to be render correctly.")));
               break;
 
             default:
@@ -605,5 +842,3 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     );
   }
 }
-
-

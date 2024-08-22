@@ -16,10 +16,12 @@ class Routenames {
   //tables routing
   static const String averageScoreTable = '/averageScoreTable';
   static const String nonComplianceTable = '/nonComplianceTable';
+  static const String nonComplianceDetails = '/nonComplianceDetails';
   static const String completedTable = '/completedTable';
   static const String pendingTable = '/pendingTable';
   static const String topPerformingTable = '/topPerformingTable';
   static const String bottomPerformingTable = '/bottomPerformingTable';
+  static const String ncDetailPage = '/ncDetailPage';
   //signature
   static const String witnessSignature = '/witnessSignature';
   static const String signaturePadScreen = '/signaturePadScreen';

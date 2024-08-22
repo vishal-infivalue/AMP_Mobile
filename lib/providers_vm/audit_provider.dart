@@ -10,7 +10,7 @@ class AuditProvider with ChangeNotifier {
   List<Audit> get audits => _audits;
 
   Future<void> fetchAudits(String loginUserId) async {
-    final url = Uri.parse('http://103.235.106.117:8080/audit_management_system-0.0.9-SNAPSHOT/api/auditmaster/getallupcomingaudits');
+    final url = Uri.parse('http://103.235.106.117:8080/audit_management_system-0.0.10-SNAPSHOT/api/auditmaster/getallupcomingaudits');
 
     final response = await http.get(url, headers: {'loginUserId': loginUserId});
 

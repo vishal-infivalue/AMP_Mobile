@@ -281,6 +281,8 @@ class PendingTable extends StatelessWidget {
                                             String jsonData = jsonEncode(data);
                                             await apiProvider.getAuditScreenData(jsonData, context);
 
+                                           print("TESTTESTTEST"+auditId);
+
                                             Navigator.pushNamed(
                                                 context, Routenames.ERBScreen_Tech);
                                             break;
