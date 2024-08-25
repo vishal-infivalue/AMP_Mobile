@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:amp/views/forms/technical_test.dart';
+import 'package:amp/views/forms/erb_technical.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

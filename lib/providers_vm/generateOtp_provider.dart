@@ -209,15 +209,15 @@ class APIProvider with ChangeNotifier {
       if (response != null) {
         print("User pre-validated successfully: $response");
         gb.isButtonEnabled_gb = true;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User pre-validated ")));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User pre-validated ")));
       } else {
         print("Error pre-validating user");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
       }
     } catch (e) {
       setLoading(false);
       print("Error pre-validating user: $e");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
     }
   }
 
@@ -233,15 +233,15 @@ class APIProvider with ChangeNotifier {
 
       if (response != null) {
         print("User pre-validated successfully: $response");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP Validation successful.")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP generated and sent to the User Registered Phone Number.")));
       } else {
         print("Error pre-validating user");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid OTP")));
       }
     } catch (e) {
       setLoading(false);
       print("Error pre-validating user: $e");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
     }
   }
 
@@ -546,11 +546,11 @@ class APIProvider with ChangeNotifier {
       setLoading(false);
 
       if (response != null) {
-        print("User pre-validated successfully: $response");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP Validation successful.")));
+        // print("User pre-validated successfully: $response");
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP Validation successful.")));
       } else {
-        print("Error pre-validating user");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
+        // print("Error pre-validating user");
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
       }
   }
 

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -190,7 +191,7 @@ class PendingTable extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    audit.stationname,
+                                    audit.stationname+audit.auditid,
                                     style: const TextStyle(
                                       fontFamily: 'Montserrat',
                                       color: AppColors.meruBlack,
@@ -283,9 +284,19 @@ class PendingTable extends StatelessWidget {
 
                                            print("TESTTESTTEST"+auditId);
 
+                                            Fluttertoast.showToast(
+                                              msg: auditId,
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              backgroundColor: Colors.black54,
+                                              textColor: Colors.white,
+                                            );
+
                                             Navigator.pushNamed(
                                                 context, Routenames.ERBScreen_Tech);
                                             break;
+
+
                                           case ConstantStrings.FUEL:
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(const SnackBar(
@@ -309,6 +320,16 @@ class PendingTable extends StatelessWidget {
                                             // Map<String, dynamic> data = {"id": "250720240001"};
                                             String jsonData = jsonEncode(data);
                                             await apiProvider.getAuditScreenData(jsonData, context);
+
+                                            print("TESTTESTTEST"+auditId);
+
+                                            Fluttertoast.showToast(
+                                              msg: auditId,
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              backgroundColor: Colors.black54,
+                                              textColor: Colors.white,
+                                            );
 
                                             Navigator.pushNamed(
                                                 context, Routenames.ERBScreen);

@@ -21,8 +21,8 @@ import '../views/dialogs/form_text_dialog.dart';
 import '../views/evaluation_preview.dart';
 import '../views/evaluation_score_summary.dart';
 import '../views/forms/erb_technical_checklist.dart';
-import '../views/forms/technical_checklist_tech.dart';
-import '../views/forms/technical_test.dart';
+import '../views/forms/erb_consumer.dart';
+import '../views/forms/erb_technical.dart';
 import '../views/nc_details.dart';
 import '../views/profile/profile.dart';
 import '../views/signature_pad/signature_pad.dart';
@@ -72,9 +72,6 @@ class Routes {
         case Routenames.ERBScreen_Tech:
         return MaterialPageRoute(
             builder: (globalContext) => TechnicalTest());
-
-        /*return MaterialPageRoute(
-            builder: (globalContext) => TechnicalTest());*/
 
         case Routenames.evaluationScorePage:
         return MaterialPageRoute(

@@ -9,14 +9,15 @@ import '../../providers_vm/generateOtp_provider.dart';
 import '../../routes/route_names.dart';
 import '../../utils/app_colors.dart';
 
-class ERB_Audit_Tech extends StatefulWidget {
-  const ERB_Audit_Tech({Key? key}) : super(key: key);
+
+class TechnicalTest extends StatefulWidget {
+  const TechnicalTest({Key? key}) : super(key: key);
 
   @override
-  _ERB_AuditState createState() => _ERB_AuditState();
+  _TechnicalTestState createState() => _TechnicalTestState();
 }
 
-class _ERB_AuditState extends State<ERB_Audit_Tech> {
+class _TechnicalTestState extends State<TechnicalTest> {
   String auditId = "";
 
   @override
@@ -33,8 +34,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     String? responseJson = prefs.getString('ERBCustomerCheckListResponse');
     String content = "No response data available";
 
-    if (responseJson != null &&
-        apiProvider.erbCustomerCheckListResponse.isEmpty &&
+    if (apiProvider.erbCustomerCheckListResponse.isEmpty &&
         !apiProvider.loading) {
       GlobalVariables gb = GlobalVariables();
       auditId = gb.auditId_gb;
@@ -71,7 +71,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
   }
 
   Map<String, Map<String, List<Map<String, dynamic>>>>
-      _extractQuestionsByHeader(List<dynamic>? questions) {
+  _extractQuestionsByHeader(List<dynamic>? questions) {
     final Map<String, Map<String, List<Map<String, dynamic>>>> result = {};
 
     if (questions == null) return result;
@@ -81,6 +81,9 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
       final subheader = question['subheader']?.toString() ?? '';
       final description = question['description'] ?? '';
       final points = question['points'] ?? 0;
+      final question_value = question['question'] ?? 0;
+      final savedscore = question['savedscore'] ?? 0;
+      final savedremark = question['savedremark'] ?? '';
 
       if (!result.containsKey(header)) {
         result[header] = {};
@@ -93,6 +96,9 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
       result[header]![subheader]!.add({
         'description': description,
         'points': points,
+        'question': question_value,
+        'savedscore': savedscore,
+        'savedremark': savedremark,
       });
     }
 
@@ -113,7 +119,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'ERB Consumer Audits',
+          'ERB Technical Audits',
           style: TextStyle(
             fontFamily: 'Montserrat',
             color: AppColors.meruRed,
@@ -140,7 +146,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
           } else {
             Map<String, dynamic> response = snapshot.data!;
             final questionsByHeader =
-                _extractQuestionsByHeader(response['questions'] ?? {});
+            _extractQuestionsByHeader(response['questions'] ?? {});
 
             final totalHeaders = 7;
 
@@ -165,7 +171,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                     itemCount: questionsByHeader.keys.length,
                     itemBuilder: (context, headerIndex) {
                       final header =
-                          questionsByHeader.keys.elementAt(headerIndex);
+                      questionsByHeader.keys.elementAt(headerIndex);
                       final subheaders = questionsByHeader[header] ?? {};
                       final firstSubheader = subheaders.keys.isNotEmpty
                           ? subheaders.keys.first
@@ -203,7 +209,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                 Expanded(
                                   child: Padding(
                                     padding:
-                                        const EdgeInsets.fromLTRB(20, 8, 8, 8),
+                                    const EdgeInsets.fromLTRB(20, 8, 8, 8),
                                     child: Text(
                                       headerDescription,
                                       style: const TextStyle(
@@ -224,13 +230,13 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                 .entries
                                 .where((entry) {
                               return
-                                  // entry.key == 0; // Exclude the 0th value
-                                  entry.key != 0; // Exclude the 0th value
+                                // entry.key == 0; // Exclude the 0th value
+                                entry.key != 0; // Exclude the 0th value
                             }).map((entry) {
                               final subheader = entry.value;
                               final questions = subheaders[subheader] ?? [];
                               final firstQuestionInSubheader =
-                                  questions.isNotEmpty ? questions.first : {};
+                              questions.isNotEmpty ? questions.first : {};
                               final subheaderDescription =
                                   firstQuestionInSubheader['description'] ?? '';
                               final sub_questionIndex =
@@ -260,7 +266,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                               color: AppColors.meruYellow,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8.0),
+                                            BorderRadius.circular(8.0),
                                           ),
                                           child: Text(
                                             subheader,
@@ -294,17 +300,17 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                         .asMap()
                                         .entries
                                         .where((entry) {
-                                      return entry.key != 0 &&
-                                          entry.key !=
-                                              1; // Exclude the 0th and 1st values
+                                      return entry.key != 0;
+                                          // entry.key !=
+                                          //     1; // Exclude the 0th and 1st values
                                     }).map((entry) {
                                       final question = entry.value;
                                       return _buildStatutoryRow(
-                                        questionIndex,
                                         header,
                                         subheader,
                                         question['description'] ?? '',
                                         question['points'] ?? '',
+                                        question['question'] ?? '',
                                         question['savedscore'] ?? '-',
                                         question['savedremark'] ?? '',
                                       );
@@ -353,183 +359,95 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     );
   }
 
-  /* Widget _buildStatutoryRow(String? description, int points, String? savedScore, String? savedremark) {
-    ValueNotifier<int?> selectedValueNotifier = ValueNotifier<int?>(dropdownValues[description]);
-
-    return Card(
-      margin: EdgeInsets.zero,
-      elevation: 0,
-      color: AppColors.meruWhite,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Colors.grey, // Border color
-          width: 0.4, // Border width
-        ),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '$description',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Text(
-                          "$points",
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ValueListenableBuilder<int?>(
-                  valueListenable: selectedValueNotifier,
-                  builder: (context, selectedValue, child) {
-                    return DropdownButton<int?>(
-                      value: selectedValue,
-                      hint: Text('Select'),
-                      items: [
-                        DropdownMenuItem<int?>(
-                          value: null,
-                          child: Text('Select'),
-                        ),
-                        DropdownMenuItem<int>(
-                          value: 1,
-                          child: Text('Yes'),
-                        ),
-                        DropdownMenuItem<int>(
-                          value: 0,
-                          child: Text('No'),
-                        ),
-                        DropdownMenuItem<int>(
-                          value: -1,
-                          child: Text('Partial'),
-                        ),
-                        DropdownMenuItem<int>(
-                          value: -2,
-                          child: Text('Not Applicable'),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        selectedValueNotifier.value = value;
-                        dropdownValues[description!] = value;
-                        sendData(context); // Call sendData with the correct context
-                      },
-                    );
-                  },
-                ),
-                SizedBox(width: 15),
-                ValueListenableBuilder<int?>(
-                  valueListenable: selectedValueNotifier,
-                  builder: (context, selectedValue, child) {
-                    return Text(
-                      selectedValue != null ? selectedValue.toString() : '-',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(width: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: AppColors.meruWhite,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    ),
-                    minimumSize: Size(25.0, 25.0),
-                  ),
-                  child: Icon(
-                    Icons.upload,
-                    color: AppColors.meruWhite,
-                    size: 16.0,
-                  ),
-                  onPressed: () {
-                    // Handle upload button press
-                  },
-                ),
-                SizedBox(width: 20),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow,
-                    foregroundColor: AppColors.meruWhite,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                    ),
-                    minimumSize: Size(25.0, 25.0),
-                  ),
-                  child: Icon(
-                    Icons.add_comment,
-                    color: AppColors.meruWhite,
-                    size: 16.0,
-                  ),
-                  onPressed: _showDialog,
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-          ],
-        ),
-      ),
-    );
-  }*/
 
   Widget _buildStatutoryRow(
-      String question,
       String header,
       String subheader,
       String? description,
       int points,
+      int question,
       String? savedScore,
-      String? savedremark) {
-    ValueNotifier<int?> selectedValueNotifier =
-        ValueNotifier<int?>(dropdownValues[description]);
+      String? savedRemark,
+      ) {
+    int? initialValue;
+    switch (savedScore) {
+      case '1':
+        initialValue = 1;
+        break;
+      case '0':
+        initialValue = 0;
+        break;
+      case '-1':
+        initialValue = -1;
+        break;
+      case '-2':
+        initialValue = -2;
+        break;
+      default:
+        initialValue = null;
+    }
+
+    ValueNotifier<int?> selectedValueNotifier = ValueNotifier<int?>(initialValue);
+    ValueNotifier<String?> remarkNotifier = ValueNotifier<String?>(savedRemark);
+    TextEditingController _textController = TextEditingController(text: savedRemark);
+
+    void _showDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Write a Review",
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            content: Form(
+              key: _formKey,
+              child: TextFormField(
+                controller: _textController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Write your Review';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    remarkNotifier.value = _textController.text;
+                    Navigator.of(context).pop(); // Close the dialog
+                    sendData(
+                      context,
+                      question.toString(),
+                      header,
+                      subheader,
+                      points.toString(),
+                      selectedValueNotifier.value.toString(),
+                      _textController.text,
+                    );
+                  }
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
 
     return Card(
       margin: EdgeInsets.zero,
@@ -578,15 +496,14 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: Colors.grey,
-                            width: 1.0,
+                            width: 0.8,
                           ),
                         ),
                         child: Text(
                           "$points",
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 11.0,
                             color: Colors.grey,
                           ),
                           textAlign: TextAlign.center,
@@ -631,14 +548,16 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                       onChanged: (value) {
                         selectedValueNotifier.value = value;
                         dropdownValues[description!] = value;
+                        savedScore = value.toString();
                         sendData(
-                            context,
-                            header,
-                            subheader,
-                            points.toString(),
-                            value.toString(),
-                            savedremark
-                                .toString()); // Call sendData with the correct context
+                          context,
+                          question.toString(),
+                          header,
+                          subheader,
+                          points.toString(),
+                          value.toString(),
+                          remarkNotifier.value ?? '',
+                        );
                       },
                     );
                   },
@@ -676,11 +595,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                     ),
                     minimumSize: Size(25.0, 25.0),
                   ),
-                  child: Icon(
-                    Icons.upload,
-                    color: AppColors.meruWhite,
-                    size: 16.0,
-                  ),
+                  child: Image.asset("assets/images/fg_upload.png"),
                   onPressed: () {
                     // Handle upload button press
                   },
@@ -688,54 +603,83 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                 SizedBox(width: 20),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow,
+                    backgroundColor: AppColors.merubtnOrange,
                     foregroundColor: AppColors.meruWhite,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
                     minimumSize: Size(25.0, 25.0),
                   ),
-                  child: Icon(
-                    Icons.add_comment,
-                    color: AppColors.meruWhite,
-                    size: 16.0,
-                  ),
+                  child: Image.asset("assets/images/fg_remark.png"),
                   onPressed: _showDialog,
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            ValueListenableBuilder<String?>(
+              valueListenable: remarkNotifier,
+              builder: (context, remark, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Remarks : ${remark ?? ''}',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.merubg,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  void sendData(BuildContext context, String header, String subheader,
+  void sendData(BuildContext context,String question, String header, String subheader,
       String points, String value, String savedremark) {
     final logInProvider = Provider.of<APIProvider>(context, listen: false);
 
+
+    savedremark = _textController.toString();
+
     print("Before creating data map");
-    Map<String, dynamic> data = {
-      "ERB_Audit_StagingDTO": [
-        {
+    Map<String, dynamic> data =
+    {
+      "audit_id": gb.auditId_gb,
+      "totalscore": points,
+      "header": header,
+      "subheader": subheader,
+      "additionalnotes": "0",
+      "question": question.toString(),
+      "obtained_score": value.toString(),
+      "remarks": savedremark,
+      "comments": "",
+      "pic_submitted_filename": "",
+      "pic_submitted_filepath": ""
+    };
+    /*{
           "audit_id": gb.auditId_gb,
           "totalscore": points,
           "header": header,
           "subheader": subheader,
           "additionalnotes": "0",
-          "question": "1",
+          "question": question,
           "obtained_score": value,
-          "remarks": savedremark,
+          "remarks": "savedremark",
           "comments": "",
           "pic_submitted_filename": "",
           "pic_submitted_filepath": ""
-        }
-      ]
-    };
+        };*/
     print("After creating data map");
 
     String jsonData = jsonEncode(data);
+    print("SOMEDATASOMEDATA");
     print(jsonData);
 
     logInProvider.postAuditData(jsonData, context);
@@ -743,56 +687,6 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
 
   final _formKey = GlobalKey<FormState>();
   final _textController = TextEditingController();
-  final _textController2 = TextEditingController();
-
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            "Write a Review",
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: Form(
-            key: _formKey,
-            child: TextFormField(
-              controller: _textController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Write your Review';
-                }
-                return null;
-              },
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                "Submit",
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              onPressed: () {
-                if (_formKey.currentState?.validate() ?? false) {
-                  // Do something with the input
-                  print('Input: ${_textController.text}');
-                  Navigator.of(context).pop(); // Close the dialog
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Widget _buildActionButton(String label) {
     return IntrinsicWidth(
@@ -819,7 +713,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
             case "Delete":
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => ERB_Audit_Tech()),
+                MaterialPageRoute(builder: (context) => TechnicalTest()),
               );
 
               ScaffoldMessenger.of(context)
@@ -827,10 +721,38 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
               break;
 
             case "Save":
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text(
-                      "Invalid Json parsing. Object{} structure needs to be render correctly.")));
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Center(
+                    child: TweenAnimationBuilder<Color?>(
+                      tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                      duration: Duration(seconds: 1),
+                      builder: (context, color, _) {
+                        return CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(color!),
+                        );
+                      },
+                      onEnd: () {
+                        // No need to do anything here
+                      },
+                    ),
+                  );
+                },
+              );
+
+              // Simulate a delay of 4 seconds
+              Future.delayed(Duration(seconds: 4), () {
+                Navigator.of(context).pop(); // Close the CircularProgressIndicator dialog
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Data saved successfully.")),
+                );
+              });
+
               break;
+
 
             default:
               ScaffoldMessenger.of(context).showSnackBar(
@@ -842,3 +764,4 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     );
   }
 }
+

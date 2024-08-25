@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 class AppColors {
   //theme for Mount Meru
   static const Color meruYellow = Color(0xFFFFF600);
+  static const Color merubtnOrange = Color(0xFFFFAE42);
   static const Color meruRed = Color(0xFFBA2F2F);
   static const Color meruBlack = Color(0xFF0B0A0A);
   static const Color meruWhite = Color(0xFFFFFFFF);
