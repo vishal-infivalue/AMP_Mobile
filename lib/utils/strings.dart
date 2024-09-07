@@ -2,6 +2,7 @@
 class AppStrings {
   // General
   static const String appName = 'My Flutter App';
+
   static const String res1 = '''{
   "counter": 2,
   "createdts": "2024-07-05T14:17:45.000+00:00",
@@ -94,5 +95,7 @@ class AppStrings {
 
   static const String clickAuditScore = 'Tap to view details';
   static const String auditScoreText = 'Overall Audit Score for your cluster over last 60 days';
+
+  static const String location_error = 'To start at the audit please make sure you are at the Station premises';
 
 }

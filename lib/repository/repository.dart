@@ -11,7 +11,7 @@ class AppRepository {
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.12-SNAPSHOT";
+      "http://103.235.106.117:8080/audit_management_system-0.0.19-SNAPSHOT";
 
 
 
@@ -184,6 +184,32 @@ class AppRepository {
     try {
       var response = await _apiServices.postWithHeaderUserIdData(
           "$baseUrl/api/erbaudit/loaddata",userIdLoggedIn!,data);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<dynamic> holdAudit(dynamic data) async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.postWithHeaderUserIdData(
+          "$baseUrl/api/auditmaster/holdaudit",userIdLoggedIn!,data);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<dynamic> submitAudit(dynamic data) async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.postWithHeaderUserIdData(
+          "$baseUrl/api/auditmaster/submitaudit",userIdLoggedIn!,data);
       return response;
     } catch (e) {
       return null;

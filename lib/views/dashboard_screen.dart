@@ -72,15 +72,15 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
 
     GlobalVariables gb = GlobalVariables();
     final List<NChartData> ndata = [
-      NChartData('ERBCONA  - 4', 4),
-      NChartData('ERBTECH - 4', 4),
-      NChartData('HSE   - 4', 4),
-      NChartData('FUEL - 4', 4),
+      NChartData('ERBCONA  - 1', 1),
+      NChartData('ERBTECH - 1', 1),
+      NChartData('HSE   - 2', 2),
+      NChartData('FUEL - 2', 2),
 
-      // NChartData('ERB CONA', gb.numberOfAuditsUpcoming_gb as int),
-      // NChartData('ERB TECH', gb.numberOfAuditsUpcoming_gb as int),
-      // NChartData('HSE', gb.numberOfAuditsUpcoming_gb as int),
-      // NChartData('FUEL', gb.numberOfAuditsUpcoming_gb as int),
+    /*NChartData('ERB CONA - ', gb.numberOfAuditsUpcoming_gb as int),
+      NChartData('ERB TECH', gb.numberOfAuditsUpcoming_gb as int),
+      NChartData('HSE', gb.numberOfAuditsUpcoming_gb as int),
+      NChartData('FUEL', gb.numberOfAuditsUpcoming_gb as int),*/
     ];
 
     List<_ChartData>? topPerforming = <_ChartData>[
@@ -97,7 +97,8 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
           return _buildSmallScreenLayout(context, data, ndata, barChart,
               topPerforming, chartData, chartData2);
         } else {
-          return _buildLargeScreenLayout(context, data);
+          return _buildLargeScreenLayout(context, data, ndata, barChart,
+              topPerforming, chartData, chartData2);
         }
       },
     );
@@ -127,8 +128,127 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
         actions: [
           GestureDetector(
             onTap: (){
-              Navigator.pushNamed(context,
-                  Routenames.profileScreen);
+
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Center(
+                    child: TweenAnimationBuilder<Color?>(
+                      tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                      duration: Duration(seconds: 1),
+                      builder: (context, color, _) {
+                        return CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(color!),
+                        );
+                      },
+                      onEnd: () {
+                        // No need to do anything here
+                      },
+                    ),
+                  );
+                },
+              );
+
+              // Simulate a delay of 4 seconds
+              Future.delayed(Duration(seconds: 4), () {
+                Navigator.of(context)
+                    .pop(); // Close the CircularProgressIndicator dialog
+
+                Navigator.pushNamed(context,
+                    Routenames.profileScreen);
+              });
+
+
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 16.0),
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.red, // Background color of the circle
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  '$initials',
+                  style: TextStyle(
+                    color: Colors.white, // Text color
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          _buildSmallScreenBody(context, data, ndata, barData, chartData),
+        ],
+      ),
+      // bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
+    );
+  }
+
+  Widget _buildLargeScreenLayout(
+      BuildContext context,
+      List<ChartData> data,
+      List<NChartData> ndata,
+      List<BarChartData> barData,
+      List<_ChartData> topPerforming,
+      List<ChartData1> chartData,
+      List<ChartData2> chartData2) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: Container(
+          width: 60, // Set your desired width
+          height: 60, // Set your desired height
+          child: IconButton(
+              icon: Image.asset("assets/images/menu_logo.png"),
+              iconSize: 40, // Set the size of the IconButton
+              onPressed: () =>     Navigator.pushNamed(context,
+                  Routenames.profileScreen) // Handle back button press
+          ),
+        ),
+        actions: [
+          GestureDetector(
+            onTap: (){
+
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Center(
+                    child: TweenAnimationBuilder<Color?>(
+                      tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                      duration: Duration(seconds: 1),
+                      builder: (context, color, _) {
+                        return CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(color!),
+                        );
+                      },
+                      onEnd: () {
+                        // No need to do anything here
+                      },
+                    ),
+                  );
+                },
+              );
+
+              // Simulate a delay of 4 seconds
+              Future.delayed(Duration(seconds: 4), () {
+                Navigator.of(context)
+                    .pop(); // Close the CircularProgressIndicator dialog
+
+                Navigator.pushNamed(context,
+                    Routenames.profileScreen);
+              });
+
+
             },
             child: Container(
               margin: EdgeInsets.only(right: 16.0),
@@ -515,7 +635,37 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                               Center(
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(context, Routenames.pendingTable);
+
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return Center(
+                                          child: TweenAnimationBuilder<Color?>(
+                                            tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                            duration: Duration(seconds: 1),
+                                            builder: (context, color, _) {
+                                              return CircularProgressIndicator(
+                                                valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                              );
+                                            },
+                                            onEnd: () {
+                                              // No need to do anything here
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    );
+
+                                    // Simulate a delay of 4 seconds
+                                    Future.delayed(Duration(seconds: 1), () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the CircularProgressIndicator dialog
+
+                                      Navigator.pushNamed(context, Routenames.pendingTable);
+                                    });
+
+
                                   },
                                   child: Text(
                                     AppStrings.tapView,
@@ -704,8 +854,38 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                       Center(
                                         child: GestureDetector(
                                           onTap: () {
-                                            Navigator.pushNamed(context,
-                                                Routenames.completedTable);
+
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (BuildContext context) {
+                                                return Center(
+                                                  child: TweenAnimationBuilder<Color?>(
+                                                    tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                                    duration: Duration(seconds: 1),
+                                                    builder: (context, color, _) {
+                                                      return CircularProgressIndicator(
+                                                        valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                                      );
+                                                    },
+                                                    onEnd: () {
+                                                      // No need to do anything here
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            // Simulate a delay of 4 seconds
+                                            Future.delayed(Duration(seconds: 1), () {
+                                              Navigator.of(context)
+                                                  .pop(); // Close the CircularProgressIndicator dialog
+
+                                              Navigator.pushNamed(context,
+                                                  Routenames.completedTable);
+                                            });
+
+
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -967,10 +1147,40 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                               Center(
                                                 child: GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushNamed(
-                                                        context,
-                                                        Routenames
-                                                            .topPerformingTable);
+
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      builder: (BuildContext context) {
+                                                        return Center(
+                                                          child: TweenAnimationBuilder<Color?>(
+                                                            tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                                            duration: Duration(seconds: 1),
+                                                            builder: (context, color, _) {
+                                                              return CircularProgressIndicator(
+                                                                valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                                              );
+                                                            },
+                                                            onEnd: () {
+                                                              // No need to do anything here
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+
+                                                    // Simulate a delay of 4 seconds
+                                                    Future.delayed(Duration(seconds: 1), () {
+                                                      Navigator.of(context)
+                                                          .pop(); // Close the CircularProgressIndicator dialog
+
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          Routenames
+                                                              .topPerformingTable);
+                                                    });
+
+
                                                   },
                                                   child: Text(
                                                     "Top 3 Performing Stations",
@@ -1024,10 +1234,40 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                               Center(
                                                 child: GestureDetector(
                                                   onTap: () {
-                                                    Navigator.pushNamed(
-                                                        context,
-                                                        Routenames
-                                                            .bottomPerformingTable);
+
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      builder: (BuildContext context) {
+                                                        return Center(
+                                                          child: TweenAnimationBuilder<Color?>(
+                                                            tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                                            duration: Duration(seconds: 1),
+                                                            builder: (context, color, _) {
+                                                              return CircularProgressIndicator(
+                                                                valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                                              );
+                                                            },
+                                                            onEnd: () {
+                                                              // No need to do anything here
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+
+                                                    // Simulate a delay of 4 seconds
+                                                    Future.delayed(Duration(seconds: 1), () {
+                                                      Navigator.of(context)
+                                                          .pop(); // Close the CircularProgressIndicator dialog
+
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          Routenames
+                                                              .bottomPerformingTable);
+                                                    });
+
+
                                                   },
                                                   child: Text(
                                                     "Bottom 3 Performing Stations",
@@ -1169,313 +1409,6 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
     );
   }
 
-  Widget _buildLargeScreenLayout(BuildContext context, List<ChartData> data) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Audit Management Platform',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.bold,
-              color: AppColors.meruWhite,
-              fontSize: 14.0,
-            ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.meruRed,
-      ),
-      body: Row(
-        children: [
-          NavigationRail(
-            backgroundColor: Colors.white,
-            selectedIndex: 0,
-            onDestinationSelected: (index) {
-              String message;
-              switch (index) {
-                case 0:
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DM_DashboardScreen()),
-                  );
-                  break;
-                case 1:
-                  // message = "Profile tapped";
-                  //add map here
-                  break;
-                case 3:
-                  // message = "Profile tapped";
-
-                  break;
-                case 2:
-                  // message = "Notifications tapped";
-                  final List<NotificationItem> notifications = [
-                    NotificationItem(
-                      title: 'New Order Received',
-                      content: 'You have a new order #12345 from John Doe.',
-                      dateTime:
-                          DateTime.now().subtract(const Duration(hours: 2)),
-                    ),
-                    NotificationItem(
-                      title: 'Reminder: Weekly Meeting',
-                      content: 'Your weekly team meeting is today at 2 PM.',
-                      dateTime:
-                          DateTime.now().subtract(const Duration(days: 1)),
-                    ),
-                    NotificationItem(
-                      title: 'App Update Available',
-                      content:
-                          'A new update for your app is available. Please update to enjoy the latest features.',
-                      dateTime:
-                          DateTime.now().subtract(const Duration(days: 3)),
-                      isNew: true,
-                    ),
-                  ];
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NotificationScreen(
-                          notifications: notifications, currentIndex: index),
-                    ),
-                  );
-                  break;
-                default:
-                  message = "";
-              }
-              // showToast(message);
-            },
-            labelType: NavigationRailLabelType.all,
-            selectedIconTheme: IconThemeData(color: Colors.blueGrey),
-            selectedLabelTextStyle: TextStyle(color: Colors.blueGrey),
-            unselectedIconTheme: IconThemeData(color: Colors.grey),
-            unselectedLabelTextStyle: TextStyle(color: Colors.grey),
-            destinations: [
-              NavigationRailDestination(
-                icon: Icon(Icons.dashboard, color: Colors.blue),
-                label: Text(
-                  'Dashboard',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.meruBlack,
-                    fontSize: 12.0,
-                    fontStyle: FontStyle.normal,
-                  ),
-                ),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.map_outlined, color: Colors.grey),
-                label: Text(
-                  'Stations',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey,
-                    fontSize: 11.0,
-                    fontStyle: FontStyle.normal,
-                  ),
-                ),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.person, color: Colors.grey),
-                label: Text(
-                  'Profile',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey,
-                    fontSize: 11.0,
-                    fontStyle: FontStyle.normal,
-                  ),
-                ),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.notifications, color: Colors.grey),
-                label: Text(
-                  'Notifications',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey,
-                    fontSize: 11.0,
-                    fontStyle: FontStyle.normal,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const VerticalDivider(thickness: 1, width: 1),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Card(
-                            color: Colors.white,
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Welcome Joe Rogan',
-                                    style: TextStyle(
-                                      color: Color(0xFFC62828),
-                                      fontSize: 18,
-                                      fontFamily: 'Lato',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    'Name : User',
-                                    style: TextStyle(
-                                      color: Color(0xFFC62828),
-                                      fontSize: 18,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage('assets/logo.jpeg'),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Card(
-                      color: Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          PieChart(
-                            dataMap: data.asMap().map((index, chartData) =>
-                                MapEntry(chartData.title,
-                                    chartData.value.toDouble())),
-                            colorList: [
-                              Colors.red,
-                              Colors.blue,
-                              Colors.green,
-                              Colors.orange,
-                            ],
-                            chartRadius: MediaQuery.of(context).size.width / 3,
-                            legendOptions: const LegendOptions(
-                              // legendPosition: LegendPosition.right,
-                              showLegendsInRow: false,
-                            ),
-                            chartValuesOptions: const ChartValuesOptions(
-                              showChartValueBackground: true,
-                              showChartValues: true,
-                              showChartValuesInPercentage: true,
-                              showChartValuesOutside: false,
-                              decimalPlaces: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  _buildTopChecklistTable(),
-                  const SizedBox(height: 20.0),
-                  _buildChecklistUtilizationTable(),
-                  const SizedBox(height: 20.0),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Audits',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: data.length,
-                    itemBuilder: (context, index) {
-                      final item = data[index];
-                      return InkWell(
-                        onTap: () {
-                          // Navigator.pushNamed(context, Routenames.form);
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.all(8.0),
-                          padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(item.title),
-                              const Icon(Icons.chevron_right),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Location Overview',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  _buildLocationOverViewTable(),
-                  const SizedBox(height: 20.0),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        /*Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AuditLogin()),
-                        );*/
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFC62828),
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text("Logout",
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   // Function to build the TopChecklistTable
   Widget _buildTopChecklistTable() {

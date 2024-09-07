@@ -58,6 +58,7 @@ dependencies:
   dropdown_button2: ^2.3.8
 
   tap_to_expand: ^0.7.2
+  image_picker: ^0.8.7+3
 
 dev_dependencies:
   flutter_test:

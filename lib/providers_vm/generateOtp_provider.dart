@@ -6,6 +6,7 @@ import 'package:amp/response/prevalidate_response.dart';
 import 'package:amp/utils/constant_strings.dart';
 import 'package:amp/utils/global_values.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../repository/repository.dart';
@@ -207,16 +208,18 @@ class APIProvider with ChangeNotifier {
       setLoading(false);
 
       if (response != null) {
-        print("User pre-validated successfully: $response");
+
         gb.isButtonEnabled_gb = true;
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User pre-validated ")));
       } else {
         print("Error pre-validating user");
+
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
       }
     } catch (e) {
       setLoading(false);
       print("Error pre-validating user: $e");
+
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
     }
   }
@@ -224,6 +227,7 @@ class APIProvider with ChangeNotifier {
   //generateOTP
   Future<void> generateOtp(String jsonData, BuildContext context) async {
     setLoading(true);
+    gb.isButtonEnabled_gb = false;
 
     Map<String, dynamic> data = jsonDecode(jsonData);
 
@@ -233,13 +237,28 @@ class APIProvider with ChangeNotifier {
 
       if (response != null) {
         print("User pre-validated successfully: $response");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP generated and sent to the User Registered Phone Number.")));
+        gb.isButtonEnabled_gb = true;
+
+        Fluttertoast.showToast(
+          msg: "OTP generated and sent to the User Registered Phone Number.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black54,
+          textColor: Colors.white,
+        );
+
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP generated and sent to the User Registered Phone Number.")));
       } else {
+        gb.isButtonEnabled_gb = false;
         print("Error pre-validating user");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid OTP")));
+
+
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid OTP")));
       }
     } catch (e) {
       setLoading(false);
+
+
       print("Error pre-validating user: $e");
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
     }
@@ -259,11 +278,25 @@ class APIProvider with ChangeNotifier {
       var auditResponse = UserResponse.fromJson(response);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(ConstantStrings.userDetails, jsonEncode(auditResponse));
+      Fluttertoast.showToast(
+        msg: "Login Successful.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+      );
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User OTP validated successfully")));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User OTP validated successfully")));
       Navigator.pushNamed(context, Routenames.dmDashboardScreen);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error validating user OTP")));
+      Fluttertoast.showToast(
+        msg: "Invalid OTP",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+      );
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error validating user OTP")));
     }
   }
 
@@ -529,6 +562,41 @@ class APIProvider with ChangeNotifier {
 
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$response")));
 
+
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page")));
+    }
+
+  }
+
+  Future<void> holdAudit(String jsonData, BuildContext context) async {
+    setLoading(true);
+
+    Map<String, dynamic> data = jsonDecode(jsonData);
+
+    var response = await _appRepository.holdAudit(data);
+
+    if(response!= null){
+
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("The audit details entered so far has been successfully saved in the On Hold state.")));
+
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page.")));
+    }
+
+  }
+
+  Future<void> submitAudit(String jsonData, BuildContext context) async {
+    setLoading(true);
+
+    Map<String, dynamic> data = jsonDecode(jsonData);
+
+    var response = await _appRepository.submitAudit(data);
+
+    if(response!= null){
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("The audit details has been submitted to the station successfully.")));
 
     }else{
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page")));

@@ -620,13 +620,73 @@ class CompletedTable extends StatelessWidget {
                                  switch(audit.audittype){
 
                                    case ConstantStrings.ERBTECH:
-                                     Navigator.pushNamed(
-                                         context, Routenames.evaluationScorePage);
+                                     showDialog(
+                                       context: context,
+                                       barrierDismissible: false,
+                                       builder: (BuildContext context) {
+                                         return Center(
+                                           child: TweenAnimationBuilder<Color?>(
+                                             tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                             duration: Duration(seconds: 1),
+                                             builder: (context, color, _) {
+                                               return CircularProgressIndicator(
+                                                 valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                               );
+                                             },
+                                             onEnd: () {
+                                               // No need to do anything here
+                                             },
+                                           ),
+                                         );
+                                       },
+                                     );
+
+                                     // Simulate a delay of 4 seconds
+                                     Future.delayed(Duration(seconds: 1), () {
+                                       Navigator.of(context)
+                                           .pop(); // Close the CircularProgressIndicator dialog
+
+
+                                       Navigator.pushNamed(
+                                           context, Routenames.evaluationScorePage);
+                                     });
+
+
                                      break;
 
                                    case ConstantStrings.ERBCONA:
-                                     Navigator.pushNamed(
-                                         context, Routenames.evaluationScorePage);
+
+                                     showDialog(
+                                       context: context,
+                                       barrierDismissible: false,
+                                       builder: (BuildContext context) {
+                                         return Center(
+                                           child: TweenAnimationBuilder<Color?>(
+                                             tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                             duration: Duration(seconds: 1),
+                                             builder: (context, color, _) {
+                                               return CircularProgressIndicator(
+                                                 valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                               );
+                                             },
+                                             onEnd: () {
+                                               // No need to do anything here
+                                             },
+                                           ),
+                                         );
+                                       },
+                                     );
+
+                                     // Simulate a delay of 4 seconds
+                                     Future.delayed(Duration(seconds: 1), () {
+                                       Navigator.of(context)
+                                           .pop(); // Close the CircularProgressIndicator dialog
+
+
+                                       Navigator.pushNamed(
+                                           context, Routenames.evaluationScorePage);
+                                     });
+
                                      break;
 
                                    default:

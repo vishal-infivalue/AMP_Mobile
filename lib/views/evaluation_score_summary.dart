@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:math';
 
 import 'package:amp/providers_vm/generateOtp_provider.dart';
 import 'package:amp/response/score_card_response.dart';
