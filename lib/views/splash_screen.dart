@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -14,6 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 1), () {
       Navigator.pushNamed(context, Routenames.loginScreen);
       // Navigator.pushNamed(context, Routenames.dmDashboardScreen);
+      // Navigator.pushNamed(context, Routenames.);
       // Navigator.pushNamed(context, Routenames.ERBScreen_Tech);
     });
     super.initState();

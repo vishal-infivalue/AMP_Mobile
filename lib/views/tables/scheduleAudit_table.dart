@@ -10,8 +10,10 @@ import '../../utils/app_colors.dart';
 import '../../utils/constant_strings.dart';
 import '../../utils/global_values.dart';
 
-class PendingTable extends StatelessWidget {
-  const PendingTable({super.key});
+
+
+  class ScheduleAuditTable extends StatelessWidget {
+  const ScheduleAuditTable({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class PendingTable extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Upcoming Audits',
+          'Scheduled Audits',
           style: TextStyle(
             fontFamily: 'Montserrat',
             color: AppColors.meruRed,
@@ -68,7 +70,7 @@ class PendingTable extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              'Number of Upcoming Audit',
+                              ' List of audits pending final signature and submission',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 12,

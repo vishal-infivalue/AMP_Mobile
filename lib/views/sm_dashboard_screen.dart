@@ -20,12 +20,12 @@ import '../utils/strings.dart';
 import '../utils/user_helper.dart';
 import 'notification_screen.dart';
 
-class DM_DashboardScreen extends StatefulWidget {
+class StationManagerDash extends StatefulWidget {
   @override
-  _DM_DashboardScreenState createState() => _DM_DashboardScreenState();
+  _StationManagerDashState createState() => _StationManagerDashState();
 }
 
-class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
+class _StationManagerDashState extends State<StationManagerDash> {
   UserResponse? user;
   String initials = '';
 
@@ -556,6 +556,156 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                             children: <Widget>[
                               Text(
                                 AppStrings.auditScore,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 2.0,
+                                  fontStyle: FontStyle.normal,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            //ScheduledAudit
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 100.8 / 2.0),
+                    child: Container(
+                        child: Card(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            logInProvider.numberOfAuditsUpcoming+" "+"List of audits pending final signature and submission",
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              letterSpacing: 2,
+                                              fontStyle: FontStyle.normal,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: TweenAnimationBuilder<Color?>(
+                                                tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                                duration: Duration(seconds: 1),
+                                                builder: (context, color, _) {
+                                                  return CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                                  );
+                                                },
+                                                onEnd: () {
+                                                  // No need to do anything here
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        // Simulate a delay of 4 seconds
+                                        Future.delayed(Duration(seconds: 1), () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the CircularProgressIndicator dialog
+
+                                          Navigator.pushNamed(context, Routenames.submittedTable);
+                                        });
+
+
+                                      },
+                                      child: Text(
+                                        AppStrings.tapView,
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: AppColors.meruBlack,
+                                          fontSize: 12.0,
+                                          fontStyle: FontStyle.normal,
+                                          decoration: TextDecoration.underline, // Underline the text
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  )
+
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(4, 0, 4, 4),
+                      child: Card(
+                        color: Colors.yellow,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 2,
+                        margin: EdgeInsets.all(16),
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                AppStrings.CompleteSubmittedAudits,
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Colors.white,
@@ -1480,7 +1630,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
           case 0:
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => DM_DashboardScreen()),
+              MaterialPageRoute(builder: (context) => StationManagerDash()),
             );
             break;
           case 1:

@@ -1,5 +1,4 @@
 class ConstantStrings {
-  // General
   static const String userIdLoggedIn = 'userIdLoggedIn';
   static const String ERBCONA = 'ERBCONA';
   static const String ERBTECH = 'ERBTECH';
@@ -10,6 +9,9 @@ class ConstantStrings {
   static const String avergaeClusterScore = 'avergaeClusterScore';
   static const String TopPerforming = 'TopPerforming';
   static const String BottomPerforming = 'BottomPerforming';
+  static const String NcResponse = 'NcResponse';
 
   static const String userDetails = 'userDetails';
+
+
 }

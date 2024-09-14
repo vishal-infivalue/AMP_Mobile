@@ -2,24 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'app_exception.dart';
 
-class AppRepository {
-  final BaseApiServices _apiServices = NetworkApiServices();
-
-  // String baseUrl = "http://103.235.106.117:8080/audit_management_system-0.0.2-SNAPSHOT";
-  String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.3-SNAPSHOT";
-
-  Future<dynamic> generateOTPTest(dynamic data) async {
-    try {
-      var response =
-          await _apiServices.postApi("$baseUrl/api/login/generateotp", data);
-      return response;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-}
 
 class ApiServices {
   Future<dynamic> postApi(String url, dynamic data) async {

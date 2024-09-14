@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart' as sf;
-import '../routes/route_names.dart';
+
 import '../utils/app_colors.dart';
 
 class EvaluationPreview extends StatefulWidget {

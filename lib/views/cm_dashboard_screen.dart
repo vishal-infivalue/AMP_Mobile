@@ -1,18 +1,14 @@
 import 'package:amp/utils/global_values.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pie_chart/pie_chart.dart' as pie_chart;
 import 'package:pie_chart/pie_chart.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+
 import '../global_theme/horizontalbar.dart';
-import '../providers_vm/generateOtp_provider.dart';
 import '../routes/route_names.dart';
 import '../utils/app_colors.dart';
-import 'package:pie_chart/pie_chart.dart' as pie_chart;
-import 'package:syncfusion_flutter_charts/charts.dart' as syncfusion_charts;
-import '../utils/carousal_items.dart';
 import '../utils/status_data.dart';
 import '../utils/strings.dart';
 import 'notification_screen.dart';

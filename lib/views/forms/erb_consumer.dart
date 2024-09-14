@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../providers_vm/generateOtp_provider.dart';
 import '../../routes/route_names.dart';
 import '../../utils/app_colors.dart';
+import '../../utils/connectivity.dart';
 import '../tables/pending_table.dart';
 
 class ERB_Audit_Tech extends StatefulWidget {
@@ -26,6 +27,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
   @override
   void initState() {
     super.initState();
+    ConnectivityService().monitorConnection(context);
     setState(() {});
     final apiProvider = Provider.of<APIProvider>(context, listen: false);
     _loadAndFetchData(apiProvider);
@@ -90,6 +92,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
       final savedscore = question['savedscore'] ?? 0;
       final savedremark = question['savedremark'] ?? '';
       final additionalnotes = question['additionalnotes'] ?? 0;
+      final image = question['image'] ?? 0;
 
       if (!result.containsKey(header)) {
         result[header] = {};
@@ -106,6 +109,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
         'savedscore': savedscore,
         'savedremark': savedremark,
         'additionalnotes': additionalnotes,
+        'image': image,
       });
     }
 
@@ -187,7 +191,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                           subheaders[firstSubheader]?.first ?? {};
                       final headerDescription =
                           firstQuestion['description'] ?? '';
-                      final questionIndex = firstQuestion['question'] ?? '';
+                      final image = firstQuestion['image'] ?? '';
 
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -196,7 +200,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                           elevation: 0,
                           color: AppColors.meruWhite,
                           shape: RoundedRectangleBorder(
-                            side: BorderSide(
+                            side: const BorderSide(
                               color: Colors.grey, // Border color
                               width: 0.4, // Border width
                             ),
@@ -215,8 +219,25 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(12.0),
-                                    child: Icon(Icons.ac_unit_sharp,
-                                        color: AppColors.meruBlack),
+                                    child: SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder:
+                                            'assets/images/fg_upload.png',
+                                        // Path to your local asset image
+                                        image: image,
+                                        fit: BoxFit.contain,
+                                        imageErrorBuilder:
+                                            (context, error, stackTrace) {
+                                          // Fallback to asset image if the URL image fails to load
+                                          return Image.asset(
+                                            'assets/images/fg_upload.png',
+                                            fit: BoxFit.contain,
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 Expanded(
@@ -327,6 +348,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                         question['savedscore'] ?? '-',
                                         question['savedremark'] ?? '',
                                         question['additionalnotes'] ?? '',
+                                        question['image'] ?? '',
                                       );
                                     }).toList(),
                                   ),
@@ -378,10 +400,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
   // final TextEditingController _textController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
-
-  Future<void> _openCamera() async {
+/*  Future<void> _openCamera() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
@@ -389,7 +408,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     } else {
       print('No image selected.');
     }
-  }
+  }*/
 
   Widget _buildStatutoryRow(
     String header,
@@ -400,8 +419,10 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     String? savedScore,
     String? savedRemark,
     int additionalnotes,
+    String? uploadProof,
   ) {
     int? initialValue;
+
     switch (savedScore) {
       case '1':
         initialValue = 1;
@@ -422,6 +443,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     ValueNotifier<int?> selectedValueNotifier =
         ValueNotifier<int?>(initialValue);
     ValueNotifier<String?> remarkNotifier = ValueNotifier<String?>(savedRemark);
+    ValueNotifier<String?> imageNotifier = ValueNotifier<String?>(uploadProof);
 
     TextEditingController _textController =
         TextEditingController(text: savedRemark);
@@ -457,6 +479,47 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
     }
 
     _initializeQuestions();
+
+    File? _image;
+    final ImagePicker _picker = ImagePicker();
+    Future<void> _openCamera(
+        BuildContext context,
+        String question,
+        String header,
+        String subheader,
+        String points,
+        String value,
+        String savedremark,
+        String image) async {
+      final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+      if (pickedFile != null) {
+        // Load the image file
+        _image = File(pickedFile.path);
+
+        // Convert the image file to bytes
+        List<int> imageBytes = await _image!.readAsBytes();
+
+        // Convert bytes to Base64 string
+        String base64Image = base64Encode(imageBytes);
+
+        imageNotifier.value = base64Image;
+
+        sendData(
+            context,
+            question.toString(),
+            header,
+            subheader,
+            points.toString(),
+            value.toString(),
+            remarkNotifier.value ?? '',
+            imageNotifier.value ?? '');
+
+        print('Base64 Image: $base64Image');
+      } else {
+        print('No image selected.');
+      }
+    }
 
     void _showDialog() {
       showDialog(
@@ -505,8 +568,8 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                       subheader,
                       points.toString(),
                       selectedValueNotifier.value.toString(),
-                      remarkComment,
-                    );
+                        remarkComment,
+                        imageNotifier.value ?? '');
                   }
                 },
               ),
@@ -698,7 +761,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                           points.toString(),
                                           value.toString(),
                                           remarkNotifier.value ?? '',
-                                        );
+                                            imageNotifier.value ?? '');
 
                                         // Update the visibility of questions B and C based on the selection
                                         if (description ==
@@ -742,7 +805,20 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                                       child: Image.asset(
                                           "assets/images/fg_upload.png"),
                                       onPressed: () async {
-                                        _openCamera();
+
+                                        _openCamera(
+                                            context,
+                                            question.toString(),
+                                            header,
+                                            subheader,
+                                            points.toString(),
+                                            selectedValueNotifier.value
+                                                .toString(),
+                                            remarkNotifier.value ?? '',
+                                            imageNotifier.value ?? '');
+
+
+                                        // _openCamera(context);
                                       },
                                     ),
                                     SizedBox(width: 20),
@@ -817,6 +893,8 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                     null,
                     // Replace with the saved remark if available
                     additionalnotes,
+                      uploadProof
+
                   );
                 },
               ),
@@ -838,6 +916,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                     null,
                     // Replace with the saved remark if available
                     additionalnotes,
+                      uploadProof
                   );
                 },
               ),
@@ -858,6 +937,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                     null,
                     // Replace with the saved remark if available
                     additionalnotes,
+                      uploadProof
                   );
                 },
               ),
@@ -868,7 +948,11 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
   }
 
   void sendData(BuildContext context, String question, String header,
-      String subheader, String points, String value, String savedremark) {
+      String subheader,
+      String points,
+      String value,
+      String savedremark,
+      String image) {
     final logInProvider = Provider.of<APIProvider>(context, listen: false);
 
     // savedremark = _textController.toString();
@@ -884,8 +968,9 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
       "obtained_score": value.toString(),
       "remarks": savedremark,
       "comments": "",
-      "pic_submitted_filename": "",
-      "pic_submitted_filepath": ""
+      "pic_submitted_filename": "image.png",
+      "pic_submitted_filepath": "",
+      "image": image,
     };
 
     print("After creating data map");

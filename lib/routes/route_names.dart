@@ -19,6 +19,8 @@ class Routenames {
   static const String nonComplianceDetails = '/nonComplianceDetails';
   static const String completedTable = '/completedTable';
   static const String pendingTable = '/pendingTable';
+  static const String submittedTable = '/submittedTable';
+  static const String scheduleAuditTable = '/scheduleAuditTable';
   static const String topPerformingTable = '/topPerformingTable';
   static const String bottomPerformingTable = '/bottomPerformingTable';
   static const String ncDetailPage = '/ncDetailPage';
@@ -26,6 +28,12 @@ class Routenames {
   static const String witnessSignature = '/witnessSignature';
   static const String signaturePadScreen = '/signaturePadScreen';
   static const String notificationScreen = '/notificationScreen';
+
+  //stockAudit
+  static const String stockAuditList = '/stockAuditList';
+  static const String productPMS = '/productPMS';
+  static const String productLSD = '/productLSD';
+  static const String productDK = '/productDK';
 }
 
 

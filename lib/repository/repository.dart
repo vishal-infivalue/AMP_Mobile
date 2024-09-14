@@ -1,7 +1,5 @@
 import 'package:amp/utils/constant_strings.dart';
-import 'package:flutter/cupertino.dart';
 
-import '../response/ERB_CustomerCheck_ListResponse.dart';
 import '../services/network_services.dart';
 import '../utils/shared_preference_helper.dart';
 
@@ -11,9 +9,7 @@ class AppRepository {
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.19-SNAPSHOT";
-
-
+      "http://103.235.106.117:8080/audit_management_system-0.0.29-SNAPSHOT";
 
   //average cluster score
   Future<dynamic> getclusteravgscore() async {
@@ -54,7 +50,6 @@ class AppRepository {
     }
   }
 
-
   //prevalidate
   Future<dynamic> prevalidateUser(dynamic data) async {
     try {
@@ -66,9 +61,6 @@ class AppRepository {
     }
   }
 
-
-
-
   //generate otp
   Future<dynamic> generateOTP(dynamic data) async {
     try {
@@ -78,7 +70,6 @@ class AppRepository {
       return null;
     }
   }
-
 
   //validate OTP
   Future<dynamic> validateUserOtp(dynamic data) async {
@@ -90,7 +81,6 @@ class AppRepository {
       return null;
     }
   }
-
 
   //getAll Pending Audits
   Future<dynamic> getAllPendingAudits() async {
@@ -119,50 +109,6 @@ class AppRepository {
     }
   }
 
-/*  Future<ERBCustomerCheckListResponse?> getERBCustomerCheckList(Map<String, dynamic> data) async {
-    // Simulating a network call
-    await Future.delayed(Duration(seconds: 2));
-
-    // This should be replaced with actual API call
-    return ERBCustomerCheckListResponse(questions: [
-      {'description': 'Question 1', 'subheader': '', 'additionalnotes': '', 'question': ''},
-      {'description': 'Question 2', 'subheader': 'Subheader 2', 'additionalnotes': 'Notes 2', 'question': 'Question 2'},
-      {'description': 'Question 3', 'subheader': '', 'additionalnotes': '', 'question': 'Question 3'},
-    ], auditDetails: null);
-  }*/
-
-  /*Future<void> getERBCusomerCheckLIst(String jsonData, BuildContext context) async {
-    setLoading(true);
-
-    Map<String, dynamic> data = jsonDecode(jsonData);
-
-    var response = await _appRepository.getERBCusomerCheckLIst(data);
-    setLoading(false);
-
-    if (response != null) {
-      print("Successful $response");
-      setResponse(response);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successful $response")));
-    } else {
-      print("Error fetching data");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
-    }
-  }*/
-
-  //getERB Consumer Checklist
-  Future<dynamic> getERBCusomerCheckLIst(dynamic data) async {
-
-    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
-
-    try {
-      var response = await _apiServices.postWithHeaderUserIdData(
-          "$baseUrl/api/erbaudit/loaddata",userIdLoggedIn!,data);
-      return response;
-    } catch (e) {
-      return null;
-    }
-  }
-
   //post audit data
   Future<dynamic> postAuditData(dynamic data) async {
 
@@ -177,6 +123,7 @@ class AppRepository {
     }
   }
 
+  //start Audit
   Future<dynamic> getAuditScreenData(dynamic data) async {
 
     String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
@@ -190,6 +137,7 @@ class AppRepository {
     }
   }
 
+  //hold the audit
   Future<dynamic> holdAudit(dynamic data) async {
 
     String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
@@ -203,6 +151,7 @@ class AppRepository {
     }
   }
 
+  //submit the audit
   Future<dynamic> submitAudit(dynamic data) async {
 
     String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
@@ -215,7 +164,6 @@ class AppRepository {
       return null;
     }
   }
-
 
   //postERB ScoreCard
   Future<dynamic> getScoreCard(dynamic data) async {
@@ -231,4 +179,44 @@ class AppRepository {
     }
   }
 
+
+  //get ALL NC Data
+  Future<dynamic> getNCData() async {
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.getApiWithHeader(
+          "$baseUrl/api/nc/search",userIdLoggedIn!);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //get  ALL Stations
+  Future<dynamic> getAllStations() async {
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.postWithHeaderUserId(
+          "$baseUrl/api/stations/getallstations",userIdLoggedIn!);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //post NC Updates
+  Future<dynamic> postNCUpdate(dynamic data) async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.postWithHeaderUserIdData(
+          "$baseUrl/api/nc/update",userIdLoggedIn!,data);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
 }

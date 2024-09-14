@@ -58,6 +58,8 @@ class AppStrings {
   static const String auditScore = 'Audit Score & Grade';
   static const String pendingAudit = 'Pending Audits';
   static const String upcomingAudits = 'Upcoming Audits';
+  static const String ScheduleAudits = 'Schedule Audits';
+  static const String CompleteSubmittedAudits = 'Complete Submitted Audits';
   static const String PerformingStation = 'Station Performance';
   static const String StaticPerformingStation = 'Performance of Stations in last 45 days';
   static const String TopPerformAudits = 'Top Performing Stations';

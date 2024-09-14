@@ -5,8 +5,7 @@ import 'package:amp/response/score_card_response.dart';
 import 'package:amp/utils/global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart' as sf;
-import '../response/averageScoreResponse.dart';
+
 import '../routes/route_names.dart';
 import '../utils/app_colors.dart';
 

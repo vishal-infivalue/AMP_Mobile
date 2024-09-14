@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:amp/response/all_dashboard_response.dart';
 import 'package:amp/response/averageScoreResponse.dart';
+import 'package:amp/response/nc_response.dart';
 import 'package:amp/response/prevalidate_response.dart';
 import 'package:amp/utils/constant_strings.dart';
 import 'package:amp/utils/global_values.dart';
@@ -42,6 +43,8 @@ class APIProvider with ChangeNotifier {
 
   List<TableData>  _pendingAuditTable = [];
   List<TableData> get pendingAuditTable => _pendingAuditTable;
+
+
 
 
 
@@ -620,6 +623,107 @@ class APIProvider with ChangeNotifier {
         // print("Error pre-validating user");
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
       }
+  }
+
+
+  List<Data> _ncAuditTable = [];
+  List<Data> get ncAuditTable => _ncAuditTable;
+
+  Future<NcResponse?> getNCData(BuildContext context) async {
+    try {
+      setLoading(true);
+
+      print("NCDATA CALLED");
+
+      // Fetch the NC Data from the repository
+      var response = await _appRepository.getNCData();
+      print("NCDATA DATA: $response");
+      var ncDataTable = NcResponse.fromJson(response);
+      _ncAuditTable = ncDataTable.data ?? [];
+
+      print("NCDATA DATA: $_ncAuditTable");
+
+      // Store the data in SharedPreferences
+      await _storeNCDataInPreferences(_ncAuditTable);
+
+      // Notify listeners for UI update
+      notifyListeners();
+
+      if (response != null) {
+        // Parse the JSON response into a model
+        var ncDataTable = NcResponse.fromJson(response);
+        _ncAuditTable = ncDataTable.data ?? [];
+
+        print("NCDATA DATA: $_ncAuditTable");
+
+        // Store the data in SharedPreferences
+        await _storeNCDataInPreferences(_ncAuditTable);
+
+        // Notify listeners for UI update
+        notifyListeners();
+
+        return ncDataTable; // Return the parsed response
+      } else {
+        print("No data received.");
+        return null;
+      }
+    } catch (e) {
+      // Log error in case of an exception
+      print("Error fetching NC data: $e");
+      return null;
+    } finally {
+      // Ensure loading state is reset regardless of success or failure
+      setLoading(false);
+    }
+  }
+
+
+// Method to store NC data in SharedPreferences
+  Future<void> _storeNCDataInPreferences(List<Data> ncAuditTable) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Convert the list of Data objects to a JSON string
+    String jsonData = jsonEncode(ncAuditTable.map((data) => data.toJson()).toList());
+
+    // Store the JSON string in SharedPreferences
+    await prefs.setString('nc_audit_table', jsonData);
+
+    print("Data stored in SharedPreferences: $jsonData");
+  }
+
+
+  Future<void> getAllStation(BuildContext context) async {
+    setLoading(true);
+    var response = await _appRepository.getAllStations();
+    setLoading(false);
+
+    if (response != null) {
+      notifyListeners();
+      print("Successful $response");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successful")));
+
+    } else {
+      print("Error fetching data");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
+    }
+  }
+
+  Future<void> postNCUpdate(String jsonData, BuildContext context) async {
+    setLoading(true);
+
+    Map<String, dynamic> data = jsonDecode(jsonData);
+
+
+    var response = await _appRepository.postNCUpdate(data);
+    setLoading(false);
+
+    if (response != null) {
+      // print("User pre-validated successfully: $response");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP Validation successful.")));
+    } else {
+      // print("Error pre-validating user");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
+    }
   }
 
 

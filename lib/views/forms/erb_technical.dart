@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../providers_vm/generateOtp_provider.dart';
 import '../../routes/route_names.dart';
 import '../../utils/app_colors.dart';
+import '../../utils/connectivity.dart';
 import '../tables/pending_table.dart';
 
 
@@ -27,6 +28,7 @@ class _TechnicalTestState extends State<TechnicalTest> {
   @override
   void initState() {
     super.initState();
+    ConnectivityService().monitorConnection(context);
     setState(() {});
     final apiProvider = Provider.of<APIProvider>(context, listen: false);
     _loadAndFetchData(apiProvider);
