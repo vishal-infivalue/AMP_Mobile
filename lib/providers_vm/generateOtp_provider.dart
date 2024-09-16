@@ -289,11 +289,11 @@ class APIProvider with ChangeNotifier {
         textColor: Colors.white,
       );
 
-      if (auditResponse.designation == "Cluster Manager") {
+      if (auditResponse.role == "1009") {
         Navigator.pushNamed(context, Routenames.dmDashboardScreen);
-      } else if (auditResponse.designation == "Station Manager") {
+      } else if (auditResponse.role == "Station Manager") {
         Navigator.pushNamed(context, Routenames.smDashboardScreen);
-      } else if (auditResponse.designation == "Compliance Manage") {
+      } else if (auditResponse.role == "1050") {
         Navigator.pushNamed(context, Routenames.cmDashboardScreen);
       }else{
         Fluttertoast.showToast(
