@@ -66,7 +66,7 @@ class SubmittedTable extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'List of audits pending final signature and submission',
+                        'List of audits pending final \nsignature and submission',
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 12,

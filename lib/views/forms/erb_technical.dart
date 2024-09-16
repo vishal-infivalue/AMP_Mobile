@@ -40,6 +40,20 @@ class _TechnicalTestState extends State<TechnicalTest> {
     String? responseJson = prefs.getString('ERBCustomerCheckListResponse');
     String content = "No response data available";
 
+    GlobalVariables gb = GlobalVariables();
+
+    auditId = gb.auditId_gb;
+
+    Map<String, dynamic> data = {
+      "id": "$auditId",
+    };
+
+    String jsonData = jsonEncode(data);
+    await apiProvider.getAuditScreenData(jsonData, context);
+
+    responseJson = jsonEncode(apiProvider.erbCustomerCheckListResponse);
+    await prefs.setString('ERBCustomerCheckListResponse', responseJson);
+
     if (apiProvider.erbCustomerCheckListResponse.isEmpty &&
         !apiProvider.loading) {
       GlobalVariables gb = GlobalVariables();
@@ -1007,7 +1021,7 @@ class _TechnicalTestState extends State<TechnicalTest> {
                 "id": "$auditId",
               };
               String jsonData = jsonEncode(data);
-              // logInProvider.submitAudit(jsonData, context);
+              logInProvider.submitAudit(jsonData, context);
 
               showDialog(
                 context: context,

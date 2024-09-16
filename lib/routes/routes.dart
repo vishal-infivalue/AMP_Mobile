@@ -11,6 +11,7 @@ import 'package:amp/views/tables/scheduleAudit_table.dart';
 import 'package:amp/views/tables/topPerformingTables.dart';
 import 'package:flutter/material.dart';
 
+import '../views/com_dashboard_screen.dart';
 import '../views/dashboard_screen.dart';
 import '../views/dialogs/form_text_dialog.dart';
 import '../views/dk_technical_checklist.dart';
@@ -23,6 +24,7 @@ import '../views/nc_details.dart';
 import '../views/pms_technical_checklist.dart';
 import '../views/profile/profile.dart';
 import '../views/signature_pad/signature_pad.dart';
+import '../views/sm_dashboard_screen.dart';
 import '../views/splash_screen.dart';
 import '../views/stockAuditList.dart';
 import '../views/tables/submittedAudit_table.dart';
@@ -45,9 +47,6 @@ class Routes {
         return MaterialPageRoute(
             builder: (globalContext) =>  OtpScreen(key: Key("")));
 
-        case Routenames.cmDashboardScreen:
-        return MaterialPageRoute(
-            builder: (globalContext) =>  DM_DashboardScreen());
 
         case Routenames.reviewDialog:
         return MaterialPageRoute(
@@ -58,6 +57,14 @@ class Routes {
         case Routenames.dmDashboardScreen:
         return MaterialPageRoute(
             builder: (globalContext) =>  DM_DashboardScreen());
+
+        case Routenames.smDashboardScreen:
+        return MaterialPageRoute(
+            builder: (globalContext) =>  StationManagerDash());
+
+        case Routenames.cmDashboardScreen:
+        return MaterialPageRoute(
+            builder: (globalContext) =>  ComplainceManagerDash());
 
         case Routenames.profileScreen:
         return MaterialPageRoute(

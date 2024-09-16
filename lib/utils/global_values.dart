@@ -30,11 +30,14 @@ class GlobalVariables {
   String numberOfAuditsUpcoming_gb = "";
   String auditId_gb = "";
   String completed_auditId_gb = "";
-  String numberofERBCONAaudits_gb ="";
   String completedaudits_gb ="";
-  String numberofERBTECHaudits_gb = "";
-  String numberofHSEaudits_gb = "";
-  String numberofFUELaudits_gb = "";
+
+  int numberofERBCONAaudits_gb = 0;
+  int numberofERBTECHaudits_gb= 0;
+  int numberofHSEaudits_gb= 0;
+  int numberofFUELaudits_gb=0;
+
 
   List<int> globalIntList = [1, 2, 3, 4, 5];
 }
+

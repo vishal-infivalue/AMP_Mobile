@@ -6,6 +6,7 @@ class Routenames {
   static const String welcomeScreen = '/welcomeScreen';
   static const String cmDashboardScreen = '/cmDashboardScreen';
   static const String dmDashboardScreen = '/dmDashboardScreen';
+  static const String smDashboardScreen = '/smDashboardScreen';
   static const String otpScreen = '/otpScreen';
   static const String ERBScreen = '/erbScreen';
   static const String ERBScreen_Tech = '/ERBScreen_Tech';
