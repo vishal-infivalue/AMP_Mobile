@@ -1,6 +1,6 @@
 # amp
 
-A new Flutter project.
+Mount Meru's Audit Management Platform
 
 ## Getting Started
 

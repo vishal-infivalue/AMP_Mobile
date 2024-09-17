@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "244296007741",
+    "firebase_url": "https://mountmeru-amp-mobile-default-rtdb.firebaseio.com",
+    "project_id": "mountmeru-amp-mobile",
+    "storage_bucket": "mountmeru-amp-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244296007741:android:55f106b0763107143cea54",
+        "android_client_info": {
+          "package_name": "com.mountmeru.auditmanagementplatform"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANKjyCjX_JvlOdQoZtqOIfswJyd7IMzXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244296007741:android:e0e187c5daed34083cea54",
+        "android_client_info": {
+          "package_name": "com.mountmeru.auditmanagementplatform.amp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANKjyCjX_JvlOdQoZtqOIfswJyd7IMzXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

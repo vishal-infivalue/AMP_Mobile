@@ -1,6 +1,5 @@
 name: amp
 description: "Mount Meru's Audit Management Platform"
-
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -39,7 +38,7 @@ dependencies:
 
   fluttertoast: ^8.2.6
   carousel_slider: ^5.0.0
-
+  dropdown_button2: ^2.3.8
   syncfusion_flutter_charts: ^26.2.9
   syncfusion_flutter_gauges: ^26.2.9
   syncfusion_flutter_signaturepad: ^26.2.9

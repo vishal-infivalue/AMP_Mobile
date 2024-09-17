@@ -71,16 +71,18 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
     ];
 
     GlobalVariables gb = GlobalVariables();
-    final List<NChartData> ndata = [
-      NChartData('ERBCONA  - 1', 1),
-      NChartData('ERBTECH - 1', 1),
-      NChartData('HSE   - 2', 2),
-      NChartData('FUEL - 2', 2),
 
-    /*NChartData('ERB CONA - ', gb.numberOfAuditsUpcoming_gb as int),
-      NChartData('ERB TECH', gb.numberOfAuditsUpcoming_gb as int),
-      NChartData('HSE', gb.numberOfAuditsUpcoming_gb as int),
-      NChartData('FUEL', gb.numberOfAuditsUpcoming_gb as int),*/
+    String cona =gb.numberofERBCONAaudits_gb.toString();
+    String tech = gb.numberofERBTECHaudits_gb.toString();
+    String hse = gb.numberofHSEaudits_gb.toString();
+    String fuel = gb.numberofFUELaudits_gb.toString();
+
+
+    final List<NChartData> ndata = [
+      NChartData('ERB CONA - $cona', gb.numberofERBCONAaudits_gb),
+      NChartData('ERB TECH - $tech', gb.numberofERBTECHaudits_gb),
+      NChartData('HSE - $hse', gb.numberofHSEaudits_gb),
+      NChartData('FUEL - $fuel', gb.numberofFUELaudits_gb),
     ];
 
     List<_ChartData>? topPerforming = <_ChartData>[
@@ -290,16 +292,12 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
       List<ChartData1> charData) {
     final logInProvider = Provider.of<APIProvider>(context);
 
-    // logInProvider.getclusteravgscore(context);
+    logInProvider.getclusteravgscore(context);
     logInProvider.getperformingstations(context);
     logInProvider.getperformingstationsBottom(context);
     logInProvider.getAllDashBoard(context);
+    logInProvider.fetchPendingAudits(context);
 
-
-
-    /*if (logInProvider.pendingAudits.isEmpty && !logInProvider.loading) {
-      logInProvider.fetchPendingAudits(context);
-    }*/
     GlobalVariables gb = GlobalVariables();
     double avgScore = logInProvider.avgScoreDB;
     String gradeValue = logInProvider.gradeValueDB;
@@ -310,6 +308,10 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
     String roundoff_avgScore = CommonFunctions.roundDoubleToString(avgScore) as String;
 
     String numberofaudits = logInProvider.numberofaudits;
+    int numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
+    int numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
+    int numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
+    int numberofFUELaudits_gb = logInProvider.numberofFUELaudits;
 
     gb.pendingAuditTable_gb = logInProvider.pendingAuditTable;
     gb.ncAuditTable_gb = logInProvider.ncAuditTable;
@@ -317,15 +319,11 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
     gb.upcomingAuditMessage_gb = logInProvider.avgMessageDB;
     gb.numberOfAuditsUpcoming_gb = logInProvider.numberOfAuditsUpcoming;
 
-    /*String numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
-    String numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
-    String numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
-    String numberofFUELaudits_gb = logInProvider.numberofFUELaudits;*/
+    gb.numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
+    gb.numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
+    gb.numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
+    gb.numberofFUELaudits_gb = logInProvider.numberofFUELaudits;
 
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofERBCONAaudits;
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofERBTECHaudits;
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofHSEaudits;
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofFUELaudits;
 
     return SingleChildScrollView(
       child: Container(
@@ -509,25 +507,6 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                           )
                                         ],
                                       ),
-                                      /*Center(
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.pushNamed(context,
-                                                Routenames.averageScoreTable);
-                                          },
-                                          child: Text(
-                                            AppStrings.clickAuditScore,
-                                            style: TextStyle(
-                                              fontFamily: 'Montserrat',
-                                              color: AppColors.meruBlack,
-                                              fontSize: 12.0,
-                                              letterSpacing: 1,
-                                              fontStyle: FontStyle.normal,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -772,7 +751,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(14.0),
                                           child: Text(
-                                            logInProvider.completedaudits,
+                                            "szs"+logInProvider.completedaudits,
                                             style: TextStyle(
                                               fontFamily: 'Montserrat',
                                               color: AppColors.meruBlack,

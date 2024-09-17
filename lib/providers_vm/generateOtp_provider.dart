@@ -140,7 +140,7 @@ class APIProvider with ChangeNotifier {
 
 
       } else {
-        print("Error pre-validating user");
+        print("Error in bottom performing station");
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error Bottom Performing")));
       }
     } catch (e) {
@@ -289,11 +289,11 @@ class APIProvider with ChangeNotifier {
         textColor: Colors.white,
       );
 
-      if (auditResponse.role == "ClusterManager") {
+      if (auditResponse.role == "1009") {
         Navigator.pushNamed(context, Routenames.dmDashboardScreen);
-      } else if (auditResponse.role == "StationManager") {
+      } else if (auditResponse.role == "Station Manager") {
         Navigator.pushNamed(context, Routenames.smDashboardScreen);
-      } else if (auditResponse.role == "ComplainceManager") {
+      } else if (auditResponse.role == "1050") {
         Navigator.pushNamed(context, Routenames.cmDashboardScreen);
       }else{
         Fluttertoast.showToast(
@@ -368,14 +368,24 @@ class APIProvider with ChangeNotifier {
   String get completedaudits => _completedaudits;
   String _numberofaudits = '0';
   String get numberofaudits => _numberofaudits;
-  String _numberofERBCONAaudits = '0';
+
+  int _numberofERBCONAaudits = 0;
+  int get numberofERBCONAaudits => _numberofERBCONAaudits;
+  int _numberofERBTECHaudits = 0;
+  int get numberofERBTECHaudits => _numberofERBTECHaudits;
+  int _numberofHSEaudits = 0;
+  int get numberofHSEaudits => _numberofHSEaudits;
+  int _numberofFUELaudits = 0;
+  int get numberofFUELaudits => _numberofFUELaudits;
+
+/*  String _numberofERBCONAaudits = '0';
   String get numberofERBCONAaudits => _numberofERBCONAaudits;
   String _numberofERBTECHaudits = '0';
   String get numberofERBTECHaudits => _numberofERBTECHaudits;
   String _numberofHSEaudits = '0';
   String get numberofHSEaudits => _numberofHSEaudits;
   String _numberofFUELaudits = '0';
-  String get numberofFUELaudits => _numberofFUELaudits;
+  String get numberofFUELaudits => _numberofFUELaudits;*/
 
   List<CompletedAudit> _completedAuditList = [];
   List<CompletedAudit> get completedAuditList => _completedAuditList;
@@ -399,10 +409,10 @@ class APIProvider with ChangeNotifier {
       _numberofaudits = dashboardAllResponse.completedAuditResponse.numberofaudits;
 
       gb.completedaudits_gb = dashboardAllResponse.completedAuditResponse.completedaudits;
-      gb.numberofERBCONAaudits_gb = dashboardAllResponse.completedAuditResponse.numberofERBCONAaudits;
-      gb.numberofERBTECHaudits_gb = dashboardAllResponse.completedAuditResponse.numberofERBTECHaudits;
-      gb.numberofHSEaudits_gb =  dashboardAllResponse.completedAuditResponse.numberofHSEaudits;
-      gb.numberofFUELaudits_gb =  dashboardAllResponse.completedAuditResponse.numberofFUELaudits;
+      gb.numberofERBCONAaudits_gb = int.parse(dashboardAllResponse.completedAuditResponse.numberofERBCONAaudits);
+      gb.numberofERBTECHaudits_gb = int.parse(dashboardAllResponse.completedAuditResponse.numberofERBTECHaudits);
+      gb.numberofHSEaudits_gb =  int.parse(dashboardAllResponse.completedAuditResponse.numberofHSEaudits);
+      gb.numberofFUELaudits_gb = int.parse(dashboardAllResponse.completedAuditResponse.numberofFUELaudits);
       gb.numberOfAuditsCompleted_gb = dashboardAllResponse.completedAuditResponse.numberofaudits;
 
       _completedAuditList = dashboardAllResponse.completedAuditResponse.completedAuditList;
@@ -582,7 +592,7 @@ class APIProvider with ChangeNotifier {
 
 
     }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page")));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page")));
     }
 
   }
@@ -600,7 +610,7 @@ class APIProvider with ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("The audit details entered so far has been successfully saved in the On Hold state.")));
 
     }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page.")));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page.")));
     }
 
   }
@@ -617,7 +627,7 @@ class APIProvider with ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("The audit details has been submitted to the station successfully.")));
 
     }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page")));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page")));
     }
 
   }

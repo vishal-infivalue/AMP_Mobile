@@ -7,9 +7,11 @@ import '../utils/constant_strings.dart';
 import '../utils/shared_preference_helper.dart';
 
 class AuditProvider with ChangeNotifier {
+
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.29-SNAPSHOT";
+      "http://103.235.106.117:8080/audit_management_system-0.0.31-SNAPSHOT";
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
+
 
 /*  Future<void> fetchAudits(String loginUserId) async {
     final url = Uri.parse('http://103.235.106.117:8080/audit_management_system-0.0.23-SNAPSHOT/api/auditmaster/getallupcomingaudits');
@@ -118,7 +120,8 @@ class AuditProvider with ChangeNotifier {
   Map get stockAuditsHeaderDetails => _stockAuditsHeaderDetails;
 
   Future<void> fetchAudits(String loginUserId) async {
-    final url = Uri.parse(baseUrl + '/api/auditmaster/getallupcomingaudits');
+    final url = Uri.parse(
+        baseUrl+'/api/auditmaster/getallupcomingaudits');
 
     final response = await http.get(url, headers: {'loginUserId': loginUserId});
 
