@@ -289,15 +289,15 @@ class APIProvider with ChangeNotifier {
         textColor: Colors.white,
       );
 
-      if (auditResponse.role == "1009") {
+      if (auditResponse.role == 1002) {
         Navigator.pushNamed(context, Routenames.dmDashboardScreen);
-      } else if (auditResponse.role == "Station Manager") {
+      } else if (auditResponse.role == 1001) {
         Navigator.pushNamed(context, Routenames.smDashboardScreen);
-      } else if (auditResponse.role == "1050") {
+      } else if (auditResponse.role == 1050) {
         Navigator.pushNamed(context, Routenames.cmDashboardScreen);
       }else{
         Fluttertoast.showToast(
-          msg: "You don't have access to this account. Please contact the Admin.",
+          msg: "Access denied.",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: Colors.black54,

@@ -203,9 +203,7 @@ class _AuditLoginState extends State<AuditLogin> {
                         String jsonData = jsonEncode(data);
                         print(jsonData);
                         logInProvider.generateOtp(jsonData, context);
-                        if(_employeeIdController.text.toString() == "16031592" ||_employeeIdController.text.toString() == "18053354"||_employeeIdController.text.toString() == "160314050"){
                           Navigator.pushNamed(context, Routenames.otpScreen);
-                        }
 
 
                       }
