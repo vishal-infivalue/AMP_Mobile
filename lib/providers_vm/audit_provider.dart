@@ -9,7 +9,7 @@ import '../utils/shared_preference_helper.dart';
 class AuditProvider with ChangeNotifier {
 
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.34-SNAPSHOT";
+      "http://103.235.106.117:8080/audit_management_system-0.0.31-SNAPSHOT";
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
 
@@ -27,7 +27,6 @@ class AuditProvider with ChangeNotifier {
       throw Exception('Failed to load audits');
     }
   }*/
-
 
   List<Audit> _audits = [];
 
@@ -140,11 +139,14 @@ class AuditProvider with ChangeNotifier {
     var auditId =
         '3108202401'; // temporary static variable, Need to fetch from Shared Preference
 
-    final url = Uri.parse(
-        baseUrl+'/api/v1/audit/fuelstock/get-product-by-category?category=$type&auditId=$auditId');
+    String? loginUserId =
+    await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-    String loginUserId = '16031592';
-    final response = await http.get(url, headers: {'loginUserId': loginUserId});
+    final url = Uri.parse(baseUrl +
+        '/api/v1/audit/fuelstock/get-product-by-category?category=$type&auditId=$auditId');
+
+    final response =
+    await http.get(url, headers: {'loginUserId': loginUserId!});
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
@@ -178,12 +180,14 @@ class AuditProvider with ChangeNotifier {
   Future<void> fetchStockAuditsHeaderDetails(String auditId) async {
     auditId = '250720240001'; // temporary static variable
 
-    final url = Uri.parse(
-        baseUrl+'/api/v1/audit/fuelstock/get-header-details?auditId=$auditId');
+    String? loginUserId =
+    await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-    String loginUserId = '16031592'; // temporary static variable
+    final url = Uri.parse(baseUrl +
+        '/api/v1/audit/fuelstock/get-header-details?auditId=$auditId');
 
-    final response = await http.get(url, headers: {'loginUserId': loginUserId});
+    final response =
+    await http.get(url, headers: {'loginUserId': loginUserId!});
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
@@ -201,12 +205,14 @@ class AuditProvider with ChangeNotifier {
       {String? auditId, String? type}) async {
     auditId = '280820240001'; // temporary static variable
 
-    final url = Uri.parse(
-        baseUrl+'/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=FUEL&subCategory=$type');
+    final url = Uri.parse(baseUrl +
+        '/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=FUEL&subCategory=$type');
 
-    // String loginUserId = '16031592'; // temporary static variable
-    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
-    final response = await http.get(url, headers: {'loginUserId': userIdLoggedIn!});
+    String? userIdLoggedIn =
+    await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    final response =
+    await http.get(url, headers: {'loginUserId': userIdLoggedIn!});
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
@@ -418,11 +424,14 @@ class AuditProvider with ChangeNotifier {
       {String? auditId, String? type}) async {
     auditId = '280820240001'; // temporary static variable
 
-    final url = Uri.parse(
-        baseUrl+'/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=$type');
+    String? loginUserId =
+    await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-    String loginUserId = '16031592'; // temporary static variable
-    final response = await http.get(url, headers: {'loginUserId': loginUserId});
+    final url = Uri.parse(baseUrl +
+        '/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=$type');
+
+    final response =
+    await http.get(url, headers: {'loginUserId': loginUserId!});
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
@@ -478,16 +487,17 @@ class AuditProvider with ChangeNotifier {
   Future<String> saveStockAuditData({Map? stockAuditData}) async {
     var auditId = '280820240001'; // temporary static variable
 
-    final url = Uri.parse(
-        '/api/v1/audit/fuelstock/create-stock-audit');
+    final url = Uri.parse('/api/v1/audit/fuelstock/create-stock-audit');
 
-    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
-
-    // String loginUserId = '16031592'; // temporary static variable
+    String? userIdLoggedIn =
+    await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
     final response = await http.post(
       url,
-      headers: {"loginUserId": userIdLoggedIn!, "Content-Type": "application/json"},
+      headers: {
+        "loginUserId": userIdLoggedIn!,
+        "Content-Type": "application/json"
+      },
       body: jsonEncode(stockAuditData),
     );
 
@@ -506,14 +516,17 @@ class AuditProvider with ChangeNotifier {
   }
 
   Future<String> stock_audit_submit_to_station({String? auditId}) async {
-    final url = Uri.parse(
-        baseUrl+'/api/auditmaster/submitaudit');
+    final url = Uri.parse(baseUrl + '/api/auditmaster/submitaudit');
 
-    String loginUserId = '16031592'; // temporary static variable
+    String? loginUserId =
+    await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
     final response = await http.post(
       url,
-      headers: {"loginUserId": loginUserId, "Content-Type": "application/json"},
+      headers: {
+        "loginUserId": loginUserId!,
+        "Content-Type": "application/json"
+      },
       body: jsonEncode({"id": "$auditId"}),
     );
 
@@ -527,6 +540,4 @@ class AuditProvider with ChangeNotifier {
       return 'Audit Submit Failed: ${resData['id']}';
     }
   }
-
-
 }

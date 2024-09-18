@@ -40,17 +40,17 @@ class _TechnicalTestState extends State<TechnicalTest> {
     String? responseJson = prefs.getString('ERBCustomerCheckListResponse');
     String content = "No response data available";
 
+    final logInProvider =
+    Provider.of<APIProvider>(context, listen: false);
     GlobalVariables gb = GlobalVariables();
-
     auditId = gb.auditId_gb;
-
     Map<String, dynamic> data = {
       "id": "$auditId",
     };
 
     String jsonData = jsonEncode(data);
+    logInProvider.startAudit(jsonData, context);
     await apiProvider.getAuditScreenData(jsonData, context);
-
     responseJson = jsonEncode(apiProvider.erbCustomerCheckListResponse);
     await prefs.setString('ERBCustomerCheckListResponse', responseJson);
 
@@ -958,7 +958,7 @@ class _TechnicalTestState extends State<TechnicalTest> {
                     "id": "$auditId",
                   };
                   String jsonData = jsonEncode(data);
-                  // logInProvider.holdAudit(jsonData, context);
+                  logInProvider.holdAudit(jsonData, context);
 
                   showDialog(
                     context: context,

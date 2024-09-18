@@ -1,24 +1,19 @@
 import 'package:amp/response/performing_stations.dart';
 import 'package:amp/utils/global_values.dart';
-import 'package:amp/views/cm_dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pie_chart/pie_chart.dart' as pie_chart;
-import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-import '../global_theme/horizontalbar.dart';
 import '../providers_vm/generateOtp_provider.dart';
 import '../response/validateUserOtp.dart';
 import '../routes/route_names.dart';
 import '../utils/CommonFunctions.dart';
 import '../utils/app_colors.dart';
-import '../utils/status_data.dart';
 import '../utils/strings.dart';
 import '../utils/user_helper.dart';
-import 'notification_screen.dart';
+import 'cm_dashboard_screen.dart';
 
 class DM_DashboardScreen extends StatefulWidget {
   @override
@@ -33,11 +28,22 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
   void initState() {
     super.initState();
     loadUserDetails();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final apiProvider = Provider.of<APIProvider>(context, listen: false);
+      await apiProvider.fetchPendingAudits(context);
+      await apiProvider.getclusteravgscore(context);
+      await apiProvider.getperformingstations(context);
+      await apiProvider.getperformingstationsBottom(context);
+      await apiProvider.getAllDashBoard(context);
+    });
   }
+
+
 
   Future<void> loadUserDetails() async {
     UserResponse? userDetails = await UserDetailsHelper.getUserDetails();
-    if (userDetails != null) {
+    if (userDetails != null && mounted) {
       setState(() {
         user = userDetails;
         initials = UserDetailsHelper.getInitials(user!);
@@ -45,23 +51,20 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
     }
   }
 
-  void showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.black54,
-      textColor: Colors.white,
-    );
-  }
+  /*Future<void> loadUserDetails() async {
+    UserResponse? userDetails = await UserDetailsHelper.getUserDetails();
+    if (userDetails != null) {
+      setState(() {
+        user = userDetails;
+        initials = UserDetailsHelper.getInitials(user!);
+      });
+    }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    final List<ChartData> data = [
-      ChartData('Emmm', 20),
-      ChartData('ERB Consumer', 30),
-      ChartData('ERB Consumer', 30),
-    ];
+
+
 
     final List<BarChartData> barChart = [
       BarChartData('<1', 500, 2, 3, 3),
@@ -70,37 +73,19 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
       BarChartData('3-6', 1250, 2, 3, 3),
     ];
 
-    GlobalVariables gb = GlobalVariables();
-
-    String cona =gb.numberofERBCONAaudits_gb.toString();
-    String tech = gb.numberofERBTECHaudits_gb.toString();
-    String hse = gb.numberofHSEaudits_gb.toString();
-    String fuel = gb.numberofFUELaudits_gb.toString();
-
-
     final List<NChartData> ndata = [
-      NChartData('ERB CONA - $cona', gb.numberofERBCONAaudits_gb),
-      NChartData('ERB TECH - $tech', gb.numberofERBTECHaudits_gb),
-      NChartData('HSE - $hse', gb.numberofHSEaudits_gb),
-      NChartData('FUEL - $fuel', gb.numberofFUELaudits_gb),
-    ];
-
-    List<_ChartData>? topPerforming = <_ChartData>[
-      _ChartData('S1', 21, 28),
-      _ChartData('s2', 24, 44),
-      _ChartData('s3', 36, 48),
-      _ChartData('s4', 38, 50),
-      _ChartData('s5', 54, 66),
+      NChartData('ERBCONA  - 1', 1),
+      NChartData('ERBTECH - 1', 1),
+      NChartData('HSE   - 2', 2),
+      NChartData('FUEL - 2', 2),
     ];
 
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 600) {
-          return _buildSmallScreenLayout(context, data, ndata, barChart,
-              topPerforming, chartData, chartData2);
+          return _buildSmallScreenLayout(context, ndata, barChart);
         } else {
-          return _buildLargeScreenLayout(context, data, ndata, barChart,
-              topPerforming, chartData, chartData2);
+          return _buildLargeScreenLayout(context, ndata, barChart);
         }
       },
     );
@@ -108,12 +93,13 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
 
   Widget _buildSmallScreenLayout(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
-      List<BarChartData> barData,
-      List<_ChartData> topPerforming,
-      List<ChartData1> chartData,
-      List<ChartData2> chartData2) {
+      List<BarChartData> barData) {
+    final logInProvider = Provider.of<APIProvider>(context);
+
+    if (logInProvider == null || logInProvider.pendingAuditTable == null) {
+      return Center(child: CircularProgressIndicator());  // Or any placeholder
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -121,10 +107,10 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
           width: 60, // Set your desired width
           height: 60, // Set your desired height
           child: IconButton(
-            icon: Image.asset("assets/images/menu_logo.png"),
-            iconSize: 40, // Set the size of the IconButton
-            onPressed: () =>     Navigator.pushNamed(context,
-                Routenames.profileScreen) // Handle back button press
+              icon: Image.asset("assets/images/menu_logo.png"),
+              iconSize: 40, // Set the size of the IconButton
+              onPressed: () =>     Navigator.pushNamed(context,
+                  Routenames.profileScreen) // Handle back button press
           ),
         ),
         actions: [
@@ -152,10 +138,8 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                 },
               );
 
-              // Simulate a delay of 4 seconds
               Future.delayed(Duration(seconds: 4), () {
-                Navigator.of(context)
-                    .pop(); // Close the CircularProgressIndicator dialog
+                Navigator.of(context).pop();
 
                 Navigator.pushNamed(context,
                     Routenames.profileScreen);
@@ -188,7 +172,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          _buildSmallScreenBody(context, data, ndata, barData, chartData),
+          _buildSmallScreenBody(context, ndata, barData),
         ],
       ),
       // bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
@@ -197,12 +181,8 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
 
   Widget _buildLargeScreenLayout(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
-      List<BarChartData> barData,
-      List<_ChartData> topPerforming,
-      List<ChartData1> chartData,
-      List<ChartData2> chartData2) {
+      List<BarChartData> barData) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -277,7 +257,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          _buildSmallScreenBody(context, data, ndata, barData, chartData),
+          _buildSmallScreenBody(context, ndata, barData),
         ],
       ),
       // bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
@@ -286,44 +266,25 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
 
   Widget _buildSmallScreenBody(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
-      List<BarChartData> barData,
-      List<ChartData1> charData) {
+      List<BarChartData> barData) {
     final logInProvider = Provider.of<APIProvider>(context);
-
-    logInProvider.getclusteravgscore(context);
-    logInProvider.getperformingstations(context);
-    logInProvider.getperformingstationsBottom(context);
-    logInProvider.getAllDashBoard(context);
-    logInProvider.fetchPendingAudits(context);
 
     GlobalVariables gb = GlobalVariables();
     double avgScore = logInProvider.avgScoreDB;
     String gradeValue = logInProvider.gradeValueDB;
-    String grade = logInProvider.grade;
 
 
 
     String roundoff_avgScore = CommonFunctions.roundDoubleToString(avgScore) as String;
 
     String numberofaudits = logInProvider.numberofaudits;
-    int numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
-    int numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
-    int numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
-    int numberofFUELaudits_gb = logInProvider.numberofFUELaudits;
 
     gb.pendingAuditTable_gb = logInProvider.pendingAuditTable;
     gb.ncAuditTable_gb = logInProvider.ncAuditTable;
     gb.completedAuditList_gb = logInProvider.completedAuditList;
     gb.upcomingAuditMessage_gb = logInProvider.avgMessageDB;
     gb.numberOfAuditsUpcoming_gb = logInProvider.numberOfAuditsUpcoming;
-
-    gb.numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
-    gb.numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
-    gb.numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
-    gb.numberofFUELaudits_gb = logInProvider.numberofFUELaudits;
-
 
     return SingleChildScrollView(
       child: Container(
@@ -338,7 +299,9 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
             Padding(
               padding: EdgeInsets.fromLTRB(20, 10, 10, 0),
               child: Text(
-                'Hello, ${user!.firstName} ${user!.lastName}',
+                user != null
+                    ? 'Hello, ${user!.firstName} ${user!.lastName}'
+                    : 'Loading user details...',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   color: AppColors.meruBlack,
@@ -402,7 +365,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: GestureDetector(
@@ -483,8 +446,8 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                 widget: Container(
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
+                                                    const EdgeInsets.all(
+                                                        8.0),
                                                     child: Text(
                                                       '\n\n\n\nAverage Score : $roundoff_avgScore%\nAverage Grade : $gradeValue',
                                                       style: TextStyle(
@@ -494,7 +457,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                         fontWeight: FontWeight.bold,
                                                         letterSpacing: 2,
                                                         fontStyle:
-                                                            FontStyle.normal,
+                                                        FontStyle.normal,
                                                       ),
                                                       textAlign: TextAlign.left,
                                                     ),
@@ -507,6 +470,25 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                           )
                                         ],
                                       ),
+                                      /*Center(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                Routenames.averageScoreTable);
+                                          },
+                                          child: Text(
+                                            AppStrings.clickAuditScore,
+                                            style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              color: AppColors.meruBlack,
+                                              fontSize: 12.0,
+                                              letterSpacing: 1,
+                                              fontStyle: FontStyle.normal,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      ),*/
                                     ],
                                   ),
                                 ),
@@ -554,6 +536,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
               ),
             ),
 
+
             // upcoming
             Padding(
               padding: const EdgeInsets.all(2.0),
@@ -564,109 +547,108 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                     padding: EdgeInsets.only(top: 100.8 / 2.0),
                     child: Container(
                         child: Card(
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    children: [
-
-                                      Text(
-                                         logInProvider.numberOfAuditsUpcoming+" "+logInProvider.upcomingAuditMessage,
-                                        style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.black,
-                                          fontSize: 12.0,
-                                          letterSpacing: 2,
-                                          fontStyle: FontStyle.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                              Center(
-                                child: GestureDetector(
-                                  onTap: () {
-
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (BuildContext context) {
-                                        return Center(
-                                          child: TweenAnimationBuilder<Color?>(
-                                            tween: ColorTween(begin: Colors.red, end: Colors.yellow),
-                                            duration: Duration(seconds: 1),
-                                            builder: (context, color, _) {
-                                              return CircularProgressIndicator(
-                                                valueColor: AlwaysStoppedAnimation<Color>(color!),
-                                              );
-                                            },
-                                            onEnd: () {
-                                              // No need to do anything here
-                                            },
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            logInProvider.numberOfAuditsUpcoming+" "+logInProvider.upcomingAuditMessage,
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              letterSpacing: 2,
+                                              fontStyle: FontStyle.normal,
+                                            ),
                                           ),
-                                        );
-                                      },
-                                    );
-
-                                    // Simulate a delay of 4 seconds
-                                    Future.delayed(Duration(seconds: 1), () {
-                                      Navigator.of(context)
-                                          .pop(); // Close the CircularProgressIndicator dialog
-
-                                      Navigator.pushNamed(context, Routenames.pendingTable);
-                                    });
-
-
-                                  },
-                                  child: Text(
-                                    AppStrings.tapView,
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: AppColors.meruBlack,
-                                      fontSize: 12.0,
-                                      fontStyle: FontStyle.normal,
-                                      decoration: TextDecoration.underline, // Underline the text
+                                        ],
+                                      ),
                                     ),
-                                    textAlign: TextAlign.left,
                                   ),
-                                ),
-                              )
+                                  Center(
+                                    child: GestureDetector(
+                                      onTap: () {
 
-                            ],
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: TweenAnimationBuilder<Color?>(
+                                                tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                                duration: Duration(seconds: 1),
+                                                builder: (context, color, _) {
+                                                  return CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                                  );
+                                                },
+                                                onEnd: () {
+                                                  // No need to do anything here
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        // Simulate a delay of 4 seconds
+                                        Future.delayed(Duration(seconds: 1), () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the CircularProgressIndicator dialog
+
+                                          Navigator.pushNamed(context, Routenames.pendingTable);
+                                        });
+
+
+                                      },
+                                      child: Text(
+                                        AppStrings.tapView,
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: AppColors.meruBlack,
+                                          fontSize: 12.0,
+                                          fontStyle: FontStyle.normal,
+                                          decoration: TextDecoration.underline, // Underline the text
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  )
+
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )),
+                        )),
                   ),
                   Container(
                     child: Padding(
@@ -746,13 +728,13 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: Padding(
                                           padding: const EdgeInsets.all(14.0),
                                           child: Text(
-                                            "szs"+logInProvider.completedaudits,
+                                            logInProvider.completedaudits,
                                             style: TextStyle(
                                               fontFamily: 'Montserrat',
                                               color: AppColors.meruBlack,
@@ -767,19 +749,19 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                       Center(
                                         child: pie_chart.PieChart(
                                           dataMap: ndata.asMap().map(
-                                              (index, chartData) => MapEntry(
+                                                  (index, chartData) => MapEntry(
                                                   chartData.title,
                                                   chartData.value.toDouble())),
                                           chartRadius: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                              .size
+                                              .width /
                                               4,
                                           // Adjust radius for mobile
                                           legendOptions:
-                                              const pie_chart.LegendOptions(
+                                          const pie_chart.LegendOptions(
                                             showLegendsInRow: false,
                                             legendPosition:
-                                                pie_chart.LegendPosition.right,
+                                            pie_chart.LegendPosition.right,
                                             // Legend at the bottom
                                             showLegends: true,
                                           ),
@@ -794,7 +776,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                           chartType: pie_chart.ChartType.ring,
                                           // Set chart type to ring for donut effect
                                           ringStrokeWidth:
-                                              20, // Adjust ring stroke width as needed
+                                          20, // Adjust ring stroke width as needed
                                         ),
                                       ),
                                       Center(
@@ -973,7 +955,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: Padding(
@@ -1002,10 +984,10 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                               dataSource: barData,
                                               xValueMapper:
                                                   (BarChartData br, _) =>
-                                                      br.x as String,
+                                              br.x as String,
                                               yValueMapper:
                                                   (BarChartData br, _) =>
-                                                      br.y1 as num,
+                                              br.y1 as num,
                                             ),
                                           ],
                                         ),
@@ -1119,7 +1101,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: Padding(
@@ -1172,19 +1154,19 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                       fontSize: 12.0,
                                                       letterSpacing: 2,
                                                       fontStyle:
-                                                          FontStyle.normal,
+                                                      FontStyle.normal,
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                const EdgeInsets.all(8.0),
                                                 child: Container(
                                                   height: 150,
                                                   child: SfCartesianChart(
                                                     primaryXAxis:
-                                                        CategoryAxis(),
+                                                    CategoryAxis(),
                                                     primaryYAxis: NumericAxis(
                                                         minimum: 0,
                                                         maximum: 120,
@@ -1197,14 +1179,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                             .topStationList.reversed
                                                             .toList(),
                                                         xValueMapper: (Station
-                                                                    data,
-                                                                _) =>
-                                                            data.stationCode ??
+                                                        data,
+                                                            _) =>
+                                                        data.stationCode ??
                                                             '',
                                                         yValueMapper:
                                                             (Station data, _) =>
-                                                                data.avgScore ??
-                                                                0,
+                                                        data.avgScore ??
+                                                            0,
                                                         name: 'Gold',
                                                         color: Colors.yellow,
                                                         width: 0.2,
@@ -1259,19 +1241,19 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                       fontSize: 12.0,
                                                       letterSpacing: 2,
                                                       fontStyle:
-                                                          FontStyle.normal,
+                                                      FontStyle.normal,
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                const EdgeInsets.all(8.0),
                                                 child: Container(
                                                   height: 150,
                                                   child: SfCartesianChart(
                                                     primaryXAxis:
-                                                        CategoryAxis(),
+                                                    CategoryAxis(),
                                                     primaryYAxis: NumericAxis(
                                                         minimum: 0,
                                                         maximum: 120,
@@ -1284,14 +1266,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                             .bottomStationList
                                                             .toList(),
                                                         xValueMapper: (Station
-                                                                    data,
-                                                                _) =>
-                                                            data.stationCode ??
+                                                        data,
+                                                            _) =>
+                                                        data.stationCode ??
                                                             '',
                                                         yValueMapper:
                                                             (Station data, _) =>
-                                                                data.avgScore ??
-                                                                0,
+                                                        data.avgScore ??
+                                                            0,
                                                         name: 'Gold',
                                                         color: Colors.red,
                                                         width: 0.2,
@@ -1390,193 +1372,8 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
       ),
     );
   }
-
-
-  // Function to build the TopChecklistTable
-  Widget _buildTopChecklistTable() {
-    // Implementation of your TopChecklistTable widget
-    return Placeholder();
-  }
-
-  Widget buildStatusGraph(List<StatusData> data) {
-    final chartData = data.map((item) => item.count).toList();
-    final colorList = data.map((item) => item.color).toList();
-    final legendLabels = data.map((item) => item.status).toList();
-
-    return PieChart(
-      dataMap: Map.fromIterable(
-        data,
-        key: (item) => item.status,
-        value: (item) => item.count,
-      ),
-      animationDuration: Duration(milliseconds: 800),
-      chartType: ChartType.ring,
-      ringStrokeWidth: 32,
-      centerText: "Status",
-      legendOptions: LegendOptions(
-        showLegends: true,
-        // legendPosition: LegendPosition.right,
-        legendShape: BoxShape.circle,
-        legendTextStyle: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      chartValuesOptions: ChartValuesOptions(
-        showChartValueBackground: true,
-        showChartValues: true,
-        showChartValuesOutside: false,
-        decimalPlaces: 0,
-      ),
-      colorList: colorList,
-      chartLegendSpacing: 32,
-      initialAngleInDegree: 0,
-      // legendLabels: legendLabels,
-    );
-  }
-
-  // Function to build the ChecklistUtilizationTable
-  Widget _buildChecklistUtilizationTable() {
-    // Implementation of your ChecklistUtilizationTable widget
-    return Placeholder();
-  }
-
-  // Function to build the LocationOverViewTable
-  Widget _buildLocationOverViewTable() {
-    // Implementation of your LocationOverViewTable widget
-    return Placeholder();
-  }
 }
 
-class CustomBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
-
-  const CustomBottomNavigationBar({Key? key, required this.currentIndex})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => DM_DashboardScreen()),
-            );
-            break;
-          case 1:
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content:
-                      Text('Location Service running. Background thread.')),
-            );
-            break;
-          case 2:
-            Navigator.pushNamed(context, Routenames.profileScreen);
-
-            break;
-          case 3:
-            final List<NotificationItem> notifications = [
-              NotificationItem(
-                title: 'New Order Received',
-                content: 'You have a new order #12345 from John Doe.',
-                dateTime: DateTime.now().subtract(const Duration(hours: 2)),
-              ),
-              NotificationItem(
-                title: 'Reminder: Weekly Meeting',
-                content: 'Your weekly team meeting is today at 2 PM.',
-                dateTime: DateTime.now().subtract(const Duration(days: 1)),
-              ),
-              NotificationItem(
-                title: 'App Update Available',
-                content:
-                    'A new update for your app is available. Please update to enjoy the latest features.',
-                dateTime: DateTime.now().subtract(const Duration(days: 3)),
-                isNew: true,
-              ),
-            ];
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotificationScreen(
-                    notifications: notifications, currentIndex: index),
-              ),
-            );
-            break;
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-            backgroundColor: Colors.black),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
-            label: 'Stations',
-            backgroundColor: Colors.black),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Account',
-            backgroundColor: Colors.black),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-            backgroundColor: Colors.black),
-      ],
-      selectedIconTheme: const IconThemeData(
-        color: Colors.purple,
-      ),
-      unselectedIconTheme: const IconThemeData(color: Colors.grey),
-      selectedLabelStyle: const TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
-        fontSize: 11.0,
-      ),
-      unselectedLabelStyle: const TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.normal,
-        color: Colors.grey,
-        fontSize: 11.0,
-      ),
-    );
-  }
-}
-
-class BarChartData {
-  final String x;
-  final int y1;
-  final int y2;
-  final int y3;
-  final int y4;
-
-  BarChartData(this.x, this.y1, this.y2, this.y3, this.y4);
-}
-
-class ChartData {
-  final String title;
-  final int value;
-
-  ChartData(this.title, this.value);
-}
-
-final chartData = [
-  ChartData1('s1', 45),
-  ChartData1('s2', 65),
-  ChartData1('s3', 85),
-];
-
-class TopPerformingData {
-  final String title;
-  final int value;
-
-  TopPerformingData(this.title, this.value);
-}
-
-final topPerformingData = [
-  TopPerformingData('s7', 85),
-  TopPerformingData('s6', 60),
-  TopPerformingData('s5', 40),
-];
 
 class NChartData {
   final String title;
@@ -1585,30 +1382,3 @@ class NChartData {
   NChartData(this.title, this.value);
 }
 
-class _ChartData {
-  _ChartData(this.x, this.y, this.y2);
-
-  final String x;
-  final double y;
-  final double y2;
-}
-
-class _BarChartProvider extends ChangeNotifier {
-  List<_ChartData>? chartData = <_ChartData>[
-    _ChartData('Mon', 21, 28),
-    _ChartData('Tus', 24, 44),
-    _ChartData('Wen', 36, 48),
-    _ChartData('Thr', 38, 50),
-    _ChartData('Fri', 54, 66),
-    _ChartData('Sat', 57, 78),
-    _ChartData('Sun', 70, 84)
-  ];
-
-  void init() {}
-
-  @override
-  void dispose() {
-    chartData?.clear();
-    super.dispose();
-  }
-}

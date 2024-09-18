@@ -1,4 +1,6 @@
+import 'package:amp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 class CommonFunctions {
   static String roundDoubleToString(double value) {
     int roundedValue = value.round();
@@ -63,5 +65,75 @@ class CommonFunctions {
       },
     );
   }
+
+  static void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+    );
+  }
+
+  static void showLoading(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: TweenAnimationBuilder<Color?>(
+            tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+            duration: Duration(seconds: 1),
+            builder: (context, color, _) {
+              return CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(color!),
+              );
+            },
+            onEnd: () {
+              // No need to do anything here
+            },
+          ),
+        );
+      },
+    );
+/*    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );*/
+  }
+
+  // Dismiss loading dialog
+  static void dismissLoading(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  // Show success or error dialog
+  static void showAlertDialog(
+      BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
 

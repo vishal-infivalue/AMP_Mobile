@@ -2,23 +2,18 @@ import 'package:amp/response/performing_stations.dart';
 import 'package:amp/utils/global_values.dart';
 import 'package:amp/views/cm_dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pie_chart/pie_chart.dart' as pie_chart;
-import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-import '../global_theme/horizontalbar.dart';
 import '../providers_vm/generateOtp_provider.dart';
 import '../response/validateUserOtp.dart';
 import '../routes/route_names.dart';
 import '../utils/CommonFunctions.dart';
 import '../utils/app_colors.dart';
-import '../utils/status_data.dart';
 import '../utils/strings.dart';
 import '../utils/user_helper.dart';
-import 'notification_screen.dart';
 
 class StationManagerDash extends StatefulWidget {
   @override
@@ -33,11 +28,22 @@ class _StationManagerDashState extends State<StationManagerDash> {
   void initState() {
     super.initState();
     loadUserDetails();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final apiProvider = Provider.of<APIProvider>(context, listen: false);
+      await apiProvider.fetchPendingAudits(context);
+      await apiProvider.getclusteravgscore(context);
+      await apiProvider.getperformingstations(context);
+      await apiProvider.getperformingstationsBottom(context);
+      await apiProvider.getAllDashBoard(context);
+    });
   }
+
+
 
   Future<void> loadUserDetails() async {
     UserResponse? userDetails = await UserDetailsHelper.getUserDetails();
-    if (userDetails != null) {
+    if (userDetails != null && mounted) {
       setState(() {
         user = userDetails;
         initials = UserDetailsHelper.getInitials(user!);
@@ -45,23 +51,20 @@ class _StationManagerDashState extends State<StationManagerDash> {
     }
   }
 
-  void showToast(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.black54,
-      textColor: Colors.white,
-    );
-  }
+  /*Future<void> loadUserDetails() async {
+    UserResponse? userDetails = await UserDetailsHelper.getUserDetails();
+    if (userDetails != null) {
+      setState(() {
+        user = userDetails;
+        initials = UserDetailsHelper.getInitials(user!);
+      });
+    }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    final List<ChartData> data = [
-      ChartData('Emmm', 20),
-      ChartData('ERB Consumer', 30),
-      ChartData('ERB Consumer', 30),
-    ];
+
+
 
     final List<BarChartData> barChart = [
       BarChartData('<1', 500, 2, 3, 3),
@@ -70,35 +73,19 @@ class _StationManagerDashState extends State<StationManagerDash> {
       BarChartData('3-6', 1250, 2, 3, 3),
     ];
 
-    GlobalVariables gb = GlobalVariables();
     final List<NChartData> ndata = [
       NChartData('ERBCONA  - 1', 1),
       NChartData('ERBTECH - 1', 1),
       NChartData('HSE   - 2', 2),
       NChartData('FUEL - 2', 2),
-
-    /*NChartData('ERB CONA - ', gb.numberOfAuditsUpcoming_gb as int),
-      NChartData('ERB TECH', gb.numberOfAuditsUpcoming_gb as int),
-      NChartData('HSE', gb.numberOfAuditsUpcoming_gb as int),
-      NChartData('FUEL', gb.numberOfAuditsUpcoming_gb as int),*/
-    ];
-
-    List<_ChartData>? topPerforming = <_ChartData>[
-      _ChartData('S1', 21, 28),
-      _ChartData('s2', 24, 44),
-      _ChartData('s3', 36, 48),
-      _ChartData('s4', 38, 50),
-      _ChartData('s5', 54, 66),
     ];
 
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 600) {
-          return _buildSmallScreenLayout(context, data, ndata, barChart,
-              topPerforming, chartData, chartData2);
+          return _buildSmallScreenLayout(context, ndata, barChart);
         } else {
-          return _buildLargeScreenLayout(context, data, ndata, barChart,
-              topPerforming, chartData, chartData2);
+          return _buildLargeScreenLayout(context, ndata, barChart);
         }
       },
     );
@@ -106,12 +93,13 @@ class _StationManagerDashState extends State<StationManagerDash> {
 
   Widget _buildSmallScreenLayout(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
-      List<BarChartData> barData,
-      List<_ChartData> topPerforming,
-      List<ChartData1> chartData,
-      List<ChartData2> chartData2) {
+      List<BarChartData> barData) {
+    final logInProvider = Provider.of<APIProvider>(context);
+
+    if (logInProvider == null || logInProvider.pendingAuditTable == null) {
+      return Center(child: CircularProgressIndicator());  // Or any placeholder
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -150,10 +138,8 @@ class _StationManagerDashState extends State<StationManagerDash> {
                 },
               );
 
-              // Simulate a delay of 4 seconds
               Future.delayed(Duration(seconds: 4), () {
-                Navigator.of(context)
-                    .pop(); // Close the CircularProgressIndicator dialog
+                Navigator.of(context).pop();
 
                 Navigator.pushNamed(context,
                     Routenames.profileScreen);
@@ -186,7 +172,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          _buildSmallScreenBody(context, data, ndata, barData, chartData),
+          _buildSmallScreenBody(context, ndata, barData),
         ],
       ),
       // bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
@@ -195,12 +181,8 @@ class _StationManagerDashState extends State<StationManagerDash> {
 
   Widget _buildLargeScreenLayout(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
-      List<BarChartData> barData,
-      List<_ChartData> topPerforming,
-      List<ChartData1> chartData,
-      List<ChartData2> chartData2) {
+      List<BarChartData> barData) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -275,7 +257,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          _buildSmallScreenBody(context, data, ndata, barData, chartData),
+          _buildSmallScreenBody(context, ndata, barData),
         ],
       ),
       // bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
@@ -284,26 +266,13 @@ class _StationManagerDashState extends State<StationManagerDash> {
 
   Widget _buildSmallScreenBody(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
-      List<BarChartData> barData,
-      List<ChartData1> charData) {
+      List<BarChartData> barData) {
     final logInProvider = Provider.of<APIProvider>(context);
 
-    // logInProvider.getclusteravgscore(context);
-    logInProvider.getperformingstations(context);
-    logInProvider.getperformingstationsBottom(context);
-    logInProvider.getAllDashBoard(context);
-
-
-
-    /*if (logInProvider.pendingAudits.isEmpty && !logInProvider.loading) {
-      logInProvider.fetchPendingAudits(context);
-    }*/
     GlobalVariables gb = GlobalVariables();
     double avgScore = logInProvider.avgScoreDB;
     String gradeValue = logInProvider.gradeValueDB;
-    String grade = logInProvider.grade;
 
 
 
@@ -316,16 +285,6 @@ class _StationManagerDashState extends State<StationManagerDash> {
     gb.completedAuditList_gb = logInProvider.completedAuditList;
     gb.upcomingAuditMessage_gb = logInProvider.avgMessageDB;
     gb.numberOfAuditsUpcoming_gb = logInProvider.numberOfAuditsUpcoming;
-
-    /*String numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
-    String numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
-    String numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
-    String numberofFUELaudits_gb = logInProvider.numberofFUELaudits;*/
-
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofERBCONAaudits;
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofERBTECHaudits;
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofHSEaudits;
-    // gb.numberOfAuditsUpcoming_gb = logInProvider.numberofFUELaudits;
 
     return SingleChildScrollView(
       child: Container(
@@ -340,7 +299,9 @@ class _StationManagerDashState extends State<StationManagerDash> {
             Padding(
               padding: EdgeInsets.fromLTRB(20, 10, 10, 0),
               child: Text(
-                'Hello, ${user!.firstName} ${user!.lastName}',
+                user != null
+                    ? 'Hello, ${user!.firstName} ${user!.lastName}'
+                    : 'Loading user details...',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   color: AppColors.meruBlack,
@@ -1560,193 +1521,8 @@ class _StationManagerDashState extends State<StationManagerDash> {
       ),
     );
   }
-
-
-  // Function to build the TopChecklistTable
-  Widget _buildTopChecklistTable() {
-    // Implementation of your TopChecklistTable widget
-    return Placeholder();
-  }
-
-  Widget buildStatusGraph(List<StatusData> data) {
-    final chartData = data.map((item) => item.count).toList();
-    final colorList = data.map((item) => item.color).toList();
-    final legendLabels = data.map((item) => item.status).toList();
-
-    return PieChart(
-      dataMap: Map.fromIterable(
-        data,
-        key: (item) => item.status,
-        value: (item) => item.count,
-      ),
-      animationDuration: Duration(milliseconds: 800),
-      chartType: ChartType.ring,
-      ringStrokeWidth: 32,
-      centerText: "Status",
-      legendOptions: LegendOptions(
-        showLegends: true,
-        // legendPosition: LegendPosition.right,
-        legendShape: BoxShape.circle,
-        legendTextStyle: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      chartValuesOptions: ChartValuesOptions(
-        showChartValueBackground: true,
-        showChartValues: true,
-        showChartValuesOutside: false,
-        decimalPlaces: 0,
-      ),
-      colorList: colorList,
-      chartLegendSpacing: 32,
-      initialAngleInDegree: 0,
-      // legendLabels: legendLabels,
-    );
-  }
-
-  // Function to build the ChecklistUtilizationTable
-  Widget _buildChecklistUtilizationTable() {
-    // Implementation of your ChecklistUtilizationTable widget
-    return Placeholder();
-  }
-
-  // Function to build the LocationOverViewTable
-  Widget _buildLocationOverViewTable() {
-    // Implementation of your LocationOverViewTable widget
-    return Placeholder();
-  }
 }
 
-class CustomBottomNavigationBar extends StatelessWidget {
-  final int currentIndex;
-
-  const CustomBottomNavigationBar({Key? key, required this.currentIndex})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => StationManagerDash()),
-            );
-            break;
-          case 1:
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                  content:
-                      Text('Location Service running. Background thread.')),
-            );
-            break;
-          case 2:
-            Navigator.pushNamed(context, Routenames.profileScreen);
-
-            break;
-          case 3:
-            final List<NotificationItem> notifications = [
-              NotificationItem(
-                title: 'New Order Received',
-                content: 'You have a new order #12345 from John Doe.',
-                dateTime: DateTime.now().subtract(const Duration(hours: 2)),
-              ),
-              NotificationItem(
-                title: 'Reminder: Weekly Meeting',
-                content: 'Your weekly team meeting is today at 2 PM.',
-                dateTime: DateTime.now().subtract(const Duration(days: 1)),
-              ),
-              NotificationItem(
-                title: 'App Update Available',
-                content:
-                    'A new update for your app is available. Please update to enjoy the latest features.',
-                dateTime: DateTime.now().subtract(const Duration(days: 3)),
-                isNew: true,
-              ),
-            ];
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotificationScreen(
-                    notifications: notifications, currentIndex: index),
-              ),
-            );
-            break;
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-            backgroundColor: Colors.black),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
-            label: 'Stations',
-            backgroundColor: Colors.black),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Account',
-            backgroundColor: Colors.black),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-            backgroundColor: Colors.black),
-      ],
-      selectedIconTheme: const IconThemeData(
-        color: Colors.purple,
-      ),
-      unselectedIconTheme: const IconThemeData(color: Colors.grey),
-      selectedLabelStyle: const TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
-        fontSize: 11.0,
-      ),
-      unselectedLabelStyle: const TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.normal,
-        color: Colors.grey,
-        fontSize: 11.0,
-      ),
-    );
-  }
-}
-
-class BarChartData {
-  final String x;
-  final int y1;
-  final int y2;
-  final int y3;
-  final int y4;
-
-  BarChartData(this.x, this.y1, this.y2, this.y3, this.y4);
-}
-
-class ChartData {
-  final String title;
-  final int value;
-
-  ChartData(this.title, this.value);
-}
-
-final chartData = [
-  ChartData1('s1', 45),
-  ChartData1('s2', 65),
-  ChartData1('s3', 85),
-];
-
-class TopPerformingData {
-  final String title;
-  final int value;
-
-  TopPerformingData(this.title, this.value);
-}
-
-final topPerformingData = [
-  TopPerformingData('s7', 85),
-  TopPerformingData('s6', 60),
-  TopPerformingData('s5', 40),
-];
 
 class NChartData {
   final String title;
@@ -1755,30 +1531,4 @@ class NChartData {
   NChartData(this.title, this.value);
 }
 
-class _ChartData {
-  _ChartData(this.x, this.y, this.y2);
 
-  final String x;
-  final double y;
-  final double y2;
-}
-
-class _BarChartProvider extends ChangeNotifier {
-  List<_ChartData>? chartData = <_ChartData>[
-    _ChartData('Mon', 21, 28),
-    _ChartData('Tus', 24, 44),
-    _ChartData('Wen', 36, 48),
-    _ChartData('Thr', 38, 50),
-    _ChartData('Fri', 54, 66),
-    _ChartData('Sat', 57, 78),
-    _ChartData('Sun', 70, 84)
-  ];
-
-  void init() {}
-
-  @override
-  void dispose() {
-    chartData?.clear();
-    super.dispose();
-  }
-}

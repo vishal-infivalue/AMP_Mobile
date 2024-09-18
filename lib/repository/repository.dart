@@ -24,6 +24,18 @@ class AppRepository {
     }
   }
 
+  Future<dynamic> downloadPdf() async {
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+    try {
+
+      var response = await _apiServices.getApiWithHeader(
+          "$baseUrl/api/auditmaster/downloadaudit?auditId=202409150001",userIdLoggedIn!);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
   //top performing stations
   Future<dynamic> getperformingstations() async {
     String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
@@ -137,6 +149,22 @@ class AppRepository {
       return null;
     }
   }
+
+
+  //create or start Audit
+  Future<dynamic> startAudit(dynamic data) async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.postWithHeaderUserIdData(
+          "$baseUrl/api/auditmaster/scheduleaudit",userIdLoggedIn!,data);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
 
   //hold the audit
   Future<dynamic> holdAudit(dynamic data) async {

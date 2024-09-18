@@ -2,48 +2,13 @@
 class AppStrings {
   // General
   static const String appName = 'My Flutter App';
-
-  static const String res1 = '''{
-  "counter": 2,
-  "createdts": "2024-07-05T14:17:45.000+00:00",
-  "updatedts": null,
-  "createdby": 1002,
-  "updatedby": 0,
-  "id": 10001,
-  "role": 1002,
-  "firstname": "gadi",
-  "middlename": "G",
-  "lastname": "Ranga",
-  "email": "gadi.ranga@gmail.com",
-  "phone1": "9986078242",
-  "phone2": "9513188242",
-  "designation": "Cluster Manager",
-  "status": "Active"
-}''';
-  static const String res2 = '''{
-    "counter": 1,
-    "createdts": "2024-07-05T14:19:13.000+00:00",
-    "updatedts": null,
-    "createdby": 1002,
-    "updatedby": 0,
-    "id": 10002,
-    "role": 1001,
-    "firstname": "Ganesh",
-    "middlename": "",
-    "lastname": "N",
-    "email": "ganesh.n@gmail.com",
-    "phone1": "1111222233",
-    "phone2": "3333444455",
-    "designation": "Station Manager",
-    "status": "Active"
-}''';
-  static const String res3 = '''{
-    "timestamp": "2024-07-22T17:23:27.286+00:00",
-    "status": 500,
-    "error": "Internal Server Error",
-    "path": "/audit_management_system-0.0.2-SNAPSHOT/api/login/prevalidateUser"
-}''';
-
+  static const String prevalidateSuccess = 'Pre-validated Successfully.';
+  static const String prevalidateFail = 'Error Pre-validating the user';
+  static const String login = 'Login';
+  static const String generateOTP = 'Generate OTP';
+  static const String otpError = 'Error generating OTP';
+  static const String emptyUserId = 'Please enter a valid User Id.';
+  static const String loginPage = 'Enter your user id. we’ll send you a verification code to your registered email id and phone number';
 
   // Profile Screen
   static const String profileScreenTitle = 'Profile Card';

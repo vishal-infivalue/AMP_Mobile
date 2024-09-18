@@ -38,7 +38,7 @@ class Routes {
 
       case Routenames.loginScreen:
         return MaterialPageRoute(
-            builder: (globalContext) =>  AuditLogin(args: {},));
+            builder: (globalContext) =>  const AuditLogin());
         
         case Routenames.otpScreen:
         /*return MaterialPageRoute(

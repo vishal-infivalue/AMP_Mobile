@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:amp/response/all_dashboard_response.dart';
 import 'package:amp/response/averageScoreResponse.dart';
 import 'package:amp/response/nc_response.dart';
-import 'package:amp/response/prevalidate_response.dart';
+import 'package:amp/response/otp_response.dart';
+import 'package:amp/utils/CommonFunctions.dart';
 import 'package:amp/utils/constant_strings.dart';
 import 'package:amp/utils/global_values.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +18,147 @@ import '../response/score_card_response.dart';
 import '../response/upcoming_audits.dart';
 import '../response/validateUserOtp.dart';
 import '../routes/route_names.dart';
+import '../utils/strings.dart';
 
 class APIProvider with ChangeNotifier {
   final _appRepository = AppRepository();
   GlobalVariables gb = GlobalVariables();
+
+  //*1....******************PREVALIDATE**********************/
+
+  String _userId = '0';
+  String get userId => _userId;
+  Future<void> prevalidateUser(String jsonData, BuildContext context) async {
+    setLoading(true);
+    Map<String, dynamic> data = jsonDecode(jsonData);
+    CommonFunctions.showLoading(context);
+    try {
+      var response = await _appRepository.prevalidateUser(data);
+      setLoading(false);
+      CommonFunctions.dismissLoading(context);
+      if (response != null) {
+        var userResponse = UserResponse.fromJson(response);
+        _userId = userResponse.id.toString();
+        CommonFunctions.showToast(AppStrings.prevalidateSuccess);
+      } else {
+        CommonFunctions.showToast(AppStrings.prevalidateFail);
+      }
+    } catch (e) {
+      setLoading(false); // Stop loading
+      CommonFunctions.dismissLoading(context); // Dismiss the loading spinner
+      CommonFunctions.showToast(AppStrings.prevalidateFail);
+    }
+  }
+
+  //*2....******************GENERATE OTP**********************/
+  String _userOTP = AppStrings.otpError;
+
+  String get userOTP => _userOTP;
+
+  Future<void> generateOtp(String jsonData, BuildContext context) async {
+    setLoading(true);
+    Map<String, dynamic> data = jsonDecode(jsonData);
+    CommonFunctions.showLoading(context);
+    try {
+      var response = await _appRepository.generateOTP(data);
+      setLoading(false);
+
+      if (response != null) {
+        var otpResponse = OTPResponse.fromJson(response);
+        _userOTP = otpResponse.message;
+        CommonFunctions.dismissLoading(context);
+        CommonFunctions.showToast(otpResponse.message);
+      } else {
+        CommonFunctions.dismissLoading(context);
+      }
+    } catch (e) {
+      setLoading(false);
+      CommonFunctions.dismissLoading(context);
+    }
+  }
+
+  //*3....******************VALIDATE USER OTP**********************/
+  Future<void> validateUserOtp(String jsonData, BuildContext context) async {
+    setLoading(true);
+
+    Map<String, dynamic> data = jsonDecode(jsonData);
+
+    var response = await _appRepository.validateUserOtp(data);
+    setLoading(false);
+
+    try {
+      if (response != null) {
+        var auditResponse = UserResponse.fromJson(response);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+            ConstantStrings.userDetails, jsonEncode(auditResponse));
+        CommonFunctions.showToast("Login Successfully.");
+
+        switch (auditResponse.role) {
+          case 1002:
+            Navigator.pushNamed(context, Routenames.dmDashboardScreen);
+            break;
+          case 1001:
+            Navigator.pushNamed(context, Routenames.cmDashboardScreen);
+            break;
+          case 1050:
+            Navigator.pushNamed(context, Routenames.smDashboardScreen);
+            break;
+          default:
+            CommonFunctions.showToast("Accessed Denied.");
+        }
+      } else {
+
+        CommonFunctions.showToast("Error Validating the OTP.");
+      }
+    }
+    catch (e) {
+      setLoading(false);
+      print("Error: $e");
+      CommonFunctions.showToast("Error Validating the OTP.");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error in top performing")));
+    }
+  }
+
+
+
+  //*3....******************AVERAGE SCORE & GRADE **********************/
+  String _avgMessage = '0';
+  String get avgMessage => _avgMessage;
+  double _avgScore = 0.0;
+  double get avgScore => _avgScore;
+  String _grade = '0';
+  String get grade => _grade;
+  String _gradeValue = '0';
+  String get gradeValue => _gradeValue;
+
+  Future<void> getclusteravgscore(BuildContext context) async {
+    setLoading(true);
+    try {
+      var response = await _appRepository.getclusteravgscore();
+      setLoading(false);
+      if (response != null) {
+        var auditResponse = AuditScoreAverageResponse.fromJson(response);
+        _avgMessage = auditResponse.message;
+        _avgScore = auditResponse.avgScore;
+        _grade = auditResponse.grade;
+        _gradeValue = auditResponse.gradeValue;
+        print("Average Score Response: $response");
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString(ConstantStrings.avergaeClusterScore, jsonEncode(response));
+      } else {
+        print("Error in fetching average score");
+      }
+    } catch (e) {
+      setLoading(false);
+      print("Error in fetching average score: $e");
+    }
+  }
+
+
+
+
+
 
   bool _loading = false;
   bool get loading => _loading;
@@ -34,6 +172,7 @@ class APIProvider with ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
+
 
 
   //AuditResponse
@@ -53,46 +192,32 @@ class APIProvider with ChangeNotifier {
 
   ///api/dashboard/audit/getclusteravgscore
 
-  String _avgMessage = '0';
-  String get avgMessage => _avgMessage;
-
-  double _avgScore = 0.0;
-  double get avgScore => _avgScore;
-
-  String _grade = '0';
-  String get grade => _grade;
-
-  String _gradeValue = '0';
-  String get gradeValue => _gradeValue;
 
 
-  Future<void> getclusteravgscore(BuildContext context) async {
+
+  Future<void> downloadPdf(BuildContext context) async {
     setLoading(true);
 
     try {
-      var response = await _appRepository.getclusteravgscore();
+      var response = await _appRepository.downloadPdf();
 
       setLoading(false);
 
       if (response != null) {
-        var auditResponse = AuditScoreAverageResponse.fromJson(response);
-        _avgMessage = auditResponse.message;
-        _avgScore = auditResponse.avgScore;
-        _grade = auditResponse.grade;
-        _gradeValue = auditResponse.gradeValue;
-        print("API Response: $response");
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString(ConstantStrings.avergaeClusterScore, jsonEncode(response));
+
       } else {
-        print("Error pre-validating user");
+        // print("Error pre-validating user");
         // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error in average cluster")));
       }
     } catch (e) {
       setLoading(false);
-      print("Error in audit data: $e");
+      // print("Error in audit data: $e");
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error in average cluster")));
     }
   }
+
+
+
 
   ///api/dashboard/audit/getperformingstations?sort=Top
   List<Station> _stationList = [];
@@ -154,169 +279,8 @@ class APIProvider with ChangeNotifier {
 
 
 
-  //prevalidate
-  String _statusOfUser = '0';
-  String get statusOfUser => _statusOfUser;
-  List<User> _statusResponse = [];
-  List<User> get statusResponse => _statusResponse;
-  bool _isButtonEnabled = false;
-  bool get isButtonEnabled => _isButtonEnabled;
-
-  // Future<void> prevalidateUser(String jsonData, BuildContext context) async {
-  //   setLoading(true);
-  //
-  //   Map<String, dynamic> data = jsonDecode(jsonData);
-  //
-  //   try {
-  //     var response = await _appRepository.prevalidateUser(data);
-  //     setLoading(false);
-  //
-  //     if (response != null) {
-  //       print("User pre-validated successfully: $response");
-  //       _isButtonEnabled = true;
-  //       notifyListeners(); // Notify listeners about the state change
-  //
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(content: Text("User pre-validated successfully"))
-  //       );
-  //     } else {
-  //       print("Error pre-validating user");
-  //       _isButtonEnabled = false;
-  //       notifyListeners(); // Notify listeners about the state change
-  //
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(content: Text("Error pre-validating user"))
-  //       );
-  //     }
-  //   } catch (e) {
-  //     setLoading(false);
-  //     print("Error pre-validating user: $e");
-  //
-  //     _isButtonEnabled = false;
-  //     notifyListeners(); // Notify listeners about the state change
-  //
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text("Error pre-validating user"))
-  //     );
-  //   }
-  // }
-
-  Future<void> prevalidateUser(String jsonData, BuildContext context) async {
-    setLoading(true);
-
-    Map<String, dynamic> data = jsonDecode(jsonData);
-
-    try {
-      var response = await _appRepository.prevalidateUser(data);
-      setLoading(false);
-
-      if (response != null) {
-
-        gb.isButtonEnabled_gb = true;
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User pre-validated ")));
-      } else {
-        print("Error pre-validating user");
-
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
-      }
-    } catch (e) {
-      setLoading(false);
-      print("Error pre-validating user: $e");
-
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
-    }
-  }
-
-  //generateOTP
-  Future<void> generateOtp(String jsonData, BuildContext context) async {
-    setLoading(true);
-    gb.isButtonEnabled_gb = false;
-
-    Map<String, dynamic> data = jsonDecode(jsonData);
-
-    try {
-      var response = await _appRepository.generateOTP(data);
-      setLoading(false);
-
-      if (response != null) {
-        print("User pre-validated successfully: $response");
-        gb.isButtonEnabled_gb = true;
-
-        Fluttertoast.showToast(
-          msg: "OTP generated and sent to the User Registered Phone Number.",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.black54,
-          textColor: Colors.white,
-        );
-
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP generated and sent to the User Registered Phone Number.")));
-      } else {
-        gb.isButtonEnabled_gb = false;
-        print("Error pre-validating user");
 
 
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Invalid OTP")));
-      }
-    } catch (e) {
-      setLoading(false);
-
-
-      print("Error pre-validating user: $e");
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
-    }
-  }
-
-  //validateOTP
-  Future<void> validateUserOtp(String jsonData, BuildContext context) async {
-    setLoading(true);
-
-    Map<String, dynamic> data = jsonDecode(jsonData);
-
-    var response = await _appRepository.validateUserOtp(data);
-    setLoading(false);
-
-    if (response != null) {
-
-      var auditResponse = UserResponse.fromJson(response);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(ConstantStrings.userDetails, jsonEncode(auditResponse));
-      Fluttertoast.showToast(
-        msg: "Login Successful.",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-      );
-
-      if (auditResponse.role == "1009") {
-        Navigator.pushNamed(context, Routenames.dmDashboardScreen);
-      } else if (auditResponse.role == "Station Manager") {
-        Navigator.pushNamed(context, Routenames.smDashboardScreen);
-      } else if (auditResponse.role == "1050") {
-        Navigator.pushNamed(context, Routenames.cmDashboardScreen);
-      }else{
-        Fluttertoast.showToast(
-          msg: "You don't have access to this account. Please contact the Admin.",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.black54,
-          textColor: Colors.white,
-        );
-      }
-
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User OTP validated successfully")));
-    } else {
-      Fluttertoast.showToast(
-        msg: "Invalid OTP",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error validating user OTP")));
-    }
-  }
 
 
   //fetch pending audits
@@ -326,6 +290,8 @@ class APIProvider with ChangeNotifier {
   String get numberOfAudits => _numberOfAudits;
   Future<void> fetchPendingAudits(BuildContext context) async {
     setLoading(true);
+
+    try{
     var response = await _appRepository.getAllPendingAudits();
     setLoading(false);
 
@@ -335,13 +301,18 @@ class APIProvider with ChangeNotifier {
       _pendingAuditsCount = auditResponse.pendingAudits;
       _numberOfAudits = auditResponse.numberOfAudits;
       notifyListeners();
-      print("Successful $response");
+      print("Upcoming API Response $response");
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successful")));
 
 
     } else {
-      print("Error fetching data");
+      print("Error fetching Upcoming API");
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
+    }}
+    catch (e) {
+      setLoading(false);
+      print("Error in Upcoming API: $e");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error Bottom Performing")));
     }
   }
 
@@ -593,6 +564,25 @@ class APIProvider with ChangeNotifier {
 
     }else{
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page")));
+    }
+
+  }
+
+
+  Future<void> startAudit(String jsonData, BuildContext context) async {
+    setLoading(true);
+
+    Map<String, dynamic> data = jsonDecode(jsonData);
+
+    var response = await _appRepository.startAudit(data);
+
+    if(response!= null){
+
+
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("The audit details entered so far has been successfully saved in the On Hold state.")));
+
+    }else{
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page.")));
     }
 
   }

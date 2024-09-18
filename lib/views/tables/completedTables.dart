@@ -1,7 +1,9 @@
 import 'package:amp/routes/route_names.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers_vm/generateOtp_provider.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/constant_strings.dart';
 import '../../utils/global_values.dart';
@@ -465,6 +467,7 @@ class CompletedTable extends StatelessWidget {
                     2: FlexColumnWidth(),
                     3: FlexColumnWidth(),
                     4: FlexColumnWidth(),
+                    5: FlexColumnWidth(),
                   },
                   children: [
                     const TableRow(
@@ -503,7 +506,7 @@ class CompletedTable extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            'Due Date',
+                            'Date of Audit',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               color: AppColors.meruWhite,
@@ -517,7 +520,7 @@ class CompletedTable extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            'Last Audit Date',
+                            'No of NCs',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               color: AppColors.meruWhite,
@@ -528,11 +531,24 @@ class CompletedTable extends StatelessWidget {
                             ),
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            'View Audit',
+                            'Score',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: AppColors.meruWhite,
+                              fontSize: 12.0,
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'View',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               color: AppColors.meruWhite,
@@ -575,7 +591,7 @@ class CompletedTable extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              audit.duedate,
+                              audit.enddate,
                               style: const TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: AppColors.meruBlack,
@@ -587,7 +603,19 @@ class CompletedTable extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              audit.lastauditdate,
+                              audit.numberOfNcs,
+                              style: const TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: AppColors.meruBlack,
+                                fontSize: 10.0,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              audit.numberOfNcs,
                               style: const TextStyle(
                                 fontFamily: 'Montserrat',
                                 color: AppColors.meruBlack,
@@ -599,16 +627,6 @@ class CompletedTable extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                             /* Container(
-                                width: 50,
-                                height: 30,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.asset(
-                                  'assets/images/icon_start.png',
-                                ),
-                              ),*/
 
                               GestureDetector(
                                 onTap: () {
@@ -651,6 +669,17 @@ class CompletedTable extends StatelessWidget {
                                            context, Routenames.evaluationScorePage);
                                      });
 
+
+                                     break;
+
+                                   case ConstantStrings.FUEL:
+
+                                     final logInProvider = Provider.of<APIProvider>(context);
+                                     logInProvider.downloadPdf(context);
+
+                                     break;
+
+                                   case ConstantStrings.HSE:
 
                                      break;
 

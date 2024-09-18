@@ -50,16 +50,18 @@ class CompletedAuditResponse {
 
   factory CompletedAuditResponse.fromJson(Map<String, dynamic> json) {
     return CompletedAuditResponse(
-      completedaudits: json['completedaudits'],
-      numberofaudits: json['numberofaudits'],
-      numberofERBCONAaudits: json['numberofERBCONAaudits'],
-      numberofERBTECHaudits: json['numberofERBTECHaudits'],
-      numberofHSEaudits: json['numberofHSEaudits'],
-      numberofFUELaudits: json['numberofFUELaudits'],
+      completedaudits: json['completedaudits']?? "0",
+      numberofaudits: json['numberofaudits']?? "0",
+      numberofERBCONAaudits: json['numberofERBCONAaudits']?? "0",
+      numberofERBTECHaudits: json['numberofERBTECHaudits']?? "0",
+      numberofHSEaudits: json['numberofHSEaudits']?? "0",
+      numberofFUELaudits: json['numberofFUELaudits']?? "0",
+
       userId: json['userId'],
-      completedAuditList: (json['completedAuditList'] as List)
-          .map((i) => CompletedAudit.fromJson(i))
-          .toList(),
+
+      completedAuditList: (json['completedAuditList'] as List<dynamic>?)
+          ?.map((i) => CompletedAudit.fromJson(i))
+          .toList() ?? [],
     );
   }
 
@@ -86,6 +88,9 @@ class CompletedAudit {
   String lastauditdate;
   String starttime;
   String stationcode;
+  String enddate;
+  String numberOfNcs;
+  String? score;
 
   CompletedAudit({
     required this.auditid,
@@ -96,6 +101,9 @@ class CompletedAudit {
     required this.lastauditdate,
     required this.starttime,
     required this.stationcode,
+    required this.enddate,
+    required this.numberOfNcs,
+    required this.score,
   });
 
   factory CompletedAudit.fromJson(Map<String, dynamic> json) {
@@ -108,6 +116,9 @@ class CompletedAudit {
       lastauditdate: json['lastauditdate'],
       starttime: json['starttime'],
       stationcode: json['stationcode'],
+      enddate: json['enddate'],
+      numberOfNcs: json['numberOfNcs'],
+      score: json['score'],
     );
   }
 
@@ -121,6 +132,9 @@ class CompletedAudit {
       'lastauditdate': lastauditdate,
       'starttime': starttime,
       'stationcode': stationcode,
+      'enddate': enddate,
+      'numberOfNcs': numberOfNcs,
+      'score': score
     };
   }
 }

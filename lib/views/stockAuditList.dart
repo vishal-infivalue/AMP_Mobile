@@ -26,32 +26,32 @@ class _StockAuditListPageState extends State<StockAuditListPage>
 
   // Lube form
   TextEditingController _oneTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _twoTextControllerLU = TextEditingController();
   TextEditingController _threeTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _fourTextControllerLU = TextEditingController();
   TextEditingController _fiveTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _sixTextControllerLU = TextEditingController();
   TextEditingController _sevenTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _eightTextControllerLU = TextEditingController();
 
   TextEditingController _nineTextControllerLU = TextEditingController();
 
   // LPG form
   TextEditingController _oneTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _twoTextControllerLP = TextEditingController();
   TextEditingController _threeTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _fourTextControllerLP = TextEditingController();
   TextEditingController _fiveTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _sixTextControllerLP = TextEditingController();
   TextEditingController _sevenTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _eightTextControllerLP = TextEditingController();
 
   TextEditingController _nineTextControllerLP = TextEditingController();
@@ -82,11 +82,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
       Provider.of<AuditProvider>(context).fetchStockAuditsLubeLPGDetails(
           auditId: '',
           type:
-              'LUBE'); // Hard coded in api calling function. Need to bring it from Shared Preference.
+          'LUBE'); // Hard coded in api calling function. Need to bring it from Shared Preference.
       Provider.of<AuditProvider>(context).fetchStockAuditsLubeLPGDetails(
           auditId: '',
           type:
-              'LPG'); // Hard coded in api calling function. Need to bring it from Shared Preference.
+          'LPG'); // Hard coded in api calling function. Need to bring it from Shared Preference.
 
       _init = false;
     }
@@ -239,19 +239,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           GestureDetector(
                               onTap: () {
                                 if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
+                                ['productshortcode'] ==
                                     'PMS') {
                                   Navigator.pushNamed(
                                       context, Routenames.productPMS);
                                 }
                                 if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
+                                ['productshortcode'] ==
                                     'LSD') {
                                   Navigator.pushNamed(
                                       context, Routenames.productLSD);
                                 }
                                 if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
+                                ['productshortcode'] ==
                                     'DK') {
                                   Navigator.pushNamed(
                                       context, Routenames.productDK);
@@ -523,7 +523,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0, vertical: 2.0),
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 1.0),
+                                const EdgeInsets.symmetric(vertical: 1.0),
                                 child: const Text(
                                   "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
                                   style: TextStyle(
@@ -585,7 +585,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -593,8 +593,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _oneTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -617,33 +617,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _twoTextControllerLU,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 1.0),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -684,7 +685,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -692,8 +693,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -716,33 +717,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _fourTextControllerLU,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 1.0),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -783,7 +785,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -791,8 +793,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _fiveTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -815,33 +817,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _sixTextControllerLU,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 1.0),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -882,7 +885,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -890,8 +893,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _sevenTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -914,33 +917,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _eightTextControllerLU,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 1.0),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /* validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -954,6 +958,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             vertical: 10.0, horizontal: 18.0),
                         child: TextFormField(
                           controller: _nineTextControllerLU,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Remarks',
@@ -984,7 +989,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 // foreground
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () {},
@@ -998,15 +1003,15 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () async {
                                 if (_formKeyLube.currentState!.validate()) {
                                   var lube_list = [];
                                   var list_lube = Provider.of<AuditProvider>(
-                                          context,
-                                          listen: false)
+                                      context,
+                                      listen: false)
                                       .lubeProductsTextControllers;
 
                                   list_lube.forEach((i, eachData) {
@@ -1014,29 +1019,29 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       "id": "$i",
                                       "category": "LUBE",
                                       "productName":
-                                          "${eachData['product_name']}",
+                                      "${eachData['product_name']}",
                                       "productShortCode":
-                                          "${eachData['product_shortCode']}",
+                                      "${eachData['product_shortCode']}",
                                       "productUOM": "LTRS",
                                       "productPrice":
-                                          "${eachData['productPrice']}",
+                                      "${eachData['productPrice']}",
                                       "previousClosedReading": "00.00",
                                       "openingStock":
-                                          "${eachData['textControllers'][0].text}",
+                                      "${eachData['textControllers'][0].text}",
                                       "closingStock":
-                                          "${eachData['textControllers'][5].text}",
+                                      "${eachData['textControllers'][5].text}",
                                       "bookingStock":
-                                          "${eachData['textControllers'][4].text}",
+                                      "${eachData['textControllers'][4].text}",
                                       "recipient":
-                                          "${eachData['textControllers'][1].text}",
+                                      "${eachData['textControllers'][1].text}",
                                       "returns":
-                                          "${eachData['textControllers'][2].text}",
+                                      "${eachData['textControllers'][2].text}",
                                       "totalSales":
-                                          "${eachData['textControllers'][3].text}",
+                                      "${eachData['textControllers'][3].text}",
                                       "diff":
-                                          "${eachData['textControllers'][6].text}",
+                                      "${eachData['textControllers'][6].text}",
                                       "remark":
-                                          "${eachData['textControllers'][7].text}",
+                                      "${eachData['textControllers'][7].text}",
                                     });
                                   });
 
@@ -1044,39 +1049,39 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     "productCategory": "LUBE",
                                     "auditId": 3108202401,
                                     "stationCode":
-                                        "${stockAuditsHeaderDetails['stationcode']}",
+                                    "${stockAuditsHeaderDetails['stationcode']}",
                                     "totalizerTotal": "00.00",
                                     "ustTotal": "00.00",
                                     "overallRemarks":
-                                        "${_nineTextControllerLU.text}",
+                                    "${_nineTextControllerLU.text}",
                                     "LUBE": lube_list,
                                     "LPG": [],
                                     "hygieneChecklists": [
                                       {
                                         "question": "1", //
                                         "answer":
-                                            "${_oneTextControllerLU.text}",
+                                        "${_oneTextControllerLU.text}",
                                         "remark": "${_twoTextControllerLU.text}"
                                       },
                                       {
                                         "question": "2",
                                         "answer":
-                                            "${_threeTextControllerLU.text}",
+                                        "${_threeTextControllerLU.text}",
                                         "remark":
-                                            "${_fourTextControllerLU.text}"
+                                        "${_fourTextControllerLU.text}"
                                       },
                                       {
                                         "question": "3",
                                         "answer":
-                                            "${_fiveTextControllerLU.text}",
+                                        "${_fiveTextControllerLU.text}",
                                         "remark": "${_sixTextControllerLU.text}"
                                       },
                                       {
                                         "question": "4",
                                         "answer":
-                                            "${_sevenTextControllerLU.text}",
+                                        "${_sevenTextControllerLU.text}",
                                         "remark":
-                                            "${_eightTextControllerLU.text}"
+                                        "${_eightTextControllerLU.text}"
                                       },
                                     ]
                                   };
@@ -1365,7 +1370,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0, vertical: 2.0),
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 1.0),
+                                const EdgeInsets.symmetric(vertical: 1.0),
                                 child: const Text(
                                   "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
                                   style: TextStyle(
@@ -1427,7 +1432,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1435,8 +1440,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _oneTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1459,20 +1464,21 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _twoTextControllerLP,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
@@ -1481,13 +1487,13 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                         ),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -1528,7 +1534,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1536,8 +1542,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1560,33 +1566,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _fourTextControllerLP,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 1.0),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -1627,7 +1634,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1635,8 +1642,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1659,33 +1666,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _sixTextControllerLP,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 1.0),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -1726,7 +1734,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1734,8 +1742,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1758,33 +1766,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _eightTextControllerLP,
+                                      textAlign: TextAlign.center,
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 1.0),
                                         hintText: 'Remark',
                                       ),
-                                      validator: (value) {
+                                      /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
                                         } else {
                                           return null;
                                         }
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 ),
@@ -1803,13 +1812,13 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             labelText: 'Remarks',
                             hintText: 'Remarks',
                           ),
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter LPG Audit Remarks';
                             } else {
                               return null;
                             }
-                          },
+                          },*/
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -1828,7 +1837,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 // foreground
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () {},
@@ -1842,7 +1851,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () async {
@@ -1850,8 +1859,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                   var lpg_list = [];
 
                                   var list_lpg = Provider.of<AuditProvider>(
-                                          context,
-                                          listen: false)
+                                      context,
+                                      listen: false)
                                       .lpgProductsTextControllers;
 
                                   list_lpg.forEach((i, eachData) {
@@ -1859,29 +1868,29 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       "id": "$i",
                                       "category": "LPG",
                                       "productName":
-                                          "${eachData['product_name']}",
+                                      "${eachData['product_name']}",
                                       "productShortCode":
-                                          "${eachData['product_shortCode']}",
+                                      "${eachData['product_shortCode']}",
                                       "productUOM": "LTRS",
                                       "productPrice":
-                                          "${eachData['productPrice']}",
+                                      "${eachData['productPrice']}",
                                       "previousClosedReading": "00.00",
                                       "openingStock":
-                                          "${eachData['textControllers'][0].text}",
+                                      "${eachData['textControllers'][0].text}",
                                       "closingStock":
-                                          "${eachData['textControllers'][5].text}",
+                                      "${eachData['textControllers'][5].text}",
                                       "bookingStock":
-                                          "${eachData['textControllers'][4].text}",
+                                      "${eachData['textControllers'][4].text}",
                                       "recipient":
-                                          "${eachData['textControllers'][1].text}",
+                                      "${eachData['textControllers'][1].text}",
                                       "returns":
-                                          "${eachData['textControllers'][2].text}",
+                                      "${eachData['textControllers'][2].text}",
                                       "totalSales":
-                                          "${eachData['textControllers'][3].text}",
+                                      "${eachData['textControllers'][3].text}",
                                       "diff":
-                                          "${eachData['textControllers'][6].text}",
+                                      "${eachData['textControllers'][6].text}",
                                       "remark":
-                                          "${eachData['textControllers'][7].text}",
+                                      "${eachData['textControllers'][7].text}",
                                     });
                                   });
 
@@ -1889,39 +1898,39 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     "productCategory": "LPG",
                                     "auditId": 3108202401,
                                     "stationCode":
-                                        "${stockAuditsHeaderDetails['stationcode']}",
+                                    "${stockAuditsHeaderDetails['stationcode']}",
                                     "totalizerTotal": "00.00",
                                     "ustTotal": "00.00",
                                     "overallRemarks":
-                                        "${_nineTextControllerLP.text}",
+                                    "${_nineTextControllerLP.text}",
                                     "LUBE": [],
                                     "LPG": lpg_list,
                                     "hygieneChecklists": [
                                       {
                                         "question": "1", //
                                         "answer":
-                                            "${_oneTextControllerLP.text}",
+                                        "${_oneTextControllerLP.text}",
                                         "remark": "${_twoTextControllerLP.text}"
                                       },
                                       {
                                         "question": "2",
                                         "answer":
-                                            "${_threeTextControllerLP.text}",
+                                        "${_threeTextControllerLP.text}",
                                         "remark":
-                                            "${_fourTextControllerLP.text}"
+                                        "${_fourTextControllerLP.text}"
                                       },
                                       {
                                         "question": "3",
                                         "answer":
-                                            "${_fiveTextControllerLP.text}",
+                                        "${_fiveTextControllerLP.text}",
                                         "remark": "${_sixTextControllerLP.text}"
                                       },
                                       {
                                         "question": "4",
                                         "answer":
-                                            "${_sevenTextControllerLP.text}",
+                                        "${_sevenTextControllerLP.text}",
                                         "remark":
-                                            "${_eightTextControllerLP.text}"
+                                        "${_eightTextControllerLP.text}"
                                       },
                                     ]
                                   };
@@ -1989,7 +1998,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         var auditId =
                             "3108202401"; // Need to fetch from shared preference
                         var result = await Provider.of<AuditProvider>(context,
-                                listen: false)
+                            listen: false)
                             .stock_audit_submit_to_station(auditId: auditId);
                       }
                     },
@@ -2000,7 +2009,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                   const Text(
                     '* Please complete Fuel, Lube & LPG audits for "Submit to Station"',
                     style:
-                        TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -2038,19 +2047,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
       Map lubeProductsTextControllers, Map eachProduct) {
     calculate_product() {
       var f_o = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][0]
+      ["textControllers"][0]
           .text;
       var f_t = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][1]
+      ["textControllers"][1]
           .text;
       var f_th = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][2]
+      ["textControllers"][2]
           .text;
       var f_fo = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][3]
+      ["textControllers"][3]
           .text;
       var f_si = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][5]
+      ["textControllers"][5]
           .text;
 
       var f_o_d = f_o == '' ? 0.0 : double.parse(f_o); // opening stock
@@ -2098,19 +2107,20 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][0],
+                          '${eachProduct['id']}']["textControllers"][0],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Stock',
                           ),
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2122,28 +2132,29 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     width: MediaQuery.sizeOf(context).width * .32,
                     child: Column(
                       children: [
-                        const Text("Recipient"),
+                        const Text("Receipts"),
                         const SizedBox(
                           height: 5.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][1],
+                          '${eachProduct['id']}']["textControllers"][1],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
-                            hintText: 'Recipient',
+                            hintText: 'Receipts',
                           ),
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2166,8 +2177,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][2],
+                          '${eachProduct['id']}']["textControllers"][2],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2177,11 +2189,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2196,8 +2208,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][3],
+                          '${eachProduct['id']}']["textControllers"][3],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2207,11 +2220,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2234,8 +2247,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][4],
+                          '${eachProduct['id']}']["textControllers"][4],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2245,11 +2259,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2264,8 +2278,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][5],
+                          '${eachProduct['id']}']["textControllers"][5],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2275,11 +2290,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2301,8 +2316,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][6],
+                          '${eachProduct['id']}']["textControllers"][6],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2312,11 +2328,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2331,19 +2347,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][7],
-                          keyboardType: TextInputType.number,
+                          '${eachProduct['id']}']["textControllers"][7],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
                             hintText: 'Remarks',
                           ),
-                          validator: (value) {
+                          textAlign: TextAlign.center,
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2384,19 +2400,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
       Map lpgProductsTextControllers, Map eachProduct) {
     calculate_product() {
       var f_o = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][0]
+      ["textControllers"][0]
           .text;
       var f_t = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][1]
+      ["textControllers"][1]
           .text;
       var f_th = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][2]
+      ["textControllers"][2]
           .text;
       var f_fo = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][3]
+      ["textControllers"][3]
           .text;
       var f_si = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][5]
+      ["textControllers"][5]
           .text;
 
       var f_o_d = f_o == '' ? 0.0 : double.parse(f_o); // opening stock
@@ -2444,9 +2460,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][0],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][0],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2456,11 +2473,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2469,29 +2486,30 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     width: MediaQuery.sizeOf(context).width * .32,
                     child: Column(
                       children: [
-                        const Text("Recipient"),
+                        const Text("Receipts"),
                         const SizedBox(
                           height: 5.0,
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][1],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][1],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
-                            hintText: 'Recipient',
+                            hintText: 'Receipts',
                           ),
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2514,9 +2532,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][2],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][2],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2526,11 +2545,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2545,9 +2564,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][3],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][3],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2557,11 +2577,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2584,9 +2604,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][4],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][4],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2596,11 +2617,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2615,9 +2636,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][5],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][5],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2627,11 +2649,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2653,9 +2675,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][6],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][6],
                           keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -2665,11 +2688,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           onChanged: (val) {
                             calculate_product();
                           },
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),
@@ -2684,20 +2707,20 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][7],
-                          keyboardType: TextInputType.number,
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][7],
+                          textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
                             hintText: 'Remarks',
                           ),
-                          validator: (value) {
+                          /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';
                             }
-                          },
+                          },*/
                         ),
                       ],
                     ),

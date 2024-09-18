@@ -288,7 +288,7 @@ class NotificationScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 3), // Adjust currentIndex as needed
+      // bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 3), // Adjust currentIndex as needed
     );
   }
 }
