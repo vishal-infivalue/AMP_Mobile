@@ -990,6 +990,28 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         ),
                       ),
                       onPressed: () async {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: TweenAnimationBuilder<Color?>(
+                                tween: ColorTween(
+                                    begin: Colors.red, end: Colors.yellow),
+                                duration: Duration(seconds: 1),
+                                builder: (context, color, _) {
+                                  return CircularProgressIndicator(
+                                    valueColor:
+                                    AlwaysStoppedAnimation<Color>(color!),
+                                  );
+                                },
+                                onEnd: () {
+                                  // No need to do anything here
+                                },
+                              ),
+                            );
+                          },
+                        );
                         Future.delayed(Duration(seconds: 2), () async {
                           if (_formKey.currentState!.validate()) {
                             var nozzle_list = [];

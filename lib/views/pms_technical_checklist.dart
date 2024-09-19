@@ -1006,7 +1006,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   );
                                 },
                                 onEnd: () {
-                                  // No need to do anything here
+
                                 },
                               ),
                             );
@@ -1095,7 +1095,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             });
 
                             final SharedPreferenceHelper _sharedPrefs =
-                                SharedPreferenceHelper();
+                            SharedPreferenceHelper();
                             String? auditId = await _sharedPrefs.getString(
                                 ConstantStrings.selectedStockAuditID);
 
@@ -1127,12 +1127,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
 
                             print("##################### $payload");
 
-                            var result = await Provider.of<AuditProvider>(
-                                    context,
-                                    listen: false)
-                                .saveStockAuditData(stockAuditData: payload);
-                            Navigator.of(context)
-                                .pop(); // Close the CircularProgressIndicator dialog
+                            var result = await Provider.of<AuditProvider>(context, listen: false).saveStockAuditData(stockAuditData: payload);
+
+                            Navigator.of(context).pop(); // Close the CircularProgressIndicator dialog
 
                             ScaffoldMessenger.of(context).showMaterialBanner(
                               MaterialBanner(
@@ -1147,6 +1144,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 ],
                               ),
                             );
+
                           } else {
                             print("12345678909876543245678");
                             final SharedPreferenceHelper _sharedPrefs =

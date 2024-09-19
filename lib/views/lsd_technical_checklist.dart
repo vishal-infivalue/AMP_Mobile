@@ -1125,12 +1125,10 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               }
                             };
 
-                            var result = await Provider.of<AuditProvider>(
-                                    context,
-                                    listen: false)
-                                .saveStockAuditData(stockAuditData: payload);
-                            Navigator.of(context)
-                                .pop(); // Close the CircularProgressIndicator dialog
+                            var result = await Provider.of<AuditProvider>(context, listen: false).saveStockAuditData(stockAuditData: payload);
+
+                            Navigator.of(context).pop(); // Close the CircularProgressIndicator dialog
+
                             ScaffoldMessenger.of(context).showMaterialBanner(
                               MaterialBanner(
                                 content: Text('$result'),

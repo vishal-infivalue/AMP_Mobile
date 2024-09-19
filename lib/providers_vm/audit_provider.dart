@@ -422,8 +422,7 @@ class AuditProvider with ChangeNotifier {
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-    final url = Uri.parse(baseUrl +
-        '/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=$type');
+    final url = Uri.parse(baseUrl + '/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=$type');
 
     final response =
         await http.get(url, headers: {'loginUserId': loginUserId!});
@@ -480,7 +479,7 @@ class AuditProvider with ChangeNotifier {
   }
 
   Future<String> saveStockAuditData({Map? stockAuditData}) async {
-    final url = Uri.parse('/api/v1/audit/fuelstock/create-stock-audit');
+    final url = Uri.parse(baseUrl +'/api/v1/audit/fuelstock/create-stock-audit');
 
     String? userIdLoggedIn =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
