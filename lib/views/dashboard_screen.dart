@@ -167,14 +167,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
               margin: EdgeInsets.only(right: 16.0),
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.red, // Background color of the circle
                 shape: BoxShape.circle,
               ),
               child: Center(
                 child: Text(
                   '$initials',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white, // Text color
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
@@ -256,14 +256,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
               margin: EdgeInsets.only(right: 16.0),
               width: 40,
               height: 40,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.red, // Background color of the circle
                 shape: BoxShape.circle,
               ),
               child: Center(
                 child: Text(
                   '$initials',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white, // Text color
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
@@ -378,7 +378,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                         margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               colors: [
                                 Colors.white,
                                 Colors.white,
@@ -414,7 +414,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                             padding: const EdgeInsets.all(12.0),
                                             child: Text(
                                               logInProvider.avgMessageDB,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 color: AppColors.meruBlack,
                                                 fontSize: 12.0,
@@ -487,7 +487,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                             8.0),
                                                     child: Text(
                                                       '\n\n\n\nAverage Score : $roundoff_avgScore%\nAverage Grade : $gradeValue',
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontFamily: 'Poppins',
                                                         color: Colors.black,
                                                         fontSize: 12.0,
@@ -639,15 +639,12 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
 
                                     // Simulate a delay of 4 seconds
                                     Future.delayed(Duration(seconds: 1), () {
-                                      Navigator.of(context)
-                                          .pop(); // Close the CircularProgressIndicator dialog
-
+                                      Navigator.of(context).pop(); // Close the CircularProgressIndicator dialog
                                       Navigator.pushNamed(context, Routenames.pendingTable);
                                     });
 
-
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     AppStrings.tapView,
                                     style: TextStyle(
                                       fontFamily: 'Montserrat',
@@ -660,7 +657,6 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                   ),
                                 ),
                               )
-
                             ],
                           ),
                         ),

@@ -1,5 +1,7 @@
 import 'package:amp/providers_vm/audit_provider.dart';
 import 'package:amp/utils/app_colors.dart';
+import 'package:amp/utils/constant_strings.dart';
+import 'package:amp/utils/shared_preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,13 +36,9 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_init) {
-      // Provider.of<AuditProvider>(context).fetchStockAuditsList("Fuel");
-      Provider.of<AuditProvider>(context).fetchStockAuditsHeaderDetails(
-          ""); // Hard coded in api calling function. Need to bring it from Shared Preference.
-      Provider.of<AuditProvider>(context).fetchStockAuditsNozzelsUSTDetails(
-          auditId: '',
-          type:
-              'LSD'); // Hard coded in api calling function. Need to bring it from Shared Preference.
+      Provider.of<AuditProvider>(context).fetchStockAuditsHeaderDetails();
+      Provider.of<AuditProvider>(context)
+          .fetchStockAuditsNozzelsUSTDetails(type: 'LSD');
       _init = false;
     }
   }
@@ -992,127 +990,179 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         ),
                       ),
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          var nozzle_list = [];
-                          var list_nozzle =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .nozzelsUstsTextControllers;
-                          var list_nozzle_ddrr =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .ddrrTextControllers;
-                          var ust_list = [];
-                          var list_ust =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .ustTextControllers;
-                          var list_ust_qnq =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .ustQnQTextControllers;
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: TweenAnimationBuilder<Color?>(
+                                tween: ColorTween(
+                                    begin: Colors.red, end: Colors.yellow),
+                                duration: Duration(seconds: 1),
+                                builder: (context, color, _) {
+                                  return CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(color!),
+                                  );
+                                },
+                                onEnd: () {
+                                  // No need to do anything here
+                                },
+                              ),
+                            );
+                          },
+                        );
+                        Future.delayed(Duration(seconds: 2), () async {
+                          if (_formKey.currentState!.validate()) {
+                            var nozzle_list = [];
+                            var list_nozzle = Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .nozzelsUstsTextControllers;
+                            var list_nozzle_ddrr = Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .ddrrTextControllers;
+                            var ust_list = [];
+                            var list_ust = Provider.of<AuditProvider>(context,
+                                    listen: false)
+                                .ustTextControllers;
+                            var list_ust_qnq = Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .ustQnQTextControllers;
 
-                          list_nozzle.forEach((i, eachData) {
-                            nozzle_list.add({
-                              "id": '${eachData['nozzle_id']}',
-                              "category": "LSD-NOZ",
-                              "productName": "$i",
-                              "productShortCode": "$i",
-                              "productUOM": "LTRS",
-                              "closedReading":
-                                  "${eachData['textControllers'][0].text}",
-                              "openingReading":
-                                  "${eachData['textControllers'][1].text}",
-                              "stockTransfer":
-                                  "${eachData['textControllers'][2].text}",
-                              "grossSales":
-                                  "${eachData['textControllers'][3].text}",
-                              "pumpTest":
-                                  "${eachData['textControllers'][4].text}",
-                              "netNozzleSales":
-                                  "${eachData['textControllers'][5].text}",
-                              "nozzleTestResult":
-                                  "${list_nozzle_ddrr[i]['textControllers'][1].text}",
-                              "nozzleTestQty":
-                                  "${list_nozzle_ddrr[i]['textControllers'][2].text}",
-                              "nozzleTestRemarks":
-                                  "${list_nozzle_ddrr[i]['textControllers'][3].text}",
+                            list_nozzle.forEach((i, eachData) {
+                              nozzle_list.add({
+                                "id": '${eachData['nozzle_id']}',
+                                "category": "LSD-NOZ",
+                                "productName": "$i",
+                                "productShortCode": "$i",
+                                "productUOM": "LTRS",
+                                "closedReading":
+                                    "${eachData['textControllers'][0].text}",
+                                "openingReading":
+                                    "${eachData['textControllers'][1].text}",
+                                "stockTransfer":
+                                    "${eachData['textControllers'][2].text}",
+                                "grossSales":
+                                    "${eachData['textControllers'][3].text}",
+                                "pumpTest":
+                                    "${eachData['textControllers'][4].text}",
+                                "netNozzleSales":
+                                    "${eachData['textControllers'][5].text}",
+                                "nozzleTestResult":
+                                    "${list_nozzle_ddrr[i]['textControllers'][1].text}",
+                                "nozzleTestQty":
+                                    "${list_nozzle_ddrr[i]['textControllers'][2].text}",
+                                "nozzleTestRemarks":
+                                    "${list_nozzle_ddrr[i]['textControllers'][3].text}",
+                              });
                             });
-                          });
 
-                          list_ust.forEach((i, eachData) {
-                            ust_list.add({
-                              "id": "${eachData['ust_id']}",
-                              "category": "LSD-UST",
-                              "productName": "$i",
-                              "productShortCode": "$i",
-                              "productUOM": "LTRS",
-                              "openingStock":
-                                  "${eachData['textControllers'][0].text}",
-                              "sumOfDNote":
-                                  "${eachData['textControllers'][1].text}",
-                              "stockTransfer":
-                                  "${eachData['textControllers'][2].text}",
-                              "total": "${eachData['textControllers'][3].text}",
-                              "closingStock":
-                                  "${eachData['textControllers'][4].text}",
-                              "salesPerUST":
-                                  "${eachData['textControllers'][5].text}",
-                              "observedDensity":
-                                  "${list_ust_qnq[i]['textControllers'][0].text}",
-                              "observedTemp":
-                                  "${list_ust_qnq[i]['textControllers'][1].text}",
-                              "observedDensityAt20deg":
-                                  "${list_ust_qnq[i]['textControllers'][2].text}",
-                              "refDensity":
-                                  "${list_ust_qnq[i]['textControllers'][3].text}",
-                              "variation":
-                                  "${list_ust_qnq[i]['textControllers'][5].text}",
-                              "isVariationWithinLimit":
-                                  "${list_ust_qnq[i]['textControllers'][6].text}",
+                            list_ust.forEach((i, eachData) {
+                              ust_list.add({
+                                "id": "${eachData['ust_id']}",
+                                "category": "LSD-UST",
+                                "productName": "$i",
+                                "productShortCode": "$i",
+                                "productUOM": "LTRS",
+                                "openingStock":
+                                    "${eachData['textControllers'][0].text}",
+                                "sumOfDNote":
+                                    "${eachData['textControllers'][1].text}",
+                                "stockTransfer":
+                                    "${eachData['textControllers'][2].text}",
+                                "total":
+                                    "${eachData['textControllers'][3].text}",
+                                "closingStock":
+                                    "${eachData['textControllers'][4].text}",
+                                "salesPerUST":
+                                    "${eachData['textControllers'][5].text}",
+                                "observedDensity":
+                                    "${list_ust_qnq[i]['textControllers'][0].text}",
+                                "observedTemp":
+                                    "${list_ust_qnq[i]['textControllers'][1].text}",
+                                "observedDensityAt20deg":
+                                    "${list_ust_qnq[i]['textControllers'][2].text}",
+                                "refDensity":
+                                    "${list_ust_qnq[i]['textControllers'][3].text}",
+                                "variation":
+                                    "${list_ust_qnq[i]['textControllers'][5].text}",
+                                "isVariationWithinLimit":
+                                    "${list_ust_qnq[i]['textControllers'][6].text}",
+                              });
                             });
-                          });
 
-                          var payload = {
-                            "productCategory": "FUEL",
-                            "auditId": 3108202401,
-                            "stationCode":
-                                "${stockAuditsHeaderDetails['stationcode']}",
-                            "overallRemarks": "overallRemarks 2",
-                            "NOZZLE": nozzle_list,
-                            "UST": ust_list,
-                            "stockVariation": {
-                              "productSubCategory": "LSD",
-                              "grossStockVariation":
-                                  "${grossStockVariation.text}",
-                              "sumOfRecoverableStorage":
-                                  "${sumOfRecoverable.text}",
-                              "netVariation": "${netVariation.text}",
-                              "stockVariationOfTotalizerSales":
-                                  "${stockVariation.text}",
-                              "permittedEvaporation":
-                                  "${grossStockVariationS.text}",
-                              "isWithinLimit":
-                                  "${isNetStockVariationPermissionLimit.text}",
-                              "totalizerTotal": "${nozzleTotalizers.text}",
-                              "ustTotal": "${ustTotalizers.text}"
-                            }
-                          };
+                            final SharedPreferenceHelper _sharedPrefs =
+                                SharedPreferenceHelper();
+                            String? auditId = await _sharedPrefs.getString(
+                                ConstantStrings.selectedStockAuditID);
 
-                          var result = await Provider.of<AuditProvider>(context,
-                                  listen: false)
-                              .saveStockAuditData(stockAuditData: payload);
-                        } else {
-                          ScaffoldMessenger.of(context).showMaterialBanner(
-                            MaterialBanner(
-                              content: const Text(
-                                  'Please fill all the LSD Audit fields'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('Close'),
-                                  onPressed: () => ScaffoldMessenger.of(context)
-                                      .hideCurrentMaterialBanner(),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
+                            var payload = {
+                              "productCategory": "FUEL",
+                              "auditId": "$auditId",
+                              "stationCode":
+                                  "${stockAuditsHeaderDetails['stationcode']}",
+                              "overallRemarks": "overallRemarks 2",
+                              "NOZZLE": nozzle_list,
+                              "UST": ust_list,
+                              "stockVariation": {
+                                "productSubCategory": "LSD",
+                                "grossStockVariation":
+                                    "${grossStockVariation.text}",
+                                "sumOfRecoverableStorage":
+                                    "${sumOfRecoverable.text}",
+                                "netVariation": "${netVariation.text}",
+                                "stockVariationOfTotalizerSales":
+                                    "${stockVariation.text}",
+                                "permittedEvaporation":
+                                    "${grossStockVariationS.text}",
+                                "isWithinLimit":
+                                    "${isNetStockVariationPermissionLimit.text}",
+                                "totalizerTotal": "${nozzleTotalizers.text}",
+                                "ustTotal": "${ustTotalizers.text}"
+                              }
+                            };
+
+                            var result = await Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .saveStockAuditData(stockAuditData: payload);
+                            Navigator.of(context)
+                                .pop(); // Close the CircularProgressIndicator dialog
+                            ScaffoldMessenger.of(context).showMaterialBanner(
+                              MaterialBanner(
+                                content: Text('$result'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('Close'),
+                                    onPressed: () =>
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentMaterialBanner(),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            Navigator.of(context)
+                                .pop(); // Close the CircularProgressIndicator dialog
+                            ScaffoldMessenger.of(context).showMaterialBanner(
+                              MaterialBanner(
+                                content: const Text(
+                                    'Please fill all the LSD Audit fields'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('Close'),
+                                    onPressed: () =>
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentMaterialBanner(),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        });
                       },
                     ),
                   ],
@@ -1520,7 +1570,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
     var sum_E = nozzleTotalizers.text == '' ? "0.0" : nozzleTotalizers.text;
     var sum_J = ustTotalizers.text == '' ? "0.0" : ustTotalizers.text;
 
-    grossStockVariation.text = "${double.parse(sum_E) - double.parse(sum_J)}";
+    grossStockVariation.text = "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
     var l = grossStockVariation.text == '' ? "0.0" : grossStockVariation.text;
 
     var k = sumOfRecoverable.text == '' ? "0.0" : sumOfRecoverable.text;
@@ -1552,11 +1602,20 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                   [1]
               .text);
 
-      ustsTextControllers['${eachUST['productName']}']['textControllers'][2]
-          .text = "${oS + dNote}";
+      var sT = double.parse(ustsTextControllers['${eachUST['productName']}']
+                      ['textControllers'][2]
+                  .text ==
+              ''
+          ? '0.0'
+          : ustsTextControllers['${eachUST['productName']}']['textControllers']
+                  [2]
+              .text);
+
+      /*ustsTextControllers['${eachUST['productName']}']['textControllers'][2]
+          .text = "${oS + dNote}";*/
 
       ustsTextControllers['${eachUST['productName']}']['textControllers'][3]
-          .text = "${(oS + dNote - (oS + dNote))}";
+          .text = "${(oS + dNote - sT)}";
 
       var cS = double.parse(ustsTextControllers['${eachUST['productName']}']
                       ['textControllers'][4]
@@ -1677,7 +1736,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     width: MediaQuery.sizeOf(context).width * .32,
                     child: Column(
                       children: [
-                        const Text('(I=G+ΣH)->ST'),
+                        Text('ST'),
                         TextFormField(
                           controller:
                               ustsTextControllers['${eachUST['productName']}']
@@ -1962,17 +2021,20 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               if (od_val == '') {
                                 od_val = 0.0;
                               } else {
-                                od_val = double.parse(od_val);
+                                od_val =
+                                    double.parse(od_val);
                               }
                               if (rd_val == '') {
                                 rd_val = 0.0;
                               } else {
-                                rd_val = double.parse(rd_val);
+                                rd_val =
+                                    double.parse(rd_val);
                               }
 
+                              var result = rd_val - od_val;
                               qnqTextControllers["${eachUST['productName']}"]
                                       ['textControllers'][4]
-                                  .text = '${rd_val - od_val}';
+                                  .text = '${result.toStringAsFixed(2)}';
                             },
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -2015,16 +2077,17 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                             if (od_val == '') {
                               od_val = 0.0;
                             } else {
-                              od_val = double.parse(od_val);
+                              od_val = double.parse(od_val).toStringAsFixed(2);
                             }
                             if (rd_val == '') {
                               rd_val = 0.0;
                             } else {
-                              rd_val = double.parse(rd_val);
+                              rd_val = double.parse(rd_val).toStringAsFixed(2);
                             }
+                            var result = rd_val - od_val;
                             qnqTextControllers["${eachUST['productName']}"]
                                     ['textControllers'][4]
-                                .text = '${rd_val - od_val}';
+                                .text = '${result.toStringAsFixed(2)}';
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -2087,6 +2150,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ),
                         ),
                         TextFormField(
+                          readOnly: true,
                           controller:
                               qnqTextControllers["${eachUST['productName']}"]
                                   ['textControllers'][5],

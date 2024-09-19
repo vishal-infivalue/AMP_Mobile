@@ -1,5 +1,7 @@
 import 'package:amp/providers_vm/audit_provider.dart';
 import 'package:amp/utils/app_colors.dart';
+import 'package:amp/utils/constant_strings.dart';
+import 'package:amp/utils/shared_preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,13 +36,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_init) {
-      // Provider.of<AuditProvider>(context).fetchStockAuditsList("Fuel");
-      Provider.of<AuditProvider>(context).fetchStockAuditsHeaderDetails(
-          ""); // Hard coded in api calling function. Need to bring it from Shared Preference.
-      Provider.of<AuditProvider>(context).fetchStockAuditsNozzelsUSTDetails(
-          auditId: '',
-          type:
-              'PMS'); // Hard coded in api calling function. Need to bring it from Shared Preference.
+      Provider.of<AuditProvider>(context).fetchStockAuditsHeaderDetails();
+      Provider.of<AuditProvider>(context)
+          .fetchStockAuditsNozzelsUSTDetails(type: 'PMS');
       _init = false;
     }
   }
@@ -354,7 +352,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachNozzleTapToExpandSectionPMS(
-                          nozzelsTextControllers,
+                          ((nozzelsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelPMSNozzleUSTDetails['NOZZLE'] ?? [])
                               as List)),
                       const SizedBox(
@@ -416,7 +414,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachUSTTapToExpandSectionPMS(
-                          ustsTextControllers,
+                          ((ustsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelPMSNozzleUSTDetails['UST'] ?? [])
                               as List)),
                       const SizedBox(
@@ -992,127 +990,188 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         ),
                       ),
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          var nozzle_list = [];
-                          var list_nozzle =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .nozzelsUstsTextControllers;
-                          var list_nozzle_ddrr =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .ddrrTextControllers;
-                          var ust_list = [];
-                          var list_ust =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .ustTextControllers;
-                          var list_ust_qnq =
-                              Provider.of<AuditProvider>(context, listen: false)
-                                  .ustQnQTextControllers;
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: TweenAnimationBuilder<Color?>(
+                                tween: ColorTween(
+                                    begin: Colors.red, end: Colors.yellow),
+                                duration: Duration(seconds: 1),
+                                builder: (context, color, _) {
+                                  return CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(color!),
+                                  );
+                                },
+                                onEnd: () {
+                                  // No need to do anything here
+                                },
+                              ),
+                            );
+                          },
+                        );
+                        Future.delayed(Duration(seconds: 2), () async {
+                          if (_formKey.currentState!.validate()) {
+                            var nozzle_list = [];
+                            var list_nozzle = Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .nozzelsUstsTextControllers;
+                            var list_nozzle_ddrr = Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .ddrrTextControllers;
+                            var ust_list = [];
+                            var list_ust = Provider.of<AuditProvider>(context,
+                                    listen: false)
+                                .ustTextControllers;
+                            var list_ust_qnq = Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .ustQnQTextControllers;
 
-                          list_nozzle.forEach((i, eachData) {
-                            nozzle_list.add({
-                              "id": '${eachData['nozzle_id']}',
-                              "category": "PMS-NOZ",
-                              "productName": "$i",
-                              "productShortCode": "$i",
-                              "productUOM": "LTRS",
-                              "closedReading":
-                                  "${eachData['textControllers'][0].text}",
-                              "openingReading":
-                                  "${eachData['textControllers'][1].text}",
-                              "stockTransfer":
-                                  "${eachData['textControllers'][2].text}",
-                              "grossSales":
-                                  "${eachData['textControllers'][3].text}",
-                              "pumpTest":
-                                  "${eachData['textControllers'][4].text}",
-                              "netNozzleSales":
-                                  "${eachData['textControllers'][5].text}",
-                              "nozzleTestResult":
-                                  "${list_nozzle_ddrr[i]['textControllers'][1].text}",
-                              "nozzleTestQty":
-                                  "${list_nozzle_ddrr[i]['textControllers'][2].text}",
-                              "nozzleTestRemarks":
-                                  "${list_nozzle_ddrr[i]['textControllers'][3].text}",
+                            list_nozzle.forEach((i, eachData) {
+                              nozzle_list.add({
+                                "id": '${eachData['nozzle_id']}',
+                                "category": "PMS-NOZ",
+                                "productName": "$i",
+                                "productShortCode": "$i",
+                                "productUOM": "LTRS",
+                                "closedReading":
+                                    "${eachData['textControllers'][0].text}",
+                                "openingReading":
+                                    "${eachData['textControllers'][1].text}",
+                                "stockTransfer":
+                                    "${eachData['textControllers'][2].text}",
+                                "grossSales":
+                                    "${eachData['textControllers'][3].text}",
+                                "pumpTest":
+                                    "${eachData['textControllers'][4].text}",
+                                "netNozzleSales":
+                                    "${eachData['textControllers'][5].text}",
+                                "nozzleTestResult":
+                                    "${list_nozzle_ddrr[i]['textControllers'][1].text}",
+                                "nozzleTestQty":
+                                    "${list_nozzle_ddrr[i]['textControllers'][2].text}",
+                                "nozzleTestRemarks":
+                                    "${list_nozzle_ddrr[i]['textControllers'][3].text}",
+                              });
                             });
-                          });
 
-                          list_ust.forEach((i, eachData) {
-                            ust_list.add({
-                              "id": "${eachData['ust_id']}",
-                              "category": "PMS-UST",
-                              "productName": "$i",
-                              "productShortCode": "$i",
-                              "productUOM": "LTRS",
-                              "openingStock":
-                                  "${eachData['textControllers'][0].text}",
-                              "sumOfDNote":
-                                  "${eachData['textControllers'][1].text}",
-                              "stockTransfer":
-                                  "${eachData['textControllers'][2].text}",
-                              "total": "${eachData['textControllers'][3].text}",
-                              "closingStock":
-                                  "${eachData['textControllers'][4].text}",
-                              "salesPerUST":
-                                  "${eachData['textControllers'][5].text}",
-                              "observedDensity":
-                                  "${list_ust_qnq[i]['textControllers'][0].text}",
-                              "observedTemp":
-                                  "${list_ust_qnq[i]['textControllers'][1].text}",
-                              "observedDensityAt20deg":
-                                  "${list_ust_qnq[i]['textControllers'][2].text}",
-                              "refDensity":
-                                  "${list_ust_qnq[i]['textControllers'][3].text}",
-                              "variation":
-                                  "${list_ust_qnq[i]['textControllers'][5].text}",
-                              "isVariationWithinLimit":
-                                  "${list_ust_qnq[i]['textControllers'][6].text}",
+                            list_ust.forEach((i, eachData) {
+                              ust_list.add({
+                                "id": "${eachData['ust_id']}",
+                                "category": "PMS-UST",
+                                "productName": "$i",
+                                "productShortCode": "$i",
+                                "productUOM": "LTRS",
+                                "openingStock":
+                                    "${eachData['textControllers'][0].text}",
+                                "sumOfDNote":
+                                    "${eachData['textControllers'][1].text}",
+                                "stockTransfer":
+                                    "${eachData['textControllers'][2].text}",
+                                "total":
+                                    "${eachData['textControllers'][3].text}",
+                                "closingStock":
+                                    "${eachData['textControllers'][4].text}",
+                                "salesPerUST":
+                                    "${eachData['textControllers'][5].text}",
+                                "observedDensity":
+                                    "${list_ust_qnq[i]['textControllers'][0].text}",
+                                "observedTemp":
+                                    "${list_ust_qnq[i]['textControllers'][1].text}",
+                                "observedDensityAt20deg":
+                                    "${list_ust_qnq[i]['textControllers'][2].text}",
+                                "refDensity":
+                                    "${list_ust_qnq[i]['textControllers'][3].text}",
+                                "variation":
+                                    "${list_ust_qnq[i]['textControllers'][5].text}",
+                                "isVariationWithinLimit":
+                                    "${list_ust_qnq[i]['textControllers'][6].text}",
+                              });
                             });
-                          });
 
-                          var payload = {
-                            "productCategory": "FUEL",
-                            "auditId": 3108202401,
-                            "stationCode":
-                                "${stockAuditsHeaderDetails['stationcode']}",
-                            "overallRemarks": "overallRemarks 2",
-                            "NOZZLE": nozzle_list,
-                            "UST": ust_list,
-                            "stockVariation": {
-                              "productSubCategory": "PMS",
-                              "grossStockVariation":
-                                  "${grossStockVariation.text}",
-                              "sumOfRecoverableStorage":
-                                  "${sumOfRecoverable.text}",
-                              "netVariation": "${netVariation.text}",
-                              "stockVariationOfTotalizerSales":
-                                  "${stockVariation.text}",
-                              "permittedEvaporation":
-                                  "${grossStockVariationS.text}",
-                              "isWithinLimit":
-                                  "${isNetStockVariationPermissionLimit.text}",
-                              "totalizerTotal": "${nozzleTotalizers.text}",
-                              "ustTotal": "${ustTotalizers.text}"
-                            }
-                          };
+                            final SharedPreferenceHelper _sharedPrefs =
+                                SharedPreferenceHelper();
+                            String? auditId = await _sharedPrefs.getString(
+                                ConstantStrings.selectedStockAuditID);
 
-                          var result = await Provider.of<AuditProvider>(context,
-                                  listen: false)
-                              .saveStockAuditData(stockAuditData: payload);
-                        } else {
-                          ScaffoldMessenger.of(context).showMaterialBanner(
-                            MaterialBanner(
-                              content: const Text(
-                                  'Please fill all the PMS Audit fields'),
-                              actions: [
-                                TextButton(
-                                  child: const Text('Close'),
-                                  onPressed: () => ScaffoldMessenger.of(context)
-                                      .hideCurrentMaterialBanner(),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
+                            var payload = {
+                              "productCategory": "FUEL",
+                              "auditId": "$auditId",
+                              "stationCode":
+                                  "${stockAuditsHeaderDetails['stationcode']}",
+                              "overallRemarks": "overallRemarks 2",
+                              "NOZZLE": nozzle_list,
+                              "UST": ust_list,
+                              "stockVariation": {
+                                "productSubCategory": "PMS",
+                                "grossStockVariation":
+                                    "${grossStockVariation.text}",
+                                "sumOfRecoverableStorage":
+                                    "${sumOfRecoverable.text}",
+                                "netVariation": "${netVariation.text}",
+                                "stockVariationOfTotalizerSales":
+                                    "${stockVariation.text}",
+                                "permittedEvaporation":
+                                    "${grossStockVariationS.text}",
+                                "isWithinLimit":
+                                    "${isNetStockVariationPermissionLimit.text}",
+                                "totalizerTotal": "${nozzleTotalizers.text}",
+                                "ustTotal": "${ustTotalizers.text}"
+                              }
+                            };
+
+                            print("##################### $payload");
+
+                            var result = await Provider.of<AuditProvider>(
+                                    context,
+                                    listen: false)
+                                .saveStockAuditData(stockAuditData: payload);
+                            Navigator.of(context)
+                                .pop(); // Close the CircularProgressIndicator dialog
+
+                            ScaffoldMessenger.of(context).showMaterialBanner(
+                              MaterialBanner(
+                                content: Text('$result'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('Close'),
+                                    onPressed: () =>
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentMaterialBanner(),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            print("12345678909876543245678");
+                            final SharedPreferenceHelper _sharedPrefs =
+                                SharedPreferenceHelper();
+                            String? auditId = await _sharedPrefs.getString(
+                                ConstantStrings.selectedStockAuditID);
+                            print("12345678909876543245678 -------------> $auditId");
+                            Navigator.of(context)
+                                .pop(); // Close the CircularProgressIndicator dialog
+                            ScaffoldMessenger.of(context).showMaterialBanner(
+                              MaterialBanner(
+                                content: const Text(
+                                    'Please fill all the PMS Audit fields'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('Close'),
+                                    onPressed: () =>
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentMaterialBanner(),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        });
                       },
                     ),
                   ],
@@ -1520,7 +1579,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     var sum_E = nozzleTotalizers.text == '' ? "0.0" : nozzleTotalizers.text;
     var sum_J = ustTotalizers.text == '' ? "0.0" : ustTotalizers.text;
 
-    grossStockVariation.text = "${double.parse(sum_E) - double.parse(sum_J)}";
+    grossStockVariation.text =
+        "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
     var l = grossStockVariation.text == '' ? "0.0" : grossStockVariation.text;
 
     var k = sumOfRecoverable.text == '' ? "0.0" : sumOfRecoverable.text;
@@ -1553,11 +1613,20 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                   [1]
               .text);
 
-      ustsTextControllers['${eachUST['productName']}']['textControllers'][2]
-          .text = "${oS + dNote}";
+      var st = double.parse(ustsTextControllers['${eachUST['productName']}']
+                      ['textControllers'][2]
+                  .text ==
+              ''
+          ? '0.0'
+          : ustsTextControllers['${eachUST['productName']}']['textControllers']
+                  [2]
+              .text);
+
+      /*ustsTextControllers['${eachUST['productName']}']['textControllers'][2]
+          .text = "${oS + dNote}";*/
 
       ustsTextControllers['${eachUST['productName']}']['textControllers'][3]
-          .text = "${(oS + dNote - (oS + dNote))}";
+          .text = "${(oS + dNote - st)}";
 
       var cS = double.parse(ustsTextControllers['${eachUST['productName']}']
                       ['textControllers'][4]
@@ -1678,7 +1747,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     width: MediaQuery.sizeOf(context).width * .32,
                     child: Column(
                       children: [
-                        const Text('(I=G+ΣH)->ST'),
+                        const Text('ST'),
                         TextFormField(
                           controller:
                               ustsTextControllers['${eachUST['productName']}']
@@ -1932,59 +2001,60 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      child: Column(
-                        children: [
-                          const Text("OD at 20deg C"),
-                          TextFormField(
-                            controller:
-                                qnqTextControllers["${eachUST['productName']}"]
-                                    ['textControllers'][2],
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 1.0),
-                              hintText: 'OD at 20deg C',
-                              hintMaxLines: 3,
-                            ),
-                            onChanged: (value) {
-                              var od_val = qnqTextControllers[
-                                          "${eachUST['productName']}"]
-                                      ['textControllers'][2]
-                                  .text;
-
-                              var rd_val = qnqTextControllers[
-                                          "${eachUST['productName']}"]
-                                      ['textControllers'][3]
-                                  .text;
-
-                              if (od_val == '') {
-                                od_val = 0.0;
-                              } else {
-                                od_val = double.parse(od_val);
-                              }
-                              if (rd_val == '') {
-                                rd_val = 0.0;
-                              } else {
-                                rd_val = double.parse(rd_val);
-                              }
-
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    child: Column(
+                      children: [
+                        const Text("OD at 20deg C"),
+                        TextFormField(
+                          controller:
                               qnqTextControllers["${eachUST['productName']}"]
-                                      ['textControllers'][4]
-                                  .text = '${rd_val - od_val}';
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Enter PMS Quality & Quantity Data';
-                              } else {
-                                return null;
-                              }
-                            },
+                                  ['textControllers'][2],
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 5.0, vertical: 1.0),
+                            hintText: 'OD at 20deg C',
+                            hintMaxLines: 3,
                           ),
-                        ],
-                      )),
+                          onChanged: (value) {
+                            var od_val =
+                                qnqTextControllers["${eachUST['productName']}"]
+                                        ['textControllers'][2]
+                                    .text;
+
+                            var rd_val =
+                                qnqTextControllers["${eachUST['productName']}"]
+                                        ['textControllers'][3]
+                                    .text;
+
+                            if (od_val == '') {
+                              od_val = 0.0;
+                            } else {
+                              od_val = double.parse(od_val);
+                            }
+                            if (rd_val == '') {
+                              rd_val = 0.0;
+                            } else {
+                              rd_val = double.parse(rd_val);
+                            }
+                            var result = rd_val - od_val;
+                            qnqTextControllers["${eachUST['productName']}"]
+                                    ['textControllers'][4]
+                                .text = '${result.toStringAsFixed(2)}';
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter PMS Quality & Quantity Data';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.33,
                     child: Column(
@@ -2023,9 +2093,10 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             } else {
                               rd_val = double.parse(rd_val);
                             }
+                            var result = rd_val - od_val;
                             qnqTextControllers["${eachUST['productName']}"]
                                     ['textControllers'][4]
-                                .text = '${rd_val - od_val}';
+                                .text = '${result.toStringAsFixed(2)}';
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -2064,7 +2135,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
                             hintText: 'Variation ( + / -)',
-                            hintMaxLines: 3,
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -2088,6 +2158,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ),
                         ),
                         TextFormField(
+                          readOnly: true,
                           controller:
                               qnqTextControllers["${eachUST['productName']}"]
                                   ['textControllers'][5],

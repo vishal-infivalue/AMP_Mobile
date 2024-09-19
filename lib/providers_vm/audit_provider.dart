@@ -7,11 +7,10 @@ import '../utils/constant_strings.dart';
 import '../utils/shared_preference_helper.dart';
 
 class AuditProvider with ChangeNotifier {
-
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.31-SNAPSHOT";
-  final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
+      "http://103.235.106.117:8080/audit_management_system-0.0.34-SNAPSHOT";
 
+  final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
 /*  Future<void> fetchAudits(String loginUserId) async {
     final url = Uri.parse('http://103.235.106.117:8080/audit_management_system-0.0.23-SNAPSHOT/api/auditmaster/getallupcomingaudits');
@@ -120,8 +119,7 @@ class AuditProvider with ChangeNotifier {
   Map get stockAuditsHeaderDetails => _stockAuditsHeaderDetails;
 
   Future<void> fetchAudits(String loginUserId) async {
-    final url = Uri.parse(
-        baseUrl+'/api/auditmaster/getallupcomingaudits');
+    final url = Uri.parse(baseUrl + '/api/auditmaster/getallupcomingaudits');
 
     final response = await http.get(url, headers: {'loginUserId': loginUserId});
 
@@ -136,9 +134,8 @@ class AuditProvider with ChangeNotifier {
   }
 
   Future<void> fetchStockAuditsList(String type) async {
-    var auditId =
-        '3108202401'; // temporary static variable, Need to fetch from Shared Preference
-
+    String? auditId =
+        await _sharedPrefs.getString(ConstantStrings.selectedStockAuditID);
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
@@ -177,9 +174,9 @@ class AuditProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchStockAuditsHeaderDetails(String auditId) async {
-    auditId = '250720240001'; // temporary static variable
-
+  Future<void> fetchStockAuditsHeaderDetails() async {
+    String? auditId =
+        await _sharedPrefs.getString(ConstantStrings.selectedStockAuditID);
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
@@ -201,15 +198,14 @@ class AuditProvider with ChangeNotifier {
   }
 
   // Fuel
-  Future<void> fetchStockAuditsNozzelsUSTDetails(
-      {String? auditId, String? type}) async {
-    auditId = '280820240001'; // temporary static variable
+  Future<void> fetchStockAuditsNozzelsUSTDetails({String? type}) async {
+    String? auditId =
+        await _sharedPrefs.getString(ConstantStrings.selectedStockAuditID);
+    String? userIdLoggedIn =
+        await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
     final url = Uri.parse(baseUrl +
         '/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=FUEL&subCategory=$type');
-
-    String? userIdLoggedIn =
-        await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
     final response =
         await http.get(url, headers: {'loginUserId': userIdLoggedIn!});
@@ -273,7 +269,7 @@ class AuditProvider with ChangeNotifier {
                 TextEditingController(),
                 TextEditingController(),
                 TextEditingController(),
-                TextEditingController(),
+                TextEditingController(text: "+/-0.005"),
                 TextEditingController(),
               ],
             };
@@ -338,7 +334,7 @@ class AuditProvider with ChangeNotifier {
                 TextEditingController(),
                 TextEditingController(),
                 TextEditingController(),
-                TextEditingController(),
+                TextEditingController(text: "+/-0.003"),
                 TextEditingController(),
               ],
             };
@@ -403,7 +399,7 @@ class AuditProvider with ChangeNotifier {
                 TextEditingController(),
                 TextEditingController(),
                 TextEditingController(),
-                TextEditingController(),
+                TextEditingController(text: "+/-0.005"),
                 TextEditingController(),
               ],
             };
@@ -420,10 +416,9 @@ class AuditProvider with ChangeNotifier {
   }
 
   // for Lube-LPG
-  Future<void> fetchStockAuditsLubeLPGDetails(
-      {String? auditId, String? type}) async {
-    auditId = '280820240001'; // temporary static variable
-
+  Future<void> fetchStockAuditsLubeLPGDetails({String? type}) async {
+    String? auditId =
+        await _sharedPrefs.getString(ConstantStrings.selectedStockAuditID);
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
@@ -485,8 +480,6 @@ class AuditProvider with ChangeNotifier {
   }
 
   Future<String> saveStockAuditData({Map? stockAuditData}) async {
-    var auditId = '280820240001'; // temporary static variable
-
     final url = Uri.parse('/api/v1/audit/fuelstock/create-stock-audit');
 
     String? userIdLoggedIn =

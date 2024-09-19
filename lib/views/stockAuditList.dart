@@ -1,5 +1,7 @@
 import 'package:amp/providers_vm/audit_provider.dart';
 import 'package:amp/utils/app_colors.dart';
+import 'package:amp/utils/constant_strings.dart';
+import 'package:amp/utils/shared_preference_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -75,16 +77,13 @@ class _StockAuditListPageState extends State<StockAuditListPage>
       Provider.of<AuditProvider>(context).fetchStockAuditsList("Fuel");
       Provider.of<AuditProvider>(context).fetchStockAuditsList("Lube");
       Provider.of<AuditProvider>(context).fetchStockAuditsList("Lpg");
-      Provider.of<AuditProvider>(context).fetchStockAuditsHeaderDetails(
-          ""); // Hard coded in api calling function. Need to bring it from Shared Preference.
+      Provider.of<AuditProvider>(context).fetchStockAuditsHeaderDetails();
       Provider.of<AuditProvider>(context)
-          .fetchStockAuditsNozzelsUSTDetails(auditId: '', type: 'DK');
+          .fetchStockAuditsNozzelsUSTDetails(type: 'DK');
       Provider.of<AuditProvider>(context).fetchStockAuditsLubeLPGDetails(
-          auditId: '',
           type:
               'LUBE'); // Hard coded in api calling function. Need to bring it from Shared Preference.
       Provider.of<AuditProvider>(context).fetchStockAuditsLubeLPGDetails(
-          auditId: '',
           type:
               'LPG'); // Hard coded in api calling function. Need to bring it from Shared Preference.
 
@@ -1007,101 +1006,145 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 ),
                               ),
                               onPressed: () async {
-                                if (_formKeyLube.currentState!.validate()) {
-                                  var lube_list = [];
-                                  var list_lube = Provider.of<AuditProvider>(
-                                          context,
-                                          listen: false)
-                                      .lubeProductsTextControllers;
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: TweenAnimationBuilder<Color?>(
+                                        tween: ColorTween(
+                                            begin: Colors.red,
+                                            end: Colors.yellow),
+                                        duration: Duration(seconds: 1),
+                                        builder: (context, color, _) {
+                                          return CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    color!),
+                                          );
+                                        },
+                                        onEnd: () {
+                                          // No need to do anything here
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                                Future.delayed(Duration(seconds: 2), () async {
+                                  if (_formKeyLube.currentState!.validate()) {
+                                    var lube_list = [];
+                                    var list_lube = Provider.of<AuditProvider>(
+                                            context,
+                                            listen: false)
+                                        .lubeProductsTextControllers;
 
-                                  list_lube.forEach((i, eachData) {
-                                    lube_list.add({
-                                      "id": "$i",
-                                      "category": "LUBE",
-                                      "productName":
-                                          "${eachData['product_name']}",
-                                      "productShortCode":
-                                          "${eachData['product_shortCode']}",
-                                      "productUOM": "LTRS",
-                                      "productPrice":
-                                          "${eachData['productPrice']}",
-                                      "previousClosedReading": "00.00",
-                                      "openingStock":
-                                          "${eachData['textControllers'][0].text}",
-                                      "closingStock":
-                                          "${eachData['textControllers'][5].text}",
-                                      "bookingStock":
-                                          "${eachData['textControllers'][4].text}",
-                                      "recipient":
-                                          "${eachData['textControllers'][1].text}",
-                                      "returns":
-                                          "${eachData['textControllers'][2].text}",
-                                      "totalSales":
-                                          "${eachData['textControllers'][3].text}",
-                                      "diff":
-                                          "${eachData['textControllers'][6].text}",
-                                      "remark":
-                                          "${eachData['textControllers'][7].text}",
+                                    list_lube.forEach((i, eachData) {
+                                      lube_list.add({
+                                        "id": "$i",
+                                        "category": "LUBE",
+                                        "productName":
+                                            "${eachData['product_name']}",
+                                        "productShortCode":
+                                            "${eachData['product_shortCode']}",
+                                        "productUOM": "LTRS",
+                                        "productPrice":
+                                            "${eachData['productPrice']}",
+                                        "previousClosedReading": "00.00",
+                                        "openingStock":
+                                            "${eachData['textControllers'][0].text}",
+                                        "closingStock":
+                                            "${eachData['textControllers'][5].text}",
+                                        "bookingStock":
+                                            "${eachData['textControllers'][4].text}",
+                                        "recipient":
+                                            "${eachData['textControllers'][1].text}",
+                                        "returns":
+                                            "${eachData['textControllers'][2].text}",
+                                        "totalSales":
+                                            "${eachData['textControllers'][3].text}",
+                                        "diff":
+                                            "${eachData['textControllers'][6].text}",
+                                        "remark":
+                                            "${eachData['textControllers'][7].text}",
+                                      });
                                     });
-                                  });
 
-                                  var payload = {
-                                    "productCategory": "LUBE",
-                                    "auditId": 3108202401,
-                                    "stationCode":
-                                        "${stockAuditsHeaderDetails['stationcode']}",
-                                    "totalizerTotal": "00.00",
-                                    "ustTotal": "00.00",
-                                    "overallRemarks":
-                                        "${_nineTextControllerLU.text}",
-                                    "LUBE": lube_list,
-                                    "LPG": [],
-                                    "hygieneChecklists": [
-                                      {
-                                        "question": "1", //
-                                        "answer":
-                                            "${_oneTextControllerLU.text}",
-                                        "remark": "${_twoTextControllerLU.text}"
-                                      },
-                                      {
-                                        "question": "2",
-                                        "answer":
-                                            "${_threeTextControllerLU.text}",
-                                        "remark":
-                                            "${_fourTextControllerLU.text}"
-                                      },
-                                      {
-                                        "question": "3",
-                                        "answer":
-                                            "${_fiveTextControllerLU.text}",
-                                        "remark": "${_sixTextControllerLU.text}"
-                                      },
-                                      {
-                                        "question": "4",
-                                        "answer":
-                                            "${_sevenTextControllerLU.text}",
-                                        "remark":
-                                            "${_eightTextControllerLU.text}"
-                                      },
-                                    ]
-                                  };
-                                } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showMaterialBanner(
-                                    MaterialBanner(
-                                      content: const Text(
-                                          'Please fill all the LUBE Audit fields'),
-                                      actions: [
-                                        TextButton(
-                                          child: const Text('Close'),
-                                          onPressed: () =>
-                                              ScaffoldMessenger.of(context)
-                                                  .hideCurrentMaterialBanner(),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }
+                                    final SharedPreferenceHelper _sharedPrefs =
+                                        SharedPreferenceHelper();
+                                    String? auditId = await _sharedPrefs
+                                        .getString(ConstantStrings
+                                            .selectedStockAuditID);
+
+                                    var payload = {
+                                      "productCategory": "LUBE",
+                                      "auditId": "$auditId",
+                                      "stationCode":
+                                          "${stockAuditsHeaderDetails['stationcode']}",
+                                      "totalizerTotal": "00.00",
+                                      "ustTotal": "00.00",
+                                      "overallRemarks":
+                                          "${_nineTextControllerLU.text}",
+                                      "LUBE": lube_list,
+                                      "LPG": [],
+                                      "hygieneChecklists": [
+                                        {
+                                          "question": "1", //
+                                          "answer":
+                                              "${_oneTextControllerLU.text}",
+                                          "remark":
+                                              "${_twoTextControllerLU.text}"
+                                        },
+                                        {
+                                          "question": "2",
+                                          "answer":
+                                              "${_threeTextControllerLU.text}",
+                                          "remark":
+                                              "${_fourTextControllerLU.text}"
+                                        },
+                                        {
+                                          "question": "3",
+                                          "answer":
+                                              "${_fiveTextControllerLU.text}",
+                                          "remark":
+                                              "${_sixTextControllerLU.text}"
+                                        },
+                                        {
+                                          "question": "4",
+                                          "answer":
+                                              "${_sevenTextControllerLU.text}",
+                                          "remark":
+                                              "${_eightTextControllerLU.text}"
+                                        },
+                                      ]
+                                    };
+
+                                    /*
+                                       var result = await Provider.of<AuditProvider>(
+                                        context, listen: false).saveStockAuditData(stockAuditData: payload);
+                                    */
+
+                                    Navigator.of(context)
+                                        .pop(); // Close the CircularProgressIndicator dialog
+                                  } else {
+                                    Navigator.of(context)
+                                        .pop(); // Close the CircularProgressIndicator dialog
+                                    ScaffoldMessenger.of(context)
+                                        .showMaterialBanner(
+                                      MaterialBanner(
+                                        content: const Text(
+                                            'Please fill all the LUBE Audit fields'),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text('Close'),
+                                            onPressed: () => ScaffoldMessenger
+                                                    .of(context)
+                                                .hideCurrentMaterialBanner(),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                });
                               },
                             ),
                           ],
@@ -1855,109 +1898,150 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 ),
                               ),
                               onPressed: () async {
-                                if (_formKeyLpg.currentState!.validate()) {
-                                  var lpg_list = [];
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: TweenAnimationBuilder<Color?>(
+                                        tween: ColorTween(
+                                            begin: Colors.red,
+                                            end: Colors.yellow),
+                                        duration: Duration(seconds: 1),
+                                        builder: (context, color, _) {
+                                          return CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    color!),
+                                          );
+                                        },
+                                        onEnd: () {
+                                          // No need to do anything here
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
 
-                                  var list_lpg = Provider.of<AuditProvider>(
-                                          context,
-                                          listen: false)
-                                      .lpgProductsTextControllers;
+                                Future.delayed(Duration(seconds: 2), () async {
+                                  if (_formKeyLpg.currentState!.validate()) {
+                                    var lpg_list = [];
 
-                                  list_lpg.forEach((i, eachData) {
-                                    lpg_list.add({
-                                      "id": "$i",
-                                      "category": "LPG",
-                                      "productName":
-                                          "${eachData['product_name']}",
-                                      "productShortCode":
-                                          "${eachData['product_shortCode']}",
-                                      "productUOM": "LTRS",
-                                      "productPrice":
-                                          "${eachData['productPrice']}",
-                                      "previousClosedReading": "00.00",
-                                      "openingStock":
-                                          "${eachData['textControllers'][0].text}",
-                                      "closingStock":
-                                          "${eachData['textControllers'][5].text}",
-                                      "bookingStock":
-                                          "${eachData['textControllers'][4].text}",
-                                      "recipient":
-                                          "${eachData['textControllers'][1].text}",
-                                      "returns":
-                                          "${eachData['textControllers'][2].text}",
-                                      "totalSales":
-                                          "${eachData['textControllers'][3].text}",
-                                      "diff":
-                                          "${eachData['textControllers'][6].text}",
-                                      "remark":
-                                          "${eachData['textControllers'][7].text}",
+                                    var list_lpg = Provider.of<AuditProvider>(
+                                            context,
+                                            listen: false)
+                                        .lpgProductsTextControllers;
+
+                                    list_lpg.forEach((i, eachData) {
+                                      lpg_list.add({
+                                        "id": "$i",
+                                        "category": "LPG",
+                                        "productName":
+                                            "${eachData['product_name']}",
+                                        "productShortCode":
+                                            "${eachData['product_shortCode']}",
+                                        "productUOM": "LTRS",
+                                        "productPrice":
+                                            "${eachData['productPrice']}",
+                                        "previousClosedReading": "00.00",
+                                        "openingStock":
+                                            "${eachData['textControllers'][0].text}",
+                                        "closingStock":
+                                            "${eachData['textControllers'][5].text}",
+                                        "bookingStock":
+                                            "${eachData['textControllers'][4].text}",
+                                        "recipient":
+                                            "${eachData['textControllers'][1].text}",
+                                        "returns":
+                                            "${eachData['textControllers'][2].text}",
+                                        "totalSales":
+                                            "${eachData['textControllers'][3].text}",
+                                        "diff":
+                                            "${eachData['textControllers'][6].text}",
+                                        "remark":
+                                            "${eachData['textControllers'][7].text}",
+                                      });
                                     });
-                                  });
 
-                                  var payload = {
-                                    "productCategory": "LPG",
-                                    "auditId": 3108202401,
-                                    "stationCode":
-                                        "${stockAuditsHeaderDetails['stationcode']}",
-                                    "totalizerTotal": "00.00",
-                                    "ustTotal": "00.00",
-                                    "overallRemarks":
-                                        "${_nineTextControllerLP.text}",
-                                    "LUBE": [],
-                                    "LPG": lpg_list,
-                                    "hygieneChecklists": [
-                                      {
-                                        "question": "1", //
-                                        "answer":
-                                            "${_oneTextControllerLP.text}",
-                                        "remark": "${_twoTextControllerLP.text}"
-                                      },
-                                      {
-                                        "question": "2",
-                                        "answer":
-                                            "${_threeTextControllerLP.text}",
-                                        "remark":
-                                            "${_fourTextControllerLP.text}"
-                                      },
-                                      {
-                                        "question": "3",
-                                        "answer":
-                                            "${_fiveTextControllerLP.text}",
-                                        "remark": "${_sixTextControllerLP.text}"
-                                      },
-                                      {
-                                        "question": "4",
-                                        "answer":
-                                            "${_sevenTextControllerLP.text}",
-                                        "remark":
-                                            "${_eightTextControllerLP.text}"
-                                      },
-                                    ]
-                                  };
+                                    final SharedPreferenceHelper _sharedPrefs =
+                                        SharedPreferenceHelper();
+                                    String? auditId = await _sharedPrefs
+                                        .getString(ConstantStrings
+                                            .selectedStockAuditID);
 
-                                  print("payload:   $payload");
+                                    var payload = {
+                                      "productCategory": "LPG",
+                                      "auditId": "$auditId",
+                                      "stationCode":
+                                          "${stockAuditsHeaderDetails['stationcode']}",
+                                      "totalizerTotal": "00.00",
+                                      "ustTotal": "00.00",
+                                      "overallRemarks":
+                                          "${_nineTextControllerLP.text}",
+                                      "LUBE": [],
+                                      "LPG": lpg_list,
+                                      "hygieneChecklists": [
+                                        {
+                                          "question": "1", //
+                                          "answer":
+                                              "${_oneTextControllerLP.text}",
+                                          "remark":
+                                              "${_twoTextControllerLP.text}"
+                                        },
+                                        {
+                                          "question": "2",
+                                          "answer":
+                                              "${_threeTextControllerLP.text}",
+                                          "remark":
+                                              "${_fourTextControllerLP.text}"
+                                        },
+                                        {
+                                          "question": "3",
+                                          "answer":
+                                              "${_fiveTextControllerLP.text}",
+                                          "remark":
+                                              "${_sixTextControllerLP.text}"
+                                        },
+                                        {
+                                          "question": "4",
+                                          "answer":
+                                              "${_sevenTextControllerLP.text}",
+                                          "remark":
+                                              "${_eightTextControllerLP.text}"
+                                        },
+                                      ]
+                                    };
 
-                                  /*var result = await Provider.of<AuditProvider>(
+                                    print("payload:   $payload");
+
+                                    /*
+                                       var result = await Provider.of<AuditProvider>(
                                         context,
-                                        listen: false)
-                                    .saveStockAuditData(stockAuditData: payload);*/
-                                } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showMaterialBanner(
-                                    MaterialBanner(
-                                      content: const Text(
-                                          'Please fill all the LPG Audit fields'),
-                                      actions: [
-                                        TextButton(
-                                          child: const Text('Close'),
-                                          onPressed: () =>
-                                              ScaffoldMessenger.of(context)
-                                                  .hideCurrentMaterialBanner(),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }
+                                        listen: false).saveStockAuditData(stockAuditData: payload);
+                                    */
+
+                                    Navigator.of(context)
+                                        .pop(); // Close the CircularProgressIndicator dialog
+                                  } else {
+                                    Navigator.of(context)
+                                        .pop(); // Close the CircularProgressIndicator dialog
+                                    ScaffoldMessenger.of(context)
+                                        .showMaterialBanner(
+                                      MaterialBanner(
+                                        content: const Text(
+                                            'Please fill all the LPG Audit fields'),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text('Close'),
+                                            onPressed: () => ScaffoldMessenger
+                                                    .of(context)
+                                                .hideCurrentMaterialBanner(),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                });
                               },
                             ),
                           ],
@@ -1995,8 +2079,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                     onPressed: () async {
                       if (isStockAuditCompleted == 'Yes') {
-                        var auditId =
-                            "3108202401"; // Need to fetch from shared preference
+                        final SharedPreferenceHelper _sharedPrefs =
+                            SharedPreferenceHelper();
+                        String? auditId = await _sharedPrefs
+                            .getString(ConstantStrings.selectedStockAuditID);
                         var result = await Provider.of<AuditProvider>(context,
                                 listen: false)
                             .stock_audit_submit_to_station(auditId: auditId);

@@ -279,8 +279,10 @@ class APIProvider with ChangeNotifier {
     if (response != null) {
 
       var auditResponse = UserResponse.fromJson(response);
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(ConstantStrings.userDetails, jsonEncode(auditResponse));
+
       Fluttertoast.showToast(
         msg: "Login Successful.",
         toastLength: Toast.LENGTH_SHORT,
@@ -304,7 +306,6 @@ class APIProvider with ChangeNotifier {
           textColor: Colors.white,
         );
       }
-
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("User OTP validated successfully")));
     } else {
       Fluttertoast.showToast(
