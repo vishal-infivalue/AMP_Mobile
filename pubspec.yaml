@@ -36,7 +36,7 @@ dependencies:
   cloud_firestore: ^5.0.2
 
 
-  fluttertoast: ^8.2.6
+  fluttertoast: ^8.2.8
   carousel_slider: ^5.0.0
   dropdown_button2: ^2.3.8
   syncfusion_flutter_charts: ^26.2.9
