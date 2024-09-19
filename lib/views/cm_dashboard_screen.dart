@@ -60,7 +60,7 @@ class CM_DashboardScreen extends StatelessWidget {
       builder: (context, constraints) {
         if (constraints.maxWidth < 600) {
           return _buildSmallScreenLayout(
-              context, data, ndata, barChart, topPerforming, chartData,chartData2);
+              context, ndata, barChart);
         } else {
           return _buildLargeScreenLayout(context, data);
         }
@@ -74,12 +74,8 @@ class CM_DashboardScreen extends StatelessWidget {
 
   Widget _buildSmallScreenLayout(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
       List<BarChartData> barData,
-      List<_ChartData> topPerforming,
-      List<ChartData1> chartData,
-      List<ChartData2> chartData2,
       ) {
     return Scaffold(
       appBar: AppBar(
@@ -97,7 +93,7 @@ class CM_DashboardScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          _buildSmallScreenBody(context, data, ndata, barData, chartData,chartData2),
+          _buildSmallScreenBody(context, ndata, barData),
         ],
       ),
       bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 0),
@@ -106,11 +102,8 @@ class CM_DashboardScreen extends StatelessWidget {
 
   Widget _buildSmallScreenBody(
       BuildContext context,
-      List<ChartData> data,
       List<NChartData> ndata,
       List<BarChartData> barData,
-      List<ChartData1> charData,
-      List<ChartData2> charData2
       ) {
 
     return SingleChildScrollView(
@@ -1377,11 +1370,11 @@ final chartData = [
 
 
 
-final chartData2 = [
+/*final chartData2 = [
   ChartData2('s9', 35),
   ChartData2('s5', 55),
   ChartData2('s6', 75),
-];
+];*/
 
 class TopPerformingData {
   final String title;

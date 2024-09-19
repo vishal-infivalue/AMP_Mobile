@@ -1,3 +1,4 @@
+/*
 import 'package:amp/views/dashboard_screen.dart';
 import 'package:amp/views/tables/pending_table.dart';
 import 'package:flutter/material.dart';
@@ -21,17 +22,19 @@ class OtpTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 60.0,
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        keyboardType: TextInputType.number,
-        maxLength: 1,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 16.0),
-        decoration: const InputDecoration(
-          counterText: '', // Hide the counter for number of characters
+      child: Center(
+        child: TextField(
+          controller: controller,
+          focusNode: focusNode,
+          keyboardType: TextInputType.number,
+          maxLength: 1,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 16.0),
+          decoration: const InputDecoration(
+            counterText: '', // Hide the counter for number of characters
+          ),
+          onChanged: onChanged,
         ),
-        onChanged: onChanged,
       ),
     );
   }
@@ -357,3 +360,4 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
     return '${_otpController1.text}${_otpController2.text}${_otpController3.text}${_otpController4.text}${_otpController5.text}${_otpController6.text}';
   }
 }
+*/

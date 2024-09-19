@@ -30,7 +30,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
   TextEditingController stockVariation = TextEditingController();
   TextEditingController grossStockVariationS = TextEditingController();
   TextEditingController isNetStockVariationPermissionLimit =
-      TextEditingController();
+  TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -96,7 +96,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                   value: (_currentStep + 1) / 4,
                   backgroundColor: Colors.grey[200],
                   valueColor:
-                      const AlwaysStoppedAnimation<Color>(AppColors.meruYellow),
+                  const AlwaysStoppedAnimation<Color>(AppColors.meruYellow),
                   minHeight: 10,
                 ),
               ),
@@ -354,7 +354,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       ...buildEachNozzleTapToExpandSectionPMS(
                           ((nozzelsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelPMSNozzleUSTDetails['NOZZLE'] ?? [])
-                              as List)),
+                          as List)),
                       const SizedBox(
                         height: 10.0,
                       ),
@@ -416,7 +416,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       ...buildEachUSTTapToExpandSectionPMS(
                           ((ustsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelPMSNozzleUSTDetails['UST'] ?? [])
-                              as List)),
+                          as List)),
                       const SizedBox(
                         height: 10.0,
                       ),
@@ -787,15 +787,15 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 width: 100.0,
                                 child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.40,
+                                  MediaQuery.of(context).size.width * 0.40,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 5.0),
                                   child: DropdownButtonFormField<String>(
                                     value: "Select",
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -805,7 +805,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                     ),
                                     onChanged: (String? newValue) {
                                       isNetStockVariationPermissionLimit.text =
-                                          newValue!;
+                                      newValue!;
                                     },
                                     validator: (String? value) {
                                       if (value == null) {
@@ -816,11 +816,11 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                               ),
@@ -897,7 +897,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       ...buildEachUSTTapToExpandSectionPMSQualityQuantity(
                           qnqTextControllers,
                           ((stockAuditsFuelPMSNozzleUSTDetails['UST'] ?? [])
-                              as List))
+                          as List))
                     ],
                   ),
                 ),
@@ -956,7 +956,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       ...buildEachNozzleTapToExpandSectionPMSDDRR(
                           ddrrTextControllers,
                           ((stockAuditsFuelPMSNozzleUSTDetails['NOZZLE'] ?? [])
-                              as List)),
+                          as List)),
                     ],
                   ),
                 ),
@@ -1221,57 +1221,57 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     void nozzleCalculation() {
       var cR = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][0]
-                      .text ==
-                  ''
+          ['textControllers'][0]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][0]
-                  .text);
+          ['textControllers'][0]
+              .text);
       var oPR = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][1]
-                      .text ==
-                  ''
+          ['textControllers'][1]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][1]
-                  .text);
+          ['textControllers'][1]
+              .text);
       var sT = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][2]
-                      .text ==
-                  ''
+          ['textControllers'][2]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][2]
-                  .text);
+          ['textControllers'][2]
+              .text);
       var pT = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][4]
-                      .text ==
-                  ''
+          ['textControllers'][4]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][4]
-                  .text);
+          ['textControllers'][4]
+              .text);
 
       nozzelsTextControllers['${eachNozzle['productName']}']['textControllers']
-              [3]
+      [3]
           .text = '${cR - oPR - sT}';
 
       var gS = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][3]
-                      .text ==
-                  ''
+          ['textControllers'][3]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][3]
-                  .text);
+          ['textControllers'][3]
+              .text);
 
       nozzelsTextControllers['${eachNozzle['productName']}']['textControllers']
-              [5]
+      [5]
           .text = '${gS - pT}';
 
       calculateNozzletotalizers();
@@ -1307,8 +1307,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(A)->CR'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][0],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1319,8 +1319,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][0]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][0]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1344,8 +1344,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(B)->OPR'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][1],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1356,8 +1356,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][1]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][1]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1389,8 +1389,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(C)->ST'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][2],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1401,8 +1401,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][2]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][2]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1426,8 +1426,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(D=A-B-C)->GS'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][3],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1438,8 +1438,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][3]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][3]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1470,8 +1470,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(E)->PT'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][4],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][4],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1482,8 +1482,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][4]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][4]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1507,8 +1507,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(F=D-E)->NNS'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][5],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1519,8 +1519,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][5]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][5]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1597,21 +1597,21 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
   Widget buildUSTTapToExpandSectionFule(Map ustsTextControllers, Map eachUST) {
     void ustCalculation() {
       var oS = double.parse(ustsTextControllers['${eachUST['productName']}']
-                      ['textControllers'][0]
-                  .text ==
-              ''
+      ['textControllers'][0]
+          .text ==
+          ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-                  [0]
-              .text);
+      [0]
+          .text);
       var dNote = double.parse(ustsTextControllers['${eachUST['productName']}']
-                      ['textControllers'][1]
-                  .text ==
-              ''
+      ['textControllers'][1]
+          .text ==
+          ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-                  [1]
-              .text);
+      [1]
+          .text);
 
       var st = double.parse(ustsTextControllers['${eachUST['productName']}']
                       ['textControllers'][2]
@@ -1629,13 +1629,13 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
           .text = "${(oS + dNote - st)}";
 
       var cS = double.parse(ustsTextControllers['${eachUST['productName']}']
-                      ['textControllers'][4]
-                  .text ==
-              ''
+      ['textControllers'][4]
+          .text ==
+          ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-                  [4]
-              .text);
+      [4]
+          .text);
 
       ustsTextControllers['${eachUST['productName']}']['textControllers'][5]
           .text = "${(oS + dNote - cS)}";
@@ -1673,8 +1673,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         ),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][0],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1685,7 +1685,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][0]
+                            ['textControllers'][0]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1707,8 +1707,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(ΣH)->S of D-Note'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][1],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1720,7 +1720,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           maxLines: 1,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][1]
+                            ['textControllers'][1]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1750,8 +1750,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('ST'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][2],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1762,7 +1762,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][2]
+                            ['textControllers'][2]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1784,8 +1784,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(J=G+ΣH-I) ->T '),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][3],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1796,7 +1796,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][3]
+                            ['textControllers'][3]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1825,8 +1825,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(K)->CS'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][4],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -1837,7 +1837,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ),
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][4]
+                            ['textControllers'][4]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1859,8 +1859,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text('(L=J-K)->Sales/UST'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][5],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1871,7 +1871,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][5]
+                            ['textControllers'][5]
                                 .text = val;
                             ustCalculation();
                           },
@@ -2126,8 +2126,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         ),
                         TextFormField(
                           controller:
-                              qnqTextControllers["${eachUST['productName']}"]
-                                  ['textControllers'][4],
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2160,8 +2160,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         TextFormField(
                           readOnly: true,
                           controller:
-                              qnqTextControllers["${eachUST['productName']}"]
-                                  ['textControllers'][5],
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][5],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2206,17 +2206,17 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       value: "Select",
                       decoration: InputDecoration(
                         contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10.0),
+                        const EdgeInsets.symmetric(horizontal: 10.0),
                         border: const OutlineInputBorder(),
                         errorBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(width: 1, color: Colors.red),
+                          const BorderSide(width: 1, color: Colors.red),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       onChanged: (String? newValue) {
                         qnqTextControllers["${eachUST['productName']}"]
-                                ['textControllers'][6]
+                        ['textControllers'][6]
                             .text = newValue!;
                       },
                       validator: (String? value) {
@@ -2287,8 +2287,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][0],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][0],
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
@@ -2310,7 +2310,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           final_result = 'Short';
                         }
                         ddrrTextControllers["${eachNozzleDDRR['productName']}"]
-                                ['textControllers'][1]
+                        ['textControllers'][1]
                             .text = final_result;
                       },
                       validator: (String? value) {
@@ -2326,8 +2326,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][1],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][1],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.symmetric(
@@ -2356,8 +2356,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][2],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][2],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.symmetric(
@@ -2379,8 +2379,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][3],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][3],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.symmetric(

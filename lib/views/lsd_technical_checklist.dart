@@ -30,7 +30,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
   TextEditingController stockVariation = TextEditingController();
   TextEditingController grossStockVariationS = TextEditingController();
   TextEditingController isNetStockVariationPermissionLimit =
-      TextEditingController();
+  TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -805,7 +805,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                     ),
                                     onChanged: (String? newValue) {
                                       isNetStockVariationPermissionLimit.text =
-                                          newValue!;
+                                      newValue!;
                                     },
                                     validator: (String? value) {
                                       if (value == null) {
@@ -816,11 +816,11 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                               ),
@@ -1212,57 +1212,57 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
     void nozzleCalculation() {
       var cR = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][0]
-                      .text ==
-                  ''
+          ['textControllers'][0]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][0]
-                  .text);
+          ['textControllers'][0]
+              .text);
       var oPR = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][1]
-                      .text ==
-                  ''
+          ['textControllers'][1]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][1]
-                  .text);
+          ['textControllers'][1]
+              .text);
       var sT = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][2]
-                      .text ==
-                  ''
+          ['textControllers'][2]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][2]
-                  .text);
+          ['textControllers'][2]
+              .text);
       var pT = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][4]
-                      .text ==
-                  ''
+          ['textControllers'][4]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][4]
-                  .text);
+          ['textControllers'][4]
+              .text);
 
       nozzelsTextControllers['${eachNozzle['productName']}']['textControllers']
-              [3]
+      [3]
           .text = '${cR - oPR - sT}';
 
       var gS = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-                          ['textControllers'][3]
-                      .text ==
-                  ''
+          ['textControllers'][3]
+              .text ==
+              ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-                      ['textControllers'][3]
-                  .text);
+          ['textControllers'][3]
+              .text);
 
       nozzelsTextControllers['${eachNozzle['productName']}']['textControllers']
-              [5]
+      [5]
           .text = '${gS - pT}';
 
       calculateNozzletotalizers();
@@ -1298,8 +1298,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         const Text('(A)->CR'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][0],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1310,8 +1310,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][0]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][0]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1461,8 +1461,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         const Text('(E)->PT'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][4],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][4],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1473,8 +1473,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][4]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][4]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1498,8 +1498,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         const Text('(F=D-E)->NNS'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                                  '${eachNozzle['productName']}']
-                              ['textControllers'][5],
+                          '${eachNozzle['productName']}']
+                          ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1510,8 +1510,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                                        '${eachNozzle['productName']}']
-                                    ['textControllers'][5]
+                            '${eachNozzle['productName']}']
+                            ['textControllers'][5]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1586,21 +1586,21 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
   Widget buildUSTTapToExpandSectionFule(Map ustsTextControllers, Map eachUST) {
     void ustCalculation() {
       var oS = double.parse(ustsTextControllers['${eachUST['productName']}']
-                      ['textControllers'][0]
-                  .text ==
-              ''
+      ['textControllers'][0]
+          .text ==
+          ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-                  [0]
-              .text);
+      [0]
+          .text);
       var dNote = double.parse(ustsTextControllers['${eachUST['productName']}']
-                      ['textControllers'][1]
-                  .text ==
-              ''
+      ['textControllers'][1]
+          .text ==
+          ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-                  [1]
-              .text);
+      [1]
+          .text);
 
       var sT = double.parse(ustsTextControllers['${eachUST['productName']}']
                       ['textControllers'][2]
@@ -1618,13 +1618,13 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
           .text = "${(oS + dNote - sT)}";
 
       var cS = double.parse(ustsTextControllers['${eachUST['productName']}']
-                      ['textControllers'][4]
-                  .text ==
-              ''
+      ['textControllers'][4]
+          .text ==
+          ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-                  [4]
-              .text);
+      [4]
+          .text);
 
       ustsTextControllers['${eachUST['productName']}']['textControllers'][5]
           .text = "${(oS + dNote - cS)}";
@@ -1662,8 +1662,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         ),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][0],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1674,7 +1674,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][0]
+                            ['textControllers'][0]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1696,8 +1696,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         const Text('(ΣH)->S of D-Note'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][1],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1709,7 +1709,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           maxLines: 1,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][1]
+                            ['textControllers'][1]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1739,8 +1739,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         Text('ST'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][2],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1751,7 +1751,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][2]
+                            ['textControllers'][2]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1773,8 +1773,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         const Text('(J=G+ΣH-I) ->T '),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][3],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1785,7 +1785,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][3]
+                            ['textControllers'][3]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1814,8 +1814,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         const Text('(K)->CS'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][4],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -1826,7 +1826,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ),
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][4]
+                            ['textControllers'][4]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1848,8 +1848,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         const Text('(L=J-K)->Sales/UST'),
                         TextFormField(
                           controller:
-                              ustsTextControllers['${eachUST['productName']}']
-                                  ['textControllers'][5],
+                          ustsTextControllers['${eachUST['productName']}']
+                          ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
@@ -1860,7 +1860,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                                    ['textControllers'][5]
+                            ['textControllers'][5]
                                 .text = val;
                             ustCalculation();
                           },
@@ -2117,8 +2117,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         ),
                         TextFormField(
                           controller:
-                              qnqTextControllers["${eachUST['productName']}"]
-                                  ['textControllers'][4],
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2152,8 +2152,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         TextFormField(
                           readOnly: true,
                           controller:
-                              qnqTextControllers["${eachUST['productName']}"]
-                                  ['textControllers'][5],
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][5],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2279,8 +2279,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][0],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][0],
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
@@ -2302,7 +2302,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           final_result = 'Short';
                         }
                         ddrrTextControllers["${eachNozzleDDRR['productName']}"]
-                                ['textControllers'][1]
+                        ['textControllers'][1]
                             .text = final_result;
                       },
                       validator: (String? value) {
@@ -2318,8 +2318,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][1],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][1],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.symmetric(
@@ -2348,8 +2348,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][2],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][2],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.symmetric(
@@ -2371,8 +2371,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                              "${eachNozzleDDRR['productName']}"]
-                          ['textControllers'][3],
+                      "${eachNozzleDDRR['productName']}"]
+                      ['textControllers'][3],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.symmetric(

@@ -306,7 +306,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   await Future.delayed(const Duration(seconds: 2));
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => AuditLogin(args: {},)), // Replace with your new route
+                    MaterialPageRoute(builder: (context) => AuditLogin()), // Replace with your new route
                         (route) => false, // This condition removes all routes
                   );
                   setState(() {

@@ -28,32 +28,32 @@ class _StockAuditListPageState extends State<StockAuditListPage>
 
   // Lube form
   TextEditingController _oneTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _twoTextControllerLU = TextEditingController();
   TextEditingController _threeTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _fourTextControllerLU = TextEditingController();
   TextEditingController _fiveTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _sixTextControllerLU = TextEditingController();
   TextEditingController _sevenTextControllerLU =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _eightTextControllerLU = TextEditingController();
 
   TextEditingController _nineTextControllerLU = TextEditingController();
 
   // LPG form
   TextEditingController _oneTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _twoTextControllerLP = TextEditingController();
   TextEditingController _threeTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _fourTextControllerLP = TextEditingController();
   TextEditingController _fiveTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _sixTextControllerLP = TextEditingController();
   TextEditingController _sevenTextControllerLP =
-      TextEditingController(text: 'Select');
+  TextEditingController(text: 'Select');
   TextEditingController _eightTextControllerLP = TextEditingController();
 
   TextEditingController _nineTextControllerLP = TextEditingController();
@@ -82,10 +82,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
           .fetchStockAuditsNozzelsUSTDetails(type: 'DK');
       Provider.of<AuditProvider>(context).fetchStockAuditsLubeLPGDetails(
           type:
-              'LUBE'); // Hard coded in api calling function. Need to bring it from Shared Preference.
+          'LUBE'); // Hard coded in api calling function. Need to bring it from Shared Preference.
       Provider.of<AuditProvider>(context).fetchStockAuditsLubeLPGDetails(
           type:
-              'LPG'); // Hard coded in api calling function. Need to bring it from Shared Preference.
+          'LPG'); // Hard coded in api calling function. Need to bring it from Shared Preference.
 
       _init = false;
     }
@@ -238,19 +238,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           GestureDetector(
                               onTap: () {
                                 if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
+                                ['productshortcode'] ==
                                     'PMS') {
                                   Navigator.pushNamed(
                                       context, Routenames.productPMS);
                                 }
                                 if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
+                                ['productshortcode'] ==
                                     'LSD') {
                                   Navigator.pushNamed(
                                       context, Routenames.productLSD);
                                 }
                                 if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
+                                ['productshortcode'] ==
                                     'DK') {
                                   Navigator.pushNamed(
                                       context, Routenames.productDK);
@@ -522,7 +522,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0, vertical: 2.0),
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 1.0),
+                                const EdgeInsets.symmetric(vertical: 1.0),
                                 child: const Text(
                                   "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
                                   style: TextStyle(
@@ -584,7 +584,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -592,8 +592,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _oneTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -616,18 +616,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _twoTextControllerLU,
                                       textAlign: TextAlign.center,
@@ -684,7 +684,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -692,8 +692,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -716,18 +716,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _fourTextControllerLU,
                                       textAlign: TextAlign.center,
@@ -784,7 +784,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -792,8 +792,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _fiveTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -816,18 +816,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _sixTextControllerLU,
                                       textAlign: TextAlign.center,
@@ -884,7 +884,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -892,8 +892,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _sevenTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -916,18 +916,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _eightTextControllerLU,
                                       textAlign: TextAlign.center,
@@ -988,7 +988,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 // foreground
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () {},
@@ -1002,7 +1002,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () async {
@@ -1413,7 +1413,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0, vertical: 2.0),
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 1.0),
+                                const EdgeInsets.symmetric(vertical: 1.0),
                                 child: const Text(
                                   "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
                                   style: TextStyle(
@@ -1475,7 +1475,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1483,8 +1483,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _oneTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1507,18 +1507,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _twoTextControllerLP,
                                       textAlign: TextAlign.center,
@@ -1577,7 +1577,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1585,8 +1585,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1609,18 +1609,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _fourTextControllerLP,
                                       textAlign: TextAlign.center,
@@ -1677,7 +1677,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1685,8 +1685,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1709,18 +1709,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _sixTextControllerLP,
                                       textAlign: TextAlign.center,
@@ -1777,7 +1777,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                  MediaQuery.of(context).size.width * 0.32,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -1785,8 +1785,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -1809,18 +1809,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width * .45,
+                                    MediaQuery.of(context).size.width * .45,
                                     child: TextFormField(
                                       controller: _eightTextControllerLP,
                                       textAlign: TextAlign.center,
@@ -1880,7 +1880,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 // foreground
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () {},
@@ -1894,7 +1894,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.circular(12), // <-- Radius
+                                  BorderRadius.circular(12), // <-- Radius
                                 ),
                               ),
                               onPressed: () async {
@@ -2084,7 +2084,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         String? auditId = await _sharedPrefs
                             .getString(ConstantStrings.selectedStockAuditID);
                         var result = await Provider.of<AuditProvider>(context,
-                                listen: false)
+                            listen: false)
                             .stock_audit_submit_to_station(auditId: auditId);
                       }
                     },
@@ -2095,7 +2095,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                   const Text(
                     '* Please complete Fuel, Lube & LPG audits for "Submit to Station"',
                     style:
-                        TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -2133,19 +2133,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
       Map lubeProductsTextControllers, Map eachProduct) {
     calculate_product() {
       var f_o = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][0]
+      ["textControllers"][0]
           .text;
       var f_t = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][1]
+      ["textControllers"][1]
           .text;
       var f_th = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][2]
+      ["textControllers"][2]
           .text;
       var f_fo = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][3]
+      ["textControllers"][3]
           .text;
       var f_si = lubeProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][5]
+      ["textControllers"][5]
           .text;
 
       var f_o_d = f_o == '' ? 0.0 : double.parse(f_o); // opening stock
@@ -2193,7 +2193,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][0],
+                          '${eachProduct['id']}']["textControllers"][0],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2224,7 +2224,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][1],
+                          '${eachProduct['id']}']["textControllers"][1],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2263,7 +2263,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][2],
+                          '${eachProduct['id']}']["textControllers"][2],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2294,7 +2294,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][3],
+                          '${eachProduct['id']}']["textControllers"][3],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2333,7 +2333,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][4],
+                          '${eachProduct['id']}']["textControllers"][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2364,7 +2364,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][5],
+                          '${eachProduct['id']}']["textControllers"][5],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2402,7 +2402,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
-                              '${eachProduct['id']}']["textControllers"][6],
+                          '${eachProduct['id']}']["textControllers"][6],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2486,19 +2486,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
       Map lpgProductsTextControllers, Map eachProduct) {
     calculate_product() {
       var f_o = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][0]
+      ["textControllers"][0]
           .text;
       var f_t = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][1]
+      ["textControllers"][1]
           .text;
       var f_th = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][2]
+      ["textControllers"][2]
           .text;
       var f_fo = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][3]
+      ["textControllers"][3]
           .text;
       var f_si = lpgProductsTextControllers['${eachProduct['id']}']
-              ["textControllers"][5]
+      ["textControllers"][5]
           .text;
 
       var f_o_d = f_o == '' ? 0.0 : double.parse(f_o); // opening stock
@@ -2546,8 +2546,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][0],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][0],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2578,8 +2578,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][1],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][1],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2618,8 +2618,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][2],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][2],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2650,8 +2650,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][3],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][3],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2690,8 +2690,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][4],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2722,8 +2722,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][5],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][5],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
@@ -2761,8 +2761,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][6],
+                          lpgProductsTextControllers['${eachProduct['id']}']
+                          ["textControllers"][6],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
