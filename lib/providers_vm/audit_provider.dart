@@ -8,7 +8,7 @@ import '../utils/shared_preference_helper.dart';
 
 class AuditProvider with ChangeNotifier {
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.34-SNAPSHOT";
+      "http://103.235.106.117:8080/audit_management_system-0.0.35-SNAPSHOT";
 
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
@@ -139,14 +139,14 @@ class AuditProvider with ChangeNotifier {
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-    final url = Uri.parse(baseUrl +
-        '/api/v1/audit/fuelstock/get-product-by-category?category=$type&auditId=$auditId');
+    final url = Uri.parse(baseUrl + '/api/v1/audit/fuelstock/get-product-by-category?category=$type&auditId=$auditId');
 
-    final response =
-        await http.get(url, headers: {'loginUserId': loginUserId!});
+    final response = await http.get(url, headers: {'loginUserId': loginUserId!});
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
+
+      print("resData $resData");
 
       if (resData['status'] == "200" && resData['result'] == 'Successful') {
         _isStockAuditCompleted = resData['data']['isAuditCompleted'];

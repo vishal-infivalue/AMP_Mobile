@@ -207,60 +207,65 @@ class _StockAuditListPageState extends State<StockAuditListPage>
             controller: _tabController,
             children: <Widget>[
               SizedBox(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: stockAuditsTypeListFuel.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: 55.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: AppColors.meruWhite,
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 5.0,
-                        vertical: 5.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const Icon(Icons.abc_rounded),
-                          Text(
-                            '${stockAuditsTypeListFuel[index]['productshortcode']}',
-                            style: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.meruBlack,
-                              fontSize: 15.0,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
-                                    'PMS') {
-                                  Navigator.pushNamed(
-                                      context, Routenames.productPMS);
-                                }
-                                if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
-                                    'LSD') {
-                                  Navigator.pushNamed(
-                                      context, Routenames.productLSD);
-                                }
-                                if (stockAuditsTypeListFuel[index]
-                                        ['productshortcode'] ==
-                                    'DK') {
-                                  Navigator.pushNamed(
-                                      context, Routenames.productDK);
-                                }
-                              },
-                              child: const Icon(Icons.chevron_right)),
-                        ],
-                      ),
-                    );
+                child: RefreshIndicator(
+                  onRefresh: () async{
+                    await Provider.of<AuditProvider>(context, listen: false).fetchStockAuditsList("Fuel");
                   },
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemCount: stockAuditsTypeListFuel.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 55.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: AppColors.meruWhite,
+                        ),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 5.0,
+                          vertical: 5.0,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Icon(Icons.abc_rounded),
+                            Text(
+                              '${stockAuditsTypeListFuel[index]['productshortcode']}',
+                              style: const TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.meruBlack,
+                                fontSize: 15.0,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  if (stockAuditsTypeListFuel[index]
+                                          ['productshortcode'] ==
+                                      'PMS') {
+                                    Navigator.pushNamed(
+                                        context, Routenames.productPMS);
+                                  }
+                                  if (stockAuditsTypeListFuel[index]
+                                          ['productshortcode'] ==
+                                      'LSD') {
+                                    Navigator.pushNamed(
+                                        context, Routenames.productLSD);
+                                  }
+                                  if (stockAuditsTypeListFuel[index]
+                                          ['productshortcode'] ==
+                                      'DK') {
+                                    Navigator.pushNamed(
+                                        context, Routenames.productDK);
+                                  }
+                                },
+                                child: const Icon(Icons.chevron_right)),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ), // Fuel
               SingleChildScrollView(
@@ -1131,14 +1136,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     ScaffoldMessenger.of(context)
                                         .showMaterialBanner(
                                       MaterialBanner(
-                                        content: Text('$result'),
+                                        content: Text('LUBE $result'),
                                         actions: [
                                           TextButton(
-                                            child: const Text('Close'),
-                                            onPressed: () => ScaffoldMessenger
-                                                    .of(context)
-                                                .hideCurrentMaterialBanner(),
-                                          ),
+                                              child: const Text('Close'),
+                                              onPressed: () {
+                                                Provider.of<AuditProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .fetchStockAuditsList(
+                                                        "Fuel");
+                                                ScaffoldMessenger.of(context)
+                                                    .hideCurrentMaterialBanner();
+                                              }),
                                         ],
                                       ),
                                     );
@@ -1153,9 +1163,14 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                         actions: [
                                           TextButton(
                                             child: const Text('Close'),
-                                            onPressed: () => ScaffoldMessenger
-                                                    .of(context)
-                                                .hideCurrentMaterialBanner(),
+                                            onPressed: () {
+                                              Provider.of<AuditProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .fetchStockAuditsList("Fuel");
+                                              ScaffoldMessenger.of(context)
+                                                  .hideCurrentMaterialBanner();
+                                            },
                                           ),
                                         ],
                                       ),
@@ -1699,7 +1714,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     horizontal: 1.0,
                                   ),
                                   child: DropdownButtonFormField<String>(
-                                    value: _threeTextControllerLP.text,
+                                    value: _fiveTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
                                           const EdgeInsets.symmetric(
@@ -1712,7 +1727,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       ),
                                     ),
                                     onChanged: (String? newValue) {
-                                      _threeTextControllerLP.text = newValue!;
+                                      _fiveTextControllerLP.text = newValue!;
                                     },
                                     validator: (value) {
                                       if (value == null ||
@@ -1799,7 +1814,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     horizontal: 1.0,
                                   ),
                                   child: DropdownButtonFormField<String>(
-                                    value: _threeTextControllerLP.text,
+                                    value: _sevenTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
                                           const EdgeInsets.symmetric(
@@ -1812,7 +1827,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       ),
                                     ),
                                     onChanged: (String? newValue) {
-                                      _threeTextControllerLP.text = newValue!;
+                                      _sevenTextControllerLP.text = newValue!;
                                     },
                                     validator: (value) {
                                       if (value == null ||
@@ -2029,7 +2044,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       ]
                                     };
 
-                                    print("payload:   $payload");
+                                    // print("payload:   $payload");
 
                                     var result =
                                         await Provider.of<AuditProvider>(
@@ -2044,13 +2059,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     ScaffoldMessenger.of(context)
                                         .showMaterialBanner(
                                       MaterialBanner(
-                                        content: Text('$result'),
+                                        content: Text('LPG $result'),
                                         actions: [
                                           TextButton(
                                             child: const Text('Close'),
-                                            onPressed: () => ScaffoldMessenger
-                                                    .of(context)
-                                                .hideCurrentMaterialBanner(),
+                                            onPressed: () {
+                                              Provider.of<AuditProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .fetchStockAuditsList("Fuel");
+                                              ScaffoldMessenger.of(context)
+                                                  .hideCurrentMaterialBanner();
+                                            },
                                           ),
                                         ],
                                       ),
@@ -2112,13 +2132,55 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                     onPressed: () async {
                       if (isStockAuditCompleted == 'Yes') {
-                        final SharedPreferenceHelper _sharedPrefs =
-                            SharedPreferenceHelper();
-                        String? auditId = await _sharedPrefs
-                            .getString(ConstantStrings.selectedStockAuditID);
-                        var result = await Provider.of<AuditProvider>(context,
-                                listen: false)
-                            .stock_audit_submit_to_station(auditId: auditId);
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: TweenAnimationBuilder<Color?>(
+                                tween: ColorTween(
+                                    begin: Colors.red, end: Colors.yellow),
+                                duration: Duration(seconds: 1),
+                                builder: (context, color, _) {
+                                  return CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation<Color>(color!),
+                                  );
+                                },
+                                onEnd: () {
+                                  // No need to do anything here
+                                },
+                              ),
+                            );
+                          },
+                        );
+                        Future.delayed(Duration(seconds: 2), () async {
+                          final SharedPreferenceHelper _sharedPrefs =
+                              SharedPreferenceHelper();
+                          String? auditId = await _sharedPrefs
+                              .getString(ConstantStrings.selectedStockAuditID);
+                          var result = await Provider.of<AuditProvider>(context,
+                                  listen: false)
+                              .stock_audit_submit_to_station(auditId: auditId);
+                          Navigator.of(context)
+                              .pop(); // Close the CircularProgressIndicator dialog
+                          ScaffoldMessenger.of(context).showMaterialBanner(
+                            MaterialBanner(
+                              content: Text('$result'),
+                              actions: [
+                                TextButton(
+                                    child: const Text('Close'),
+                                    onPressed: () {
+                                      Provider.of<AuditProvider>(context,
+                                              listen: false)
+                                          .fetchStockAuditsList("Fuel");
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentMaterialBanner();
+                                    }),
+                              ],
+                            ),
+                          );
+                        });
                       }
                     },
                   ),

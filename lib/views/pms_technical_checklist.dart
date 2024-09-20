@@ -1133,13 +1133,17 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
 
                             ScaffoldMessenger.of(context).showMaterialBanner(
                               MaterialBanner(
-                                content: Text('$result'),
+                                content: Text('PMS $result'),
                                 actions: [
                                   TextButton(
                                     child: const Text('Close'),
-                                    onPressed: () =>
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentMaterialBanner(),
+                                    onPressed: () {
+                                      Provider.of<AuditProvider>(
+                                          context,
+                                          listen: false)
+                                          .fetchStockAuditsList("Fuel");
+                                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                                    }
                                   ),
                                 ],
                               ),

@@ -1002,7 +1002,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 builder: (context, color, _) {
                                   return CircularProgressIndicator(
                                     valueColor:
-                                    AlwaysStoppedAnimation<Color>(color!),
+                                        AlwaysStoppedAnimation<Color>(color!),
                                   );
                                 },
                                 onEnd: () {
@@ -1133,13 +1133,17 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 .pop(); // Close the CircularProgressIndicator dialog
                             ScaffoldMessenger.of(context).showMaterialBanner(
                               MaterialBanner(
-                                content: Text('$result'),
+                                content: Text('DK $result'),
                                 actions: [
                                   TextButton(
                                     child: const Text('Close'),
-                                    onPressed: () =>
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentMaterialBanner(),
+                                    onPressed: () {
+                                      Provider.of<AuditProvider>(context,
+                                              listen: false)
+                                          .fetchStockAuditsList("Fuel");
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentMaterialBanner();
+                                    },
                                   ),
                                 ],
                               ),
@@ -1570,7 +1574,8 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     var sum_E = nozzleTotalizers.text == '' ? "0.0" : nozzleTotalizers.text;
     var sum_J = ustTotalizers.text == '' ? "0.0" : ustTotalizers.text;
 
-    grossStockVariation.text = "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
+    grossStockVariation.text =
+        "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
     var l = grossStockVariation.text == '' ? "0.0" : grossStockVariation.text;
 
     var k = sumOfRecoverable.text == '' ? "0.0" : sumOfRecoverable.text;
@@ -2021,15 +2026,13 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               if (od_val == '') {
                                 od_val = 0.0;
                               } else {
-                                od_val =
-                                    double.parse(od_val);
+                                od_val = double.parse(od_val);
                               }
 
                               if (rd_val == '') {
                                 rd_val = 0.0;
                               } else {
-                                rd_val =
-                                    double.parse(rd_val);
+                                rd_val = double.parse(rd_val);
                               }
 
                               var result = rd_val - od_val;
