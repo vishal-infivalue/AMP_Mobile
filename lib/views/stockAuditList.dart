@@ -123,7 +123,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
       appBar: AppBar(
         elevation: 0.5,
         title: const Text(
-          'Stock Audit',
+          'Stocks Audit',
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
@@ -499,7 +499,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 margin: const EdgeInsets.only(right: 10.0),
                                 width: MediaQuery.of(context).size.width * .50,
                                 child: const Text(
-                                  'Stock Reconciliation\n(All Figures in ltrs)',
+                                  'Stocks Reconciliation\n(All Figures in ltrs)',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: AppColors.meruBlack,
@@ -1417,7 +1417,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 margin: const EdgeInsets.only(right: 10.0),
                                 width: MediaQuery.of(context).size.width * .50,
                                 child: const Text(
-                                  'Stock Reconciliation\n(All Figures in ltrs)',
+                                  'Stocks Reconciliation\n(All Figures in ltrs)',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: AppColors.meruBlack,
@@ -2422,7 +2422,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     width: MediaQuery.sizeOf(context).width * .32,
                     child: Column(
                       children: [
-                        const Text("Booking Stocks"),
+                        const Text("Book Stocks"),
                         const SizedBox(
                           height: 5.0,
                         ),
@@ -2435,7 +2435,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
-                            hintText: 'Booking Stocks',
+                            hintText: 'Book Stocks',
                           ),
                           onChanged: (val) {
                             calculate_product();
@@ -2779,7 +2779,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     width: MediaQuery.sizeOf(context).width * .32,
                     child: Column(
                       children: [
-                        const Text("Booking Stocks"),
+                        const Text("Book Stocks"),
                         const SizedBox(
                           height: 5.0,
                         ),
@@ -2793,7 +2793,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 1.0),
-                            hintText: 'Booking Stocks',
+                            hintText: 'Book Stocks',
                           ),
                           onChanged: (val) {
                             calculate_product();
