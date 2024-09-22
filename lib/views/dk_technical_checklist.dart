@@ -352,7 +352,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachNozzleTapToExpandSectionDK(
-                          nozzelsTextControllers,
+                          ((nozzelsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['NOZZLE'] ?? [])
                               as List)),
                       const SizedBox(
@@ -414,7 +414,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachUSTTapToExpandSectionDK(
-                          ustsTextControllers,
+                          ((ustsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['UST'] ?? [])
                               as List)),
                       const SizedBox(
@@ -895,7 +895,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachUSTTapToExpandSectionDKQualityQuantity(
-                          qnqTextControllers,
+                          ((qnqTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['UST'] ?? [])
                               as List))
                     ],
@@ -954,7 +954,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachNozzleTapToExpandSectionDKDDRR(
-                          ddrrTextControllers,
+                          ((ddrrTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['NOZZLE'] ?? [])
                               as List)),
                     ],
@@ -1181,7 +1181,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
 
   List<Widget> buildEachNozzleTapToExpandSectionDK(
       Map nozzelsTextControllers, List nozzleList) {
-    if (nozzleList.length > 0) {
+    if (nozzleList.length > 0 && nozzelsTextControllers.isNotEmpty) {
       return [
         ...nozzleList.map((eachNozzle) => buildNozzleTapToExpandSectionFule(
             nozzelsTextControllers, eachNozzle))
@@ -1189,7 +1189,14 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }
@@ -1541,7 +1548,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
 
   List<Widget> buildEachUSTTapToExpandSectionDK(
       Map ustsTextControllers, List ustList) {
-    if (ustList.length > 0) {
+    if (ustList.length > 0 && ustsTextControllers.isNotEmpty) {
       return [
         ...ustList.map((eachUST) =>
             buildUSTTapToExpandSectionFule(ustsTextControllers, eachUST))
@@ -1549,7 +1556,14 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }
@@ -1891,7 +1905,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
 
   List<Widget> buildEachUSTTapToExpandSectionDKQualityQuantity(
       Map qnqTextControllers, List ustList) {
-    if (ustList.length > 0) {
+    if (ustList.length > 0 && qnqTextControllers.isNotEmpty) {
       return [
         ...ustList.map((eachUST) =>
             buildUSTTapToExpandSectionFuleQualityQuantity(
@@ -1900,7 +1914,14 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }
@@ -2249,7 +2270,14 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }

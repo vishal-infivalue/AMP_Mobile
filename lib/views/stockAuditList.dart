@@ -208,8 +208,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
             children: <Widget>[
               SizedBox(
                 child: RefreshIndicator(
-                  onRefresh: () async{
-                    await Provider.of<AuditProvider>(context, listen: false).fetchStockAuditsList("Fuel");
+                  onRefresh: () async {
+                    await Provider.of<AuditProvider>(context, listen: false)
+                        .fetchStockAuditsList("Fuel");
                   },
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8),
@@ -518,8 +519,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 height: 5.0,
                               ),
                               ...buildEachProductTapToExpandSectionLube(
-                                  lubeProductsTextControllers,
-                                  stockAuditsTypeListLube),
+                                  ((lubeProductsTextControllers ?? {}) as Map),
+                                  ((stockAuditsTypeListLube ?? []))),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -1436,8 +1437,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                 height: 5.0,
                               ),
                               ...buildEachProductTapToExpandSectionLpg(
-                                  lpgProductsTextControllers,
-                                  stockAuditsTypeListLpg),
+                                  (lpgProductsTextControllers ?? {}),
+                                  (stockAuditsTypeListLpg ?? [])),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -2203,7 +2204,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
 
   List<Widget> buildEachProductTapToExpandSectionLube(
       Map lubeProductsTextControllers, List<Map> productList) {
-    if (productList.length > 0) {
+    if (productList.length > 0 && !lubeProductsTextControllers.isEmpty) {
       return [
         ...productList.map((eachProduct) => buildProductTapToExpandSectionLube(
             lubeProductsTextControllers, eachProduct))
@@ -2556,7 +2557,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
 
   List<Widget> buildEachProductTapToExpandSectionLpg(
       Map lpgeProductsTextControllers, List<Map> productList) {
-    if (productList.length > 0) {
+    if (productList.length > 0 && lpgeProductsTextControllers.isNotEmpty) {
       return [
         ...productList.map((eachProduct) => buildProductTapToExpandSectionLpg(
             lpgeProductsTextControllers, eachProduct))

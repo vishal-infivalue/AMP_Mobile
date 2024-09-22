@@ -895,7 +895,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachUSTTapToExpandSectionPMSQualityQuantity(
-                          qnqTextControllers,
+                          ((qnqTextControllers ?? {}) as Map),
                           ((stockAuditsFuelPMSNozzleUSTDetails['UST'] ?? [])
                           as List))
                     ],
@@ -954,7 +954,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachNozzleTapToExpandSectionPMSDDRR(
-                          ddrrTextControllers,
+                          ((ddrrTextControllers ?? {}) as Map),
                           ((stockAuditsFuelPMSNozzleUSTDetails['NOZZLE'] ?? [])
                           as List)),
                     ],
@@ -1125,8 +1125,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                               }
                             };
 
-                            print("##################### $payload");
-
                             var result = await Provider.of<AuditProvider>(context, listen: false).saveStockAuditData(stockAuditData: payload);
 
                             Navigator.of(context).pop(); // Close the CircularProgressIndicator dialog
@@ -1150,12 +1148,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             );
 
                           } else {
-                            print("12345678909876543245678");
-                            final SharedPreferenceHelper _sharedPrefs =
-                                SharedPreferenceHelper();
-                            String? auditId = await _sharedPrefs.getString(
-                                ConstantStrings.selectedStockAuditID);
-                            print("12345678909876543245678 -------------> $auditId");
                             Navigator.of(context)
                                 .pop(); // Close the CircularProgressIndicator dialog
                             ScaffoldMessenger.of(context).showMaterialBanner(
@@ -1188,7 +1180,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
 
   List<Widget> buildEachNozzleTapToExpandSectionPMS(
       Map nozzelsTextControllers, List nozzleList) {
-    if (nozzleList.length > 0) {
+    if (nozzleList.length > 0 && nozzelsTextControllers.isNotEmpty) {
       return [
         ...nozzleList.map((eachNozzle) => buildNozzleTapToExpandSectionFule(
             nozzelsTextControllers, eachNozzle))
@@ -1196,7 +1188,14 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }
@@ -1548,7 +1547,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
 
   List<Widget> buildEachUSTTapToExpandSectionPMS(
       Map ustsTextControllers, List ustList) {
-    if (ustList.length > 0) {
+    if (ustList.length > 0 && ustsTextControllers.isNotEmpty) {
       return [
         ...ustList.map((eachUST) =>
             buildUSTTapToExpandSectionFule(ustsTextControllers, eachUST))
@@ -1556,7 +1555,14 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }
@@ -1899,7 +1905,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
 
   List<Widget> buildEachUSTTapToExpandSectionPMSQualityQuantity(
       Map qnqTextControllers, List ustList) {
-    if (ustList.length > 0) {
+    if (ustList.length > 0 && qnqTextControllers.isNotEmpty) {
       return [
         ...ustList.map((eachUST) =>
             buildUSTTapToExpandSectionFuleQualityQuantity(
@@ -1908,7 +1914,14 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }
@@ -2247,7 +2260,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
 
   List<Widget> buildEachNozzleTapToExpandSectionPMSDDRR(
       Map ddrrTextControllers, List ustList) {
-    if (ustList.length > 0) {
+    if (ustList.length > 0 && ddrrTextControllers.isNotEmpty) {
       return [
         ...ustList.map((eachNozzle) => buildNozzleTapToExpandSectionFuleDDRR(
             ddrrTextControllers, eachNozzle))
@@ -2255,7 +2268,14 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     } else {
       return [
         const SizedBox(
-          height: 1.0,
+          height: 30.0,
+          child: Center(
+            child: Text(
+              "Products not available",
+              style: TextStyle(
+                  color: AppColors.meruRed, fontWeight: FontWeight.bold),
+            ),
+          ),
         )
       ];
     }
