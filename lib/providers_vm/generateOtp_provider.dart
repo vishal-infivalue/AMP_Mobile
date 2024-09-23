@@ -1,28 +1,267 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:amp/response/all_dashboard_response.dart';
 import 'package:amp/response/averageScoreResponse.dart';
 import 'package:amp/response/nc_response.dart';
 import 'package:amp/response/otp_response.dart';
+import 'package:amp/response/submitted_auditResponse.dart';
 import 'package:amp/utils/CommonFunctions.dart';
 import 'package:amp/utils/constant_strings.dart';
 import 'package:amp/utils/global_values.dart';
+import 'package:amp/views/tables/all_auditors_response.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:http_parser/http_parser.dart';
 
 import '../repository/repository.dart';
 import '../response/ERBResponse.dart';
+import '../response/com_audit_list.dart';
 import '../response/performing_stations.dart';
 import '../response/score_card_response.dart';
 import '../response/upcoming_audits.dart';
 import '../response/validateUserOtp.dart';
 import '../routes/route_names.dart';
+import '../response/nc_dash_response.dart';
+import '../utils/shared_preference_helper.dart';
 import '../utils/strings.dart';
 
 class APIProvider with ChangeNotifier {
   final _appRepository = AppRepository();
   GlobalVariables gb = GlobalVariables();
+  final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
+
+  ////////////////////////////////////////////////////////
+
+  /////////  COMPLIANCE MANAGER        ///////////////////
+
+  ////////////////////////////////////////////////////////
+
+  //*1....******************GET ALL AUDITOR**********************/
+
+  List<Auditor>? _bodyAuditor = [];
+  List<Auditor>? get bodyAuditor => _bodyAuditor;
+
+  Future<void> getAllAuditors(BuildContext context) async {
+    setLoading(true);
+
+    try{
+      var response = await _appRepository.getAllAuditors();
+      setLoading(false);
+
+      if (response != null) {
+        var auditResponse = AllAuditors.fromJson(response);
+        _bodyAuditor = auditResponse.data;
+
+        notifyListeners();
+        print("All Auditor API Response $response");
+      } else {
+        print("Error fetching Auditor API");
+      }}
+    catch (e) {
+      setLoading(false);
+      print("Error fetching Auditor API: $e");
+    }
+  }
+
+  //*2....******************GET ALL STATION LIST **********************/
+
+  Future<void> getAllStations(BuildContext context) async {
+    setLoading(true);
+
+    try{
+      var response = await _appRepository.getAllStations();
+      setLoading(false);
+
+      if (response != null) {
+        var auditResponse = AllAuditors.fromJson(response);
+        _bodyAuditor = auditResponse.data;
+
+        notifyListeners();
+        print("All Auditor API Response $response");
+      } else {
+        print("Error fetching Auditor API");
+      }}
+    catch (e) {
+      setLoading(false);
+      print("Error fetching Auditor API: $e");
+    }
+  }
+
+  //*3....******************GET ALL SCHEDULABLE  LIST **********************/
+
+  String _schedulableAuditsCount = '0';
+  String get schedulableAuditsCount => _schedulableAuditsCount;
+  String _numberOfSchedulableAudits = '0';
+  String get numberOfSchedulableAudits => _numberOfSchedulableAudits;
+
+  List<AuditBody>? _body = [];
+  List<AuditBody>? get body => _body;
+
+  Future<void> getAllSchedulableAudits(BuildContext context) async {
+    setLoading(true);
+
+    try{
+      var response = await _appRepository.getAllSchedulableAudits();
+      setLoading(false);
+
+      if (response != null) {
+        var auditResponse = ComplianceManagerAuditResponse.fromJson(response);
+        _body = auditResponse.body;
+        _schedulableAuditsCount = auditResponse.body!.length.toString();
+
+        notifyListeners();
+        print("Upcoming API Response $response");
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successful")));
+
+
+      } else {
+        print("Error fetching Upcoming API");
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
+      }}
+    catch (e) {
+      setLoading(false);
+      print("Error in Upcoming API: $e");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error Bottom Performing")));
+    }
+  }
+
+  ////////////////////////////////////////////////////////
+
+  /////////  STATION MANAGER        ///////////////////
+
+  ////////////////////////////////////////////////////////
+
+  //*1....******************DOWNLOAD PDF **********************/
+  Future<void> downloadPdf(BuildContext context) async {
+    setLoading(true);
+
+    try {
+      var response = await _appRepository.downloadPdf();
+
+      setLoading(false);
+
+      if (response != null) {
+
+        CommonFunctions.showToast("Successfully Downloaded");
+
+      } else {
+
+        CommonFunctions.showToast("Error Downloading the file");
+        // print("Error pre-validating user");
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error in average cluster")));
+      }
+    } catch (e) {
+      setLoading(false);
+
+      CommonFunctions.showToast("Error Downloading the file $e");
+      // print("Error in audit data: $e");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error in average cluster")));
+    }
+  }
+
+  //*2....******************UPLOAD PDF **********************/
+
+  Future<void> completeAudit(String auditId, File file, BuildContext context) async {
+    try {
+      setLoading(true);
+      // String url = 'http://103.235.106.117:8080/audit_management_system-0.0.37-SNAPSHOT/api/auditmaster/completeaudit?auditId=$auditId';
+      String url = 'http://audit_management_system-UAT/api/auditmaster/completeaudit?auditId=$auditId';
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+
+
+      request.headers.addAll({ // Example of adding an authorization token
+        'Content-Type': 'multipart/form-data',
+        'loginUserId': userIdLoggedIn.toString()
+      });
+
+      if (file != null) {
+        String fileName = basename(file.path);
+        String? mimeType = lookupMimeType(file.path);
+
+        request.files.add(await http.MultipartFile.fromPath(
+          'file',
+          file.path,
+          filename: fileName,
+          contentType: mimeType != null ? MediaType.parse(mimeType) : null, // Safely remove defaultContentType
+        ));
+      }
+
+      var response = await request.send();
+      var responseData = await http.Response.fromStream(response);
+      setLoading(false); // Set loading to false
+
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(responseData.body);
+        print("Audit completed successfully");
+        CommonFunctions.showToast("Audit completed successfully.");
+
+      } else {
+
+        print("Error completing audit: ${responseData.body}");
+        CommonFunctions.showToast("Error completing the audit.");
+      }
+    } catch (e) {
+      setLoading(false);
+      print("Error: $e");
+      CommonFunctions.showToast("Error completing the audit.");
+    }
+  }
+
+
+  //*3....******************GET ALL SUBMITTED AUDITS **********************/
+
+  String _submittedAuditsCount = '0';
+  String get submittedAuditsCount => _submittedAuditsCount;
+  List<SubmittedAuditBody> _submittedAuditItems = [];
+  List<SubmittedAuditBody> get submittedAuditItems => _submittedAuditItems;
+
+  Future<void> getAllSubmittedAudits(BuildContext context) async {
+    setLoading(true);
+
+    try{
+      var response = await _appRepository.getAllSubmittedAudits();
+      setLoading(false);
+
+      if (response != null) {
+        var auditResponse = SubmittedAuditResponse.fromJson(response);
+        _submittedAuditsCount = auditResponse.body.length.toString();
+        _submittedAuditItems = auditResponse.body;
+        notifyListeners();
+        print("Submitted API Response $response");
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successful")));
+
+
+      } else {
+        print("Error in Submitted API");
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
+      }}
+    catch (e) {
+      setLoading(false);
+      print("Error in Submitted API: $e");
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error Bottom Performing")));
+    }
+  }
+
+
+  // /api/auditmaster/getallauditbystate?state=Submitted
+
+
+
+
+
+
+  ////////////////////////////////////////////////////////
+
+  /////////  CLUSTER MANAGER        ///////////////////
+
+  ////////////////////////////////////////////////////////
+
 
   //*1....******************PREVALIDATE**********************/
 
@@ -34,6 +273,7 @@ class APIProvider with ChangeNotifier {
     CommonFunctions.showLoading(context);
     try {
       var response = await _appRepository.prevalidateUser(data);
+
       setLoading(false);
       CommonFunctions.dismissLoading(context);
       if (response != null) {
@@ -95,15 +335,22 @@ class APIProvider with ChangeNotifier {
         CommonFunctions.showToast("Login Successfully.");
 
         switch (auditResponse.role) {
+          case 1001:
+            Navigator.pushNamed(context, Routenames.smDashboardScreen);
+            break;
           case 1002:
             Navigator.pushNamed(context, Routenames.dmDashboardScreen);
             break;
-          case 1001:
+          case 1003:
+            Navigator.pushNamed(context, Routenames.dmDashboardScreen);
+            break;
+          case 1004:
+            Navigator.pushNamed(context, Routenames.dmDashboardScreen);
+            break;
+          case 1013:
             Navigator.pushNamed(context, Routenames.cmDashboardScreen);
             break;
-          case 1050:
-            Navigator.pushNamed(context, Routenames.smDashboardScreen);
-            break;
+
           default:
             CommonFunctions.showToast("Accessed Denied.");
         }
@@ -122,7 +369,7 @@ class APIProvider with ChangeNotifier {
 
 
 
-  //*3....******************AVERAGE SCORE & GRADE **********************/
+  //*4....******************AVERAGE SCORE & GRADE **********************/
   String _avgMessage = '0';
   String get avgMessage => _avgMessage;
   double _avgScore = 0.0;
@@ -154,6 +401,8 @@ class APIProvider with ChangeNotifier {
       print("Error in fetching average score: $e");
     }
   }
+
+
 
 
 
@@ -193,28 +442,6 @@ class APIProvider with ChangeNotifier {
   ///api/dashboard/audit/getclusteravgscore
 
 
-
-
-  Future<void> downloadPdf(BuildContext context) async {
-    setLoading(true);
-
-    try {
-      var response = await _appRepository.downloadPdf();
-
-      setLoading(false);
-
-      if (response != null) {
-
-      } else {
-        // print("Error pre-validating user");
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error in average cluster")));
-      }
-    } catch (e) {
-      setLoading(false);
-      // print("Error in audit data: $e");
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error in average cluster")));
-    }
-  }
 
 
 
@@ -275,6 +502,52 @@ class APIProvider with ChangeNotifier {
     }
   }
 
+
+  //////NC DashBoard
+
+  int _lessThan30 = 0;
+  int get lessThan30 => _lessThan30;
+
+  int _lessThan90 = 0;
+  int get lessThan90 => _lessThan90;
+
+  int _lessThan180 = 0;
+  int get lessThan180 => _lessThan180;
+
+  int _morethan188 = 0;
+  int get morethan188 => _morethan188;
+
+  Future<void> getNCDashboard(BuildContext context) async {
+    setLoading(true);
+
+    try{
+      var response = await _appRepository.getNCDashboard();
+      setLoading(false);
+
+      if (response != null) {
+        var auditResponse = NcDashResponse.fromJson(response);
+        _lessThan30 = auditResponse.data!.lessThan30!;
+        _lessThan90 = auditResponse.data!.lessThan90!;
+        _lessThan180 = auditResponse.data!.lessThan180!;
+        _morethan188 = auditResponse.data!.moreThan188!;
+        notifyListeners();
+        print("Upcoming API Response $response");
+
+
+      } else {
+        print("Error fetching Upcoming API");
+      }}
+    catch (e) {
+      setLoading(false);
+      print("Error in Upcoming API: $e");
+    }
+  }
+
+
+
+
+
+
   //fetch pending audits
   String _pendingAuditsCount = '0';
   String get pendingAuditsCount => _pendingAuditsCount;
@@ -295,8 +568,6 @@ class APIProvider with ChangeNotifier {
       notifyListeners();
       print("Upcoming API Response $response");
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successful")));
-
-
     } else {
       print("Error fetching Upcoming API");
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error")));
@@ -366,6 +637,10 @@ class APIProvider with ChangeNotifier {
       _gradeDB = dashboardAllResponse.auditScoreSummary.gradeValue;
       _avgMessageDB = dashboardAllResponse.auditScoreSummary.message;
       _gradeValueDB = dashboardAllResponse.auditScoreSummary.gradeValue;
+
+      _numberofERBTECHaudits = int.parse(dashboardAllResponse.completedAuditResponse.numberofERBTECHaudits);
+      _numberofERBCONAaudits = int.parse(dashboardAllResponse.completedAuditResponse.numberofERBCONAaudits);
+      _numberofFUELaudits = int.parse(dashboardAllResponse.completedAuditResponse.numberofFUELaudits);
 
       _completedAuditList = dashboardAllResponse.completedAuditResponse.completedAuditList;
       _completedaudits = dashboardAllResponse.completedAuditResponse.completedaudits;
@@ -560,22 +835,47 @@ class APIProvider with ChangeNotifier {
 
   }
 
-
-  Future<void> startAudit(String jsonData, BuildContext context) async {
+  Future<void> createAudit(String jsonData, BuildContext context) async {
     setLoading(true);
 
     Map<String, dynamic> data = jsonDecode(jsonData);
 
-    var response = await _appRepository.startAudit(data);
+    try {
+      var response = await _appRepository.createAudit(data);
+      setLoading(false);
 
-    if(response!= null){
-
-
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("The audit details entered so far has been successfully saved in the On Hold state.")));
-
-    }else{
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please reload the page.")));
+      if (response != null) {
+        print("Success ScoreCard");
+      } else {
+        print("Error ScoreCard");
+      }
+    } catch (e) {
+      setLoading(false);
+      print("Error ScoreCard");
     }
+  }
+
+
+  Future<void> startAudit(String jsonData, BuildContext context) async {
+    setLoading(true);
+
+    try {
+      Map<String, dynamic> data = jsonDecode(jsonData);
+
+      var response = await _appRepository.startAudit(data);
+
+      if (response.statusCode == 200) {
+
+      } else if (response.statusCode == 406) {
+        print(
+            "Due Date Should be greater than or equal to previous Audit Date + 45 Days");
+      } else {
+        print("Error");
+      }
+    }catch(e){
+      print("Error $e");
+    }
+
 
   }
 
@@ -636,66 +936,22 @@ class APIProvider with ChangeNotifier {
   List<Data> _ncAuditTable = [];
   List<Data> get ncAuditTable => _ncAuditTable;
 
-  Future<NcResponse?> getNCData(BuildContext context) async {
-    try {
-      setLoading(true);
+  Future<void> getNCData(BuildContext context) async {
+    setLoading(true);
+    var response = await _appRepository.getNCData();
+    setLoading(false);
 
-      print("NCDATA CALLED");
-
-      // Fetch the NC Data from the repository
-      var response = await _appRepository.getNCData();
-      print("NCDATA DATA: $response");
+    if (response != null) {
       var ncDataTable = NcResponse.fromJson(response);
-      _ncAuditTable = ncDataTable.data ?? [];
+      _ncAuditTable = ncDataTable.data!;
 
-      print("NCDATA DATA: $_ncAuditTable");
-
-      // Store the data in SharedPreferences
-      await _storeNCDataInPreferences(_ncAuditTable);
-
-      // Notify listeners for UI update
       notifyListeners();
 
-      if (response != null) {
-        // Parse the JSON response into a model
-        var ncDataTable = NcResponse.fromJson(response);
-        _ncAuditTable = ncDataTable.data ?? [];
+      print("Successful $response");
 
-        print("NCDATA DATA: $_ncAuditTable");
-
-        // Store the data in SharedPreferences
-        await _storeNCDataInPreferences(_ncAuditTable);
-
-        // Notify listeners for UI update
-        notifyListeners();
-
-        return ncDataTable; // Return the parsed response
-      } else {
-        print("No data received.");
-        return null;
-      }
-    } catch (e) {
-      // Log error in case of an exception
-      print("Error fetching NC data: $e");
-      return null;
-    } finally {
-      // Ensure loading state is reset regardless of success or failure
-      setLoading(false);
+    } else {
+      print("Error fetching data");
     }
-  }
-
-
-// Method to store NC data in SharedPreferences
-  Future<void> _storeNCDataInPreferences(List<Data> ncAuditTable) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Convert the list of Data objects to a JSON string
-    String jsonData = jsonEncode(ncAuditTable.map((data) => data.toJson()).toList());
-
-    // Store the JSON string in SharedPreferences
-    await prefs.setString('nc_audit_table', jsonData);
-
-    print("Data stored in SharedPreferences: $jsonData");
   }
 
 
@@ -720,43 +976,18 @@ class APIProvider with ChangeNotifier {
 
     Map<String, dynamic> data = jsonDecode(jsonData);
 
-
     var response = await _appRepository.postNCUpdate(data);
     setLoading(false);
 
     if (response != null) {
-      // print("User pre-validated successfully: $response");
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("OTP Validation successful.")));
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully Closed.")));
     } else {
-      // print("Error pre-validating user");
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error pre-validating user")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error Closing the NC as no Zoho Assigned..")));
     }
   }
 
 
-  // Future<void> postAuditData(String jsonData, BuildContext context) async {
-  //   setLoading(true);
-  //
-  //   Map<String, dynamic> data = jsonDecode(jsonData);
-  //
-  //   try {
-  //     var response = await _appRepository.postAuditData(data);
-  //     setLoading(false);
-  //
-  //     if (response != null) {
-  //       print("VISHAL888 Data send: $response");
-  //       gb.isButtonEnabled_gb = true;
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Data send ")));
-  //     } else {
-  //       print("VISHAL888 Error pre-validating user");
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Error sending data")));
-  //     }
-  //   } catch (e) {
-  //     setLoading(false);
-  //     print("VISHAL888 Error pre-validating user: $e");
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("VISHAL888 Error sending data")));
-  //   }
-  // }
 
 
 

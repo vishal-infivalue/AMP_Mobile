@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:amp/utils/constant_strings.dart';
 import 'package:amp/utils/global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers_vm/generateOtp_provider.dart';
 import '../utils/app_colors.dart';
@@ -24,33 +26,43 @@ class NCDetailPage extends StatefulWidget {
 
 
 class _NCDetailPageState extends State<NCDetailPage> {
+  int index = 0;
+  int auditId = 0;
+
 
   final _employeeIdController = TextEditingController();
 
-  void _checkInputLength() {
-    setState(() {
-      if (_employeeIdController.text.length > 1 ) {
+  Future<Map<String, dynamic>?> loadData() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      int? auditId = prefs.getInt(ConstantStrings.selectedNCAuditId);
+      final logInProvider = Provider.of<APIProvider>(context, listen: false);
+      GlobalVariables gb = GlobalVariables();
+      Map<String, dynamic> data = {
+        "id": gb.ncAudit,
+        "comment": _employeeIdController.text.toString(),
+      };
 
-        GlobalVariables gb = GlobalVariables();
+      String jsonData = jsonEncode(data);
+      print(jsonData);
 
-        final logInProvider = Provider.of<APIProvider>(context, listen: false);
+      logInProvider.postNCUpdate(jsonData, context);
+    }catch(e){
+      print("ERROR");
+    }
 
-        Map<String, dynamic> data = {
-          "id": 1,
-          "comment": _employeeIdController.text.toString(),
-        };
+  }
 
-        String jsonData = jsonEncode(data);
-        print(jsonData);
-
-        logInProvider.postNCUpdate(jsonData, context);
-
-
-      }
-      else {
-        print("ERROR");
-      }
-    });
+  Future<Map<String, dynamic>?> loadIndex() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      index = prefs.getInt(ConstantStrings.selectedNCIndex)!;
+      auditId = prefs.getInt(ConstantStrings.selectedNCAuditId)!;
+      print("INDEX VALUE IS $index");
+      print("INDEX VALUE IS $auditId");
+    }catch(e){
+      print("SOME ERROR");
+    }
   }
 
   @override
@@ -63,12 +75,16 @@ class _NCDetailPageState extends State<NCDetailPage> {
   @override
   void initState() {
     super.initState();
+
   }
 
 
-  GlobalVariables gb = GlobalVariables();
+
   @override
   Widget build(BuildContext context) {
+    GlobalVariables gb = GlobalVariables();
+
+    // loadIndex();
     return Scaffold(
       appBar: AppBar(
         title: const Text('NC Details',
@@ -163,7 +179,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.station!.stationname!,
+                                gb.ncAuditTable_gb[gb.index].station!.stationname!+""+gb.ncAudit.toString(),
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -189,7 +205,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.station!.stationcode!,
+                                gb.ncAuditTable_gb[gb.index].station!.stationcode!,
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -215,7 +231,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.stationManager!.firstname!+" "+gb.ncAuditTable_gb[0]!.stationManager!.lastname!,
+                                gb.ncAuditTable_gb[gb.index].stationManager!.firstname!+" "+gb.ncAuditTable_gb[0]!.stationManager!.lastname!,
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -253,7 +269,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.clusterManager!.firstname!+" "+gb.ncAuditTable_gb[0]!.clusterManager!.lastname!,
+                                gb.ncAuditTable_gb[gb.index].clusterManager!.firstname!+" "+gb.ncAuditTable_gb[0]!.clusterManager!.lastname!,
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -279,7 +295,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.auditor!.firstname!+" "+gb.ncAuditTable_gb[0]!.auditor!.lastname!,
+                                gb.ncAuditTable_gb[gb.index].auditor!.firstname!+" "+gb.ncAuditTable_gb[0]!.auditor!.lastname!,
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -343,7 +359,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.audit!.id!.toString(),
+                                gb.ncAuditTable_gb[gb.index].audit!.id!.toString(),
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -369,7 +385,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.audit!.scheduledDate.toString(),
+                                gb.ncAuditTable_gb[gb.index].audit!.scheduledDate.toString(),
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -433,7 +449,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                gb.ncAuditTable_gb[0]!.audit!.type!,
+                                gb.ncAuditTable_gb[gb.index].audit!.type!,
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -485,7 +501,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                               ),
                               SizedBox(height: 4.0),
                               Text(
-                                "In Progress",
+                                "-",
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14.0,
@@ -521,7 +537,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                     ),
                   ),
                   Text(
-                    gb.ncAuditTable_gb[0]!.auditor!.lastname!,
+                    gb.ncAuditTable_gb[gb.index].auditor!.lastname!,
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       color: AppColors.meruBlack,
@@ -744,7 +760,7 @@ class _NCDetailPageState extends State<NCDetailPage> {
                         ),
                       ),
                       onPressed: () {
-
+                        loadData();
                       },
                     ),
                   ),

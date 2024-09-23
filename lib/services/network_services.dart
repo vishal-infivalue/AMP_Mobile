@@ -20,6 +20,8 @@ abstract class BaseApiServices {
 
   Future<dynamic> getApiWithHeader(String url, String loginUserId);
 
+  Future<dynamic> getApiWithHeaderForPDF(String url, String loginUserId);
+
   Future<dynamic> getApi(String url);
 }
 
@@ -40,6 +42,8 @@ class NetworkApiServices extends BaseApiServices {
         throw UnAuthorizedException(message: "SOME ERROR");
       case 500:
         throw UnAuthorizedException(message: "INTERNAL SERVER ERROR");
+        case 406:
+        throw UnAuthorizedException(message: "Not Acceptable");
       default:
         throw FetchDataException(message: "Error during communication");
     }
@@ -106,6 +110,25 @@ class NetworkApiServices extends BaseApiServices {
     try {
       final headers = {
         "Content-Type": "application/json",
+        "loginUserId": loginUserId, // Add the loginUserId header
+      };
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: headers,
+      );
+      responseJson = apiResponse(response);
+    } catch (e) {
+      print(e.toString());
+    }
+    return responseJson;
+  }
+
+  @override
+  Future getApiWithHeaderForPDF(String url, String loginUserId) async {
+    dynamic responseJson;
+    try {
+      final headers = {
+        "Content-Type": "application/pdf",
         "loginUserId": loginUserId, // Add the loginUserId header
       };
       http.Response response = await http.get(

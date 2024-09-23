@@ -365,8 +365,8 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _buildActionButton("Save", context),
-            _buildActionButton("Delete", context),
-            _buildActionButton("Hold", context),
+            /*_buildActionButton("Delete", context),
+            _buildActionButton("Hold", context),*/
             _buildActionButton("Submit to station", context),
           ],
         ),
@@ -957,7 +957,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                     "id": "$auditId",
                   };
                   String jsonData = jsonEncode(data);
-                  // logInProvider.holdAudit(jsonData, context);
+                  logInProvider.holdAudit(jsonData, context);
 
                   showDialog(
                     context: context,
@@ -1020,7 +1020,7 @@ class _ERB_AuditState extends State<ERB_Audit_Tech> {
                 "id": "$auditId",
               };
               String jsonData = jsonEncode(data);
-              // logInProvider.submitAudit(jsonData, context);
+              logInProvider.submitAudit(jsonData, context);
 
               showDialog(
                 context: context,

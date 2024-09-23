@@ -15,6 +15,28 @@ import '../utils/app_colors.dart';
 import '../utils/strings.dart';
 import '../utils/user_helper.dart';
 
+import 'package:amp/response/performing_stations.dart';
+import 'package:amp/utils/global_values.dart';
+import 'package:amp/views/cm_dashboard_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pie_chart/pie_chart.dart' as pie_chart;
+import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
+
+import '../global_theme/horizontalbar.dart';
+import '../providers_vm/generateOtp_provider.dart';
+import '../response/validateUserOtp.dart';
+import '../routes/route_names.dart';
+import '../utils/CommonFunctions.dart';
+import '../utils/app_colors.dart';
+import '../utils/status_data.dart';
+import '../utils/strings.dart';
+import '../utils/user_helper.dart';
+import 'notification_screen.dart';
+
 class StationManagerDash extends StatefulWidget {
   @override
   _StationManagerDashState createState() => _StationManagerDashState();
@@ -31,11 +53,13 @@ class _StationManagerDashState extends State<StationManagerDash> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final apiProvider = Provider.of<APIProvider>(context, listen: false);
+      await apiProvider.getAllSchedulableAudits(context);
       await apiProvider.fetchPendingAudits(context);
       await apiProvider.getclusteravgscore(context);
       await apiProvider.getperformingstations(context);
       await apiProvider.getperformingstationsBottom(context);
       await apiProvider.getAllDashBoard(context);
+      await apiProvider.getAllSubmittedAudits(context);
     });
   }
 
@@ -73,11 +97,16 @@ class _StationManagerDashState extends State<StationManagerDash> {
       BarChartData('3-6', 1250, 2, 3, 3),
     ];
 
+
+    final logInProvider = Provider.of<APIProvider>(context);
+    int numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
+    int numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
+    int numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
+    int numberofFUELaudits_gb = logInProvider.numberofFUELaudits;
     final List<NChartData> ndata = [
-      NChartData('ERBCONA  - 1', 1),
-      NChartData('ERBTECH - 1', 1),
-      NChartData('HSE   - 2', 2),
-      NChartData('FUEL - 2', 2),
+      NChartData("Consumer: "+numberofERBCONAaudits_gb.toString(), numberofERBCONAaudits_gb),
+      NChartData("Technical: "+numberofERBTECHaudits_gb.toString(), numberofERBCONAaudits_gb),
+      NChartData("Stock: "+numberofFUELaudits_gb.toString(), numberofFUELaudits_gb)
     ];
 
     return LayoutBuilder(
@@ -107,10 +136,10 @@ class _StationManagerDashState extends State<StationManagerDash> {
           width: 60, // Set your desired width
           height: 60, // Set your desired height
           child: IconButton(
-            icon: Image.asset("assets/images/menu_logo.png"),
-            iconSize: 40, // Set the size of the IconButton
-            onPressed: () =>     Navigator.pushNamed(context,
-                Routenames.profileScreen) // Handle back button press
+              icon: Image.asset("assets/images/menu_logo.png"),
+              iconSize: 40, // Set the size of the IconButton
+              onPressed: () =>     Navigator.pushNamed(context,
+                  Routenames.profileScreen) // Handle back button press
           ),
         ),
         actions: [
@@ -281,10 +310,16 @@ class _StationManagerDashState extends State<StationManagerDash> {
     String numberofaudits = logInProvider.numberofaudits;
 
     gb.pendingAuditTable_gb = logInProvider.pendingAuditTable;
+    gb.submittedAuditTable_gb = logInProvider.submittedAuditItems;
+
+    gb.schedulableAuditsList_gb = logInProvider.body;
+    gb.schedulableAuditsCount_gb = logInProvider.schedulableAuditsCount;
+
     gb.ncAuditTable_gb = logInProvider.ncAuditTable;
     gb.completedAuditList_gb = logInProvider.completedAuditList;
     gb.upcomingAuditMessage_gb = logInProvider.avgMessageDB;
     gb.numberOfAuditsUpcoming_gb = logInProvider.numberOfAuditsUpcoming;
+    gb.numberOfAuditsSubmitted_gb = logInProvider.submittedAuditsCount;
 
     return SingleChildScrollView(
       child: Container(
@@ -365,7 +400,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: GestureDetector(
@@ -446,8 +481,8 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                                 widget: Container(
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
+                                                    const EdgeInsets.all(
+                                                        8.0),
                                                     child: Text(
                                                       '\n\n\n\nAverage Score : $roundoff_avgScore%\nAverage Grade : $gradeValue',
                                                       style: TextStyle(
@@ -457,7 +492,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                                         fontWeight: FontWeight.bold,
                                                         letterSpacing: 2,
                                                         fontStyle:
-                                                            FontStyle.normal,
+                                                        FontStyle.normal,
                                                       ),
                                                       textAlign: TextAlign.left,
                                                     ),
@@ -535,8 +570,8 @@ class _StationManagerDashState extends State<StationManagerDash> {
                 ],
               ),
             ),
-
-            //ScheduledAudit
+            
+            //SubmittedAudit
             Padding(
               padding: const EdgeInsets.all(2.0),
               child: Stack(
@@ -581,7 +616,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                       child: Column(
                                         children: [
                                           Text(
-                                            logInProvider.numberOfAuditsUpcoming+" "+"List of audits pending final signature and submission",
+                                            logInProvider.submittedAuditsCount+" "+"List of audits pending final signature and submission",
                                             style: TextStyle(
                                               fontFamily: 'Poppins',
                                               color: Colors.black,
@@ -696,108 +731,108 @@ class _StationManagerDashState extends State<StationManagerDash> {
                     padding: EdgeInsets.only(top: 100.8 / 2.0),
                     child: Container(
                         child: Card(
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                              Colors.white,
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                         logInProvider.numberOfAuditsUpcoming+" "+logInProvider.upcomingAuditMessage,
-                                        style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.black,
-                                          fontSize: 12.0,
-                                          letterSpacing: 2,
-                                          fontStyle: FontStyle.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                              Center(
-                                child: GestureDetector(
-                                  onTap: () {
-
-                                    showDialog(
-                                      context: context,
-                                      barrierDismissible: false,
-                                      builder: (BuildContext context) {
-                                        return Center(
-                                          child: TweenAnimationBuilder<Color?>(
-                                            tween: ColorTween(begin: Colors.red, end: Colors.yellow),
-                                            duration: Duration(seconds: 1),
-                                            builder: (context, color, _) {
-                                              return CircularProgressIndicator(
-                                                valueColor: AlwaysStoppedAnimation<Color>(color!),
-                                              );
-                                            },
-                                            onEnd: () {
-                                              // No need to do anything here
-                                            },
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            logInProvider.numberOfAuditsUpcoming+" "+logInProvider.upcomingAuditMessage,
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              letterSpacing: 2,
+                                              fontStyle: FontStyle.normal,
+                                            ),
                                           ),
-                                        );
-                                      },
-                                    );
-
-                                    // Simulate a delay of 4 seconds
-                                    Future.delayed(Duration(seconds: 1), () {
-                                      Navigator.of(context)
-                                          .pop(); // Close the CircularProgressIndicator dialog
-
-                                      Navigator.pushNamed(context, Routenames.pendingTable);
-                                    });
-
-
-                                  },
-                                  child: Text(
-                                    AppStrings.tapView,
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: AppColors.meruBlack,
-                                      fontSize: 12.0,
-                                      fontStyle: FontStyle.normal,
-                                      decoration: TextDecoration.underline, // Underline the text
+                                        ],
+                                      ),
                                     ),
-                                    textAlign: TextAlign.left,
                                   ),
-                                ),
-                              )
+                                  Center(
+                                    child: GestureDetector(
+                                      onTap: () {
 
-                            ],
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: TweenAnimationBuilder<Color?>(
+                                                tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                                duration: Duration(seconds: 1),
+                                                builder: (context, color, _) {
+                                                  return CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                                  );
+                                                },
+                                                onEnd: () {
+                                                  // No need to do anything here
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        // Simulate a delay of 4 seconds
+                                        Future.delayed(Duration(seconds: 1), () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the CircularProgressIndicator dialog
+
+                                          Navigator.pushNamed(context, Routenames.pendingTable);
+                                        });
+
+
+                                      },
+                                      child: Text(
+                                        AppStrings.tapView,
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: AppColors.meruBlack,
+                                          fontSize: 12.0,
+                                          fontStyle: FontStyle.normal,
+                                          decoration: TextDecoration.underline, // Underline the text
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  )
+
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    )),
+                        )),
                   ),
                   Container(
                     child: Padding(
@@ -877,7 +912,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: Padding(
@@ -898,19 +933,19 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                       Center(
                                         child: pie_chart.PieChart(
                                           dataMap: ndata.asMap().map(
-                                              (index, chartData) => MapEntry(
+                                                  (index, chartData) => MapEntry(
                                                   chartData.title,
                                                   chartData.value.toDouble())),
                                           chartRadius: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
+                                              .size
+                                              .width /
                                               4,
                                           // Adjust radius for mobile
                                           legendOptions:
-                                              const pie_chart.LegendOptions(
+                                          const pie_chart.LegendOptions(
                                             showLegendsInRow: false,
                                             legendPosition:
-                                                pie_chart.LegendPosition.right,
+                                            pie_chart.LegendPosition.right,
                                             // Legend at the bottom
                                             showLegends: true,
                                           ),
@@ -925,7 +960,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                           chartType: pie_chart.ChartType.ring,
                                           // Set chart type to ring for donut effect
                                           ringStrokeWidth:
-                                              20, // Adjust ring stroke width as needed
+                                          20, // Adjust ring stroke width as needed
                                         ),
                                       ),
                                       Center(
@@ -1104,7 +1139,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: Padding(
@@ -1133,10 +1168,10 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                               dataSource: barData,
                                               xValueMapper:
                                                   (BarChartData br, _) =>
-                                                      br.x as String,
+                                              br.x as String,
                                               yValueMapper:
                                                   (BarChartData br, _) =>
-                                                      br.y1 as num,
+                                              br.y1 as num,
                                             ),
                                           ],
                                         ),
@@ -1210,7 +1245,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
             ),
 
             //performing stations
-            Padding(
+           /* Padding(
               padding: const EdgeInsets.all(2.0),
               child: Stack(
                 alignment: Alignment.topCenter,
@@ -1250,7 +1285,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: Padding(
@@ -1303,19 +1338,19 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                                       fontSize: 12.0,
                                                       letterSpacing: 2,
                                                       fontStyle:
-                                                          FontStyle.normal,
+                                                      FontStyle.normal,
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                const EdgeInsets.all(8.0),
                                                 child: Container(
                                                   height: 150,
                                                   child: SfCartesianChart(
                                                     primaryXAxis:
-                                                        CategoryAxis(),
+                                                    CategoryAxis(),
                                                     primaryYAxis: NumericAxis(
                                                         minimum: 0,
                                                         maximum: 120,
@@ -1328,14 +1363,14 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                                             .topStationList.reversed
                                                             .toList(),
                                                         xValueMapper: (Station
-                                                                    data,
-                                                                _) =>
-                                                            data.stationCode ??
+                                                        data,
+                                                            _) =>
+                                                        data.stationCode ??
                                                             '',
                                                         yValueMapper:
                                                             (Station data, _) =>
-                                                                data.avgScore ??
-                                                                0,
+                                                        data.avgScore ??
+                                                            0,
                                                         name: 'Gold',
                                                         color: Colors.yellow,
                                                         width: 0.2,
@@ -1390,19 +1425,19 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                                       fontSize: 12.0,
                                                       letterSpacing: 2,
                                                       fontStyle:
-                                                          FontStyle.normal,
+                                                      FontStyle.normal,
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                const EdgeInsets.all(8.0),
                                                 child: Container(
                                                   height: 150,
                                                   child: SfCartesianChart(
                                                     primaryXAxis:
-                                                        CategoryAxis(),
+                                                    CategoryAxis(),
                                                     primaryYAxis: NumericAxis(
                                                         minimum: 0,
                                                         maximum: 120,
@@ -1415,14 +1450,14 @@ class _StationManagerDashState extends State<StationManagerDash> {
                                                             .bottomStationList
                                                             .toList(),
                                                         xValueMapper: (Station
-                                                                    data,
-                                                                _) =>
-                                                            data.stationCode ??
+                                                        data,
+                                                            _) =>
+                                                        data.stationCode ??
                                                             '',
                                                         yValueMapper:
                                                             (Station data, _) =>
-                                                                data.avgScore ??
-                                                                0,
+                                                        data.avgScore ??
+                                                            0,
                                                         name: 'Gold',
                                                         color: Colors.red,
                                                         width: 0.2,
@@ -1499,7 +1534,7 @@ class _StationManagerDashState extends State<StationManagerDash> {
                   )
                 ],
               ),
-            ),
+            ),*/
 
             const SizedBox(height: 10.0),
             Center(
@@ -1530,5 +1565,6 @@ class NChartData {
 
   NChartData(this.title, this.value);
 }
+
 
 

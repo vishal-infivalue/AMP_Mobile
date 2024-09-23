@@ -156,12 +156,12 @@ class UpcomingAuditsResponse {
     return UpcomingAuditsResponse(
       pendingaudits: json['pendingaudits'],
       numberofaudits: json['numberofaudits'],
-      tabledata: (json['tabledata'] as List)
-          .map((i) => TableData.fromJson(i))
-          .toList(),
-      listUpcomingAuditsTableDTO: (json['listUpcomingAuditsTableDTO'] as List)
-          .map((i) => ListUpcomingAuditsTableDTO.fromJson(i))
-          .toList(),
+      tabledata: (json['tabledata'] as List?)
+          ?.map((i) => TableData.fromJson(i))
+          .toList() ?? [], // Return an empty list if null
+      listUpcomingAuditsTableDTO: (json['listUpcomingAuditsTableDTO'] as List?)
+          ?.map((i) => ListUpcomingAuditsTableDTO.fromJson(i))
+          .toList() ?? [], // Return an empty list if null
     );
   }
 
@@ -195,12 +195,12 @@ class TableData {
 
   factory TableData.fromJson(Map<String, dynamic> json) {
     return TableData(
-      auditid: json['auditid'],
-      stationname: json['stationname'],
-      audittype: json['audittype'],
-      auditname: json['auditname'],
-      duedate: json['duedate'],
-      lastauditdate: json['lastauditdate'],
+      auditid: json['auditid']?? '0',
+      stationname: json['stationname'] ?? '0',
+      audittype: json['audittype']?? '0',
+      auditname: json['auditname']?? '0',
+      duedate: json['duedate']?? '0',
+      lastauditdate: json['lastauditdate']?? '0',
     );
   }
 
@@ -235,12 +235,12 @@ class ListUpcomingAuditsTableDTO {
 
   factory ListUpcomingAuditsTableDTO.fromJson(Map<String, dynamic> json) {
     return ListUpcomingAuditsTableDTO(
-      auditid: json['auditid'],
-      stationname: json['stationname'],
-      audittype: json['audittype'],
-      auditname: json['auditname'],
-      duedate: json['duedate'],
-      lastauditdate: json['lastauditdate'],
+      auditid: json['auditid']?? '0',
+      stationname: json['stationname']?? '0',
+      audittype: json['audittype']?? '0',
+      auditname: json['auditname']?? '0',
+      duedate: json['duedate']?? '0',
+      lastauditdate: json['lastauditdate']?? '0',
     );
   }
 
@@ -280,12 +280,12 @@ class AuditScoreSummary {
 
   factory AuditScoreSummary.fromJson(Map<String, dynamic> json) {
     return AuditScoreSummary(
-      message: json['message'],
-      loginUserId: json['loginUserId'],
-      totalNC: json['totalNC'],
-      avgScore: json['avgScore'],
-      grade: json['grade'],
-      gradeValue: json['gradeValue'],
+      message: json['message']?? '0',
+      loginUserId: json['loginUserId']?? '0',
+      totalNC: json['totalNC']?? '0',
+      avgScore: json['avgScore']?? '0',
+      grade: json['grade']?? '0',
+      gradeValue: json['gradeValue']?? '0',
       /*totalScore: json['totalScore'],
       scoreSummary: json['scoreSummary'],*/
     );

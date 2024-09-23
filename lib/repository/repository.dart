@@ -9,7 +9,8 @@ class AppRepository {
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.34-SNAPSHOT";
+      "http://103.235.106.117:8080/audit_management_system-0.0.37-SNAPSHOT";
+      // "http://103.235.106.117:8080/audit_management_system-UAT";
 
   //average cluster score
   Future<dynamic> getclusteravgscore() async {
@@ -28,7 +29,7 @@ class AppRepository {
     String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
     try {
 
-      var response = await _apiServices.getApiWithHeader(
+      var response = await _apiServices.getApiWithHeaderForPDF(
           "$baseUrl/api/auditmaster/downloadaudit?auditId=202409150001",userIdLoggedIn!);
       return response;
     } catch (e) {
@@ -65,8 +66,7 @@ class AppRepository {
   //prevalidate
   Future<dynamic> prevalidateUser(dynamic data) async {
     try {
-      var response = await _apiServices.postApi(
-          "$baseUrl/api/login/prevalidateuser", data);
+      var response = await _apiServices.postApi("$baseUrl/api/login/prevalidateuser", data);
       return response;
     } catch (e) {
       return null;
@@ -102,11 +102,73 @@ class AppRepository {
     try {
       var response = await _apiServices.postWithHeaderUserId(
           "$baseUrl/api/auditmaster/getallupcomingaudits",userIdLoggedIn!);
+
       return response;
     } catch (e) {
       return null;
     }
   }
+
+  Future<dynamic> getNCDashboard() async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.getApiWithHeader(
+          "$baseUrl/api/nc/report",userIdLoggedIn!);
+
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+
+  Future<dynamic> getAllSubmittedAudits() async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.getApiWithHeader(
+          "$baseUrl/api/auditmaster/getallauditbystate?state=Submitted",userIdLoggedIn!);
+          // "$baseUrl/api/auditmaster/getallauditbystate?state=Submitted","16031592");
+
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+
+  Future<dynamic> getAllSchedulableAudits() async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.getApiWithHeader(
+          "$baseUrl/api/auditmaster/getallschdulableaudits",userIdLoggedIn!);
+
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+
+  Future<dynamic> getAllAuditors() async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.getApiWithHeader(
+          "$baseUrl/api/users/get-all-auditors",userIdLoggedIn!);
+
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
 
   Future<dynamic> getAllDashBoard() async {
 
@@ -143,6 +205,19 @@ class AppRepository {
     try {
       var response = await _apiServices.postWithHeaderUserIdData(
           "$baseUrl/api/erbaudit/loaddata",userIdLoggedIn!,data);
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<dynamic> createAudit(dynamic data) async {
+
+    String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+    try {
+      var response = await _apiServices.postWithHeaderUserIdData(
+          "$baseUrl/api/auditmaster/scheduleaudit",userIdLoggedIn!,data);
       return response;
     } catch (e) {
       return null;
@@ -226,7 +301,7 @@ class AppRepository {
     String? userIdLoggedIn = await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
     try {
-      var response = await _apiServices.postWithHeaderUserId(
+      var response = await _apiServices.getApiWithHeader(
           "$baseUrl/api/stations/getallstations",userIdLoggedIn!);
       return response;
     } catch (e) {

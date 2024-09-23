@@ -36,11 +36,13 @@ class _ComplainceManagerDashState extends State<ComplainceManagerDash> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final apiProvider = Provider.of<APIProvider>(context, listen: false);
+      await apiProvider.getAllSchedulableAudits(context);
       await apiProvider.fetchPendingAudits(context);
       await apiProvider.getclusteravgscore(context);
       await apiProvider.getperformingstations(context);
       await apiProvider.getperformingstationsBottom(context);
       await apiProvider.getAllDashBoard(context);
+      await apiProvider.getAllAuditors(context);
     });
   }
 
@@ -78,11 +80,15 @@ class _ComplainceManagerDashState extends State<ComplainceManagerDash> {
       BarChartData('3-6', 1250, 2, 3, 3),
     ];
 
+    final logInProvider = Provider.of<APIProvider>(context);
+    int numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
+    int numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
+    int numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
+    int numberofFUELaudits_gb = logInProvider.numberofFUELaudits;
     final List<NChartData> ndata = [
-      NChartData('ERBCONA  - 1', 1),
-      NChartData('ERBTECH - 1', 1),
-      NChartData('HSE   - 2', 2),
-      NChartData('FUEL - 2', 2),
+      NChartData("Consumer: "+numberofERBCONAaudits_gb.toString(), numberofERBCONAaudits_gb),
+      NChartData("Technical: "+numberofERBTECHaudits_gb.toString(), numberofERBCONAaudits_gb),
+      NChartData("Stock: "+numberofFUELaudits_gb.toString(), numberofFUELaudits_gb)
     ];
 
     return LayoutBuilder(
@@ -286,6 +292,10 @@ class _ComplainceManagerDashState extends State<ComplainceManagerDash> {
     String numberofaudits = logInProvider.numberofaudits;
 
     gb.pendingAuditTable_gb = logInProvider.pendingAuditTable;
+
+    gb.schedulableAuditsList_gb = logInProvider.body;
+    gb.schedulableAuditsCount_gb = logInProvider.schedulableAuditsCount;
+
     gb.ncAuditTable_gb = logInProvider.ncAuditTable;
     gb.completedAuditList_gb = logInProvider.completedAuditList;
     gb.upcomingAuditMessage_gb = logInProvider.avgMessageDB;
@@ -541,156 +551,7 @@ class _ComplainceManagerDashState extends State<ComplainceManagerDash> {
               ),
             ),
 
-            //ScheduledAudit
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 100.8 / 2.0),
-                    child: Container(
-                        child: Card(
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.white,
-                                  Colors.white,
-                                  Colors.white,
-                                  Colors.white,
-                                  Colors.white,
-                                  Colors.white,
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            logInProvider.numberOfAuditsUpcoming+" "+"List of audits pending final signature and submission",
-                                            style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              color: Colors.black,
-                                              fontSize: 12.0,
-                                              letterSpacing: 2,
-                                              fontStyle: FontStyle.normal,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: GestureDetector(
-                                      onTap: () {
-
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return Center(
-                                              child: TweenAnimationBuilder<Color?>(
-                                                tween: ColorTween(begin: Colors.red, end: Colors.yellow),
-                                                duration: Duration(seconds: 1),
-                                                builder: (context, color, _) {
-                                                  return CircularProgressIndicator(
-                                                    valueColor: AlwaysStoppedAnimation<Color>(color!),
-                                                  );
-                                                },
-                                                onEnd: () {
-                                                  // No need to do anything here
-                                                },
-                                              ),
-                                            );
-                                          },
-                                        );
-
-                                        // Simulate a delay of 4 seconds
-                                        Future.delayed(Duration(seconds: 1), () {
-                                          Navigator.of(context)
-                                              .pop(); // Close the CircularProgressIndicator dialog
-
-                                          Navigator.pushNamed(context, Routenames.submittedTable);
-                                        });
-
-
-                                      },
-                                      child: Text(
-                                        AppStrings.tapView,
-                                        style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          color: AppColors.meruBlack,
-                                          fontSize: 12.0,
-                                          fontStyle: FontStyle.normal,
-                                          decoration: TextDecoration.underline, // Underline the text
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  )
-
-                                ],
-                              ),
-                            ),
-                          ),
-                        )),
-                  ),
-                  Container(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(4, 0, 4, 4),
-                      child: Card(
-                        color: Colors.yellow,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 2,
-                        margin: EdgeInsets.all(16),
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                AppStrings.ScheduleAudits,
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 2.0,
-                                  fontStyle: FontStyle.normal,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-
+            //UpcomingAudit
             // upcoming
             Padding(
               padding: const EdgeInsets.all(2.0),
@@ -822,6 +683,156 @@ class _ComplainceManagerDashState extends State<ComplainceManagerDash> {
                             children: <Widget>[
                               Text(
                                 AppStrings.upcomingAudits,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 2.0,
+                                  fontStyle: FontStyle.normal,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            // upcoming
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 100.8 / 2.0),
+                    child: Container(
+                        child: Card(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.white,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Number of Stations for which ERB Compliance Team Audit hasn't been performed for last 45 days "+logInProvider.schedulableAuditsCount,
+                                            style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.black,
+                                              fontSize: 12.0,
+                                              letterSpacing: 2,
+                                              fontStyle: FontStyle.normal,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child: TweenAnimationBuilder<Color?>(
+                                                tween: ColorTween(begin: Colors.red, end: Colors.yellow),
+                                                duration: Duration(seconds: 1),
+                                                builder: (context, color, _) {
+                                                  return CircularProgressIndicator(
+                                                    valueColor: AlwaysStoppedAnimation<Color>(color!),
+                                                  );
+                                                },
+                                                onEnd: () {
+                                                  // No need to do anything here
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        // Simulate a delay of 4 seconds
+                                        Future.delayed(Duration(seconds: 1), () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the CircularProgressIndicator dialog
+
+                                          Navigator.pushNamed(context, Routenames.scheduleAuditTable);
+                                        });
+
+
+                                      },
+                                      child: Text(
+                                        AppStrings.tapView,
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: AppColors.meruBlack,
+                                          fontSize: 12.0,
+                                          fontStyle: FontStyle.normal,
+                                          decoration: TextDecoration.underline, // Underline the text
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  )
+
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(4, 0, 4, 4),
+                      child: Card(
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 2,
+                        margin: EdgeInsets.all(16),
+                        child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                AppStrings.ScheduleAudits,
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Colors.white,

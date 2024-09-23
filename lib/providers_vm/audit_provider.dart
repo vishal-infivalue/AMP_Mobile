@@ -9,28 +9,12 @@ import '../utils/shared_preference_helper.dart';
 class AuditProvider with ChangeNotifier {
   String baseUrl =
       "http://103.235.106.117:8080/audit_management_system-0.0.37-SNAPSHOT";
+      // "http://103.235.106.117:8080/audit_management_system-UAT";
 
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
-/*  Future<void> fetchAudits(String loginUserId) async {
-    final url = Uri.parse('http://103.235.106.117:8080/audit_management_system-0.0.23-SNAPSHOT/api/auditmaster/getallupcomingaudits');
-
-    final response = await http.get(url, headers: {'loginUserId': loginUserId});
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final AuditResponse auditResponse = AuditResponse.fromJson(data);
-      _audits = auditResponse.tableData;
-      notifyListeners();
-    } else {
-      throw Exception('Failed to load audits');
-    }
-  }*/
-
   List<Audit> _audits = [];
-
   List<Audit> get audits => _audits;
-
   List<Map> _stockAuditsTypeListFuel = [];
   List<Map> _stockAuditsTypeListLube = [];
   List<Map> _stockAuditsTypeListLpg = [];
@@ -139,9 +123,11 @@ class AuditProvider with ChangeNotifier {
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-    final url = Uri.parse(baseUrl + '/api/v1/audit/fuelstock/get-product-by-category?category=$type&auditId=$auditId');
+    final url = Uri.parse(baseUrl +
+        '/api/v1/audit/fuelstock/get-product-by-category?category=$type&auditId=$auditId');
 
-    final response = await http.get(url, headers: {'loginUserId': loginUserId!});
+    final response =
+        await http.get(url, headers: {'loginUserId': loginUserId!});
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
@@ -180,13 +166,13 @@ class AuditProvider with ChangeNotifier {
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
+    print("auditId : $auditId");
+
     final url = Uri.parse(baseUrl +
         '/api/v1/audit/fuelstock/get-header-details?auditId=$auditId');
 
     final response =
         await http.get(url, headers: {'loginUserId': loginUserId!});
-
-    print("fetchStockAuditsHeaderDetails respose - $auditId : ${json.decode(response.body)}");
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
@@ -211,9 +197,6 @@ class AuditProvider with ChangeNotifier {
 
     final response =
         await http.get(url, headers: {'loginUserId': userIdLoggedIn!});
-
-    print("fetchStockAuditsNozzelsUSTDetails respose - $auditId : ${json.decode(response.body)}");
-
 
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
@@ -427,7 +410,8 @@ class AuditProvider with ChangeNotifier {
     String? loginUserId =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-    final url = Uri.parse(baseUrl + '/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=$type');
+    final url = Uri.parse(baseUrl +
+        '/api/v1/audit/fuelstock/get-stock-reconciliation-details?auditId=$auditId&category=$type');
 
     final response =
         await http.get(url, headers: {'loginUserId': loginUserId!});
@@ -484,7 +468,8 @@ class AuditProvider with ChangeNotifier {
   }
 
   Future<String> saveStockAuditData({Map? stockAuditData}) async {
-    final url = Uri.parse(baseUrl +'/api/v1/audit/fuelstock/create-stock-audit');
+    final url =
+        Uri.parse(baseUrl + '/api/v1/audit/fuelstock/create-stock-audit');
 
     String? userIdLoggedIn =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);

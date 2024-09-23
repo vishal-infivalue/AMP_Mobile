@@ -1,17 +1,24 @@
-import 'dart:convert';
+import 'dart:io';
 
-import 'package:amp/utils/CommonFunctions.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:mime/mime.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers_vm/generateOtp_provider.dart';
-import '../../routes/route_names.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/constant_strings.dart';
 import '../../utils/global_values.dart';
 
-class SubmittedTable extends StatelessWidget {
-  const SubmittedTable({super.key});
+class SubmittedTable extends StatefulWidget {
+  @override
+  _SubmittedTableState createState() => _SubmittedTableState();
+}
+
+class _SubmittedTableState extends State<SubmittedTable> {
+  FilePickerResult? result;
+  File? _selectedFile;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,20 +47,6 @@ class SubmittedTable extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  gb.upcomingAuditMessage_gb,
-                  style: const TextStyle(
-                    fontFamily: 'Poppins',
-                    color: AppColors.meruBlack,
-                    fontSize: 12.0,
-                    letterSpacing: 1,
-                    fontStyle: FontStyle.normal,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-              ),
               Card(
                 elevation: 4,
                 color: AppColors.meruWhite,
@@ -80,7 +73,7 @@ class SubmittedTable extends StatelessWidget {
                         ),
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          gb.numberOfAuditsUpcoming_gb,
+                          gb.numberOfAuditsSubmitted_gb,
                           style: const TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 14,
@@ -141,7 +134,7 @@ class SubmittedTable extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            'Date',
+                            'Audit Date',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               color: AppColors.meruWhite,
@@ -155,7 +148,7 @@ class SubmittedTable extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
-                            'Last Audit Date',
+                            'Status',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               color: AppColors.meruWhite,
@@ -182,15 +175,15 @@ class SubmittedTable extends StatelessWidget {
                         ),
                       ],
                     ),
-                    ...gb.pendingAuditTable_gb.map((audit) {
+                    ...gb.submittedAuditTable_gb.map((audit) {
+                      String auditId = audit.id.toString();
                       return TableRow(
                         children: [
                           Center(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                audit.stationname + audit.auditid,
-                                // audit.stationname,
+                                auditId,
                                 style: const TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: AppColors.meruBlack,
@@ -204,7 +197,7 @@ class SubmittedTable extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                audit.audittype,
+                                audit.type,
                                 style: const TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: AppColors.meruBlack,
@@ -218,7 +211,7 @@ class SubmittedTable extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                audit.duedate,
+                                audit.scheduledDate,
                                 style: const TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: AppColors.meruBlack,
@@ -232,7 +225,7 @@ class SubmittedTable extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                audit.lastauditdate,
+                                audit.state,
                                 style: const TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: AppColors.meruBlack,
@@ -246,29 +239,34 @@ class SubmittedTable extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  width: 50,
-                                  height: 30,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    foregroundColor: AppColors.meruWhite,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                    minimumSize: Size(25.0, 25.0),
                                   ),
                                   child: Image.asset(
-                                    'assets/images/fg_upload.png',
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {},
-                                  child: const Text(
-                                    'Upload PDF\n',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.blue,
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.normal,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
+                                      "assets/images/upload_icon.png"),
+                                  onPressed: () async {
+                                    result = await FilePicker.platform
+                                        .pickFiles(allowMultiple: false);
+
+                                    if (result == null) {
+                                      print("No file selected");
+                                    } else {
+                                      setState(() {});
+                                      for (var element in result!.files) {
+                                        print(element.name);
+                                        _selectedFile = File(element.path!);
+
+                                        // Upload the selected file immediately
+                                        await _uploadFile(auditId);
+                                      }
+                                    }
+                                  },
                                 ),
                               ],
                             ),
@@ -284,5 +282,83 @@ class SubmittedTable extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _pickFile() async {
+    // Check if permissions are granted
+    bool permissionGranted = await _checkPermission();
+
+    if (permissionGranted) {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'], // Only allow PDF files
+      );
+
+      if (result != null) {
+        // Get the file
+        File file = File(result.files.single.path!);
+        String? mimeType = lookupMimeType(file.path);
+
+        // Ensure it's a PDF
+        if (mimeType == 'application/pdf') {
+          setState(() {
+            _selectedFile = file;
+          });
+        } else {
+          // Show error if the file is not a PDF
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Please select a PDF file')),
+          );
+        }
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Permission denied. Please allow storage access.')),
+      );
+    }
+  }
+
+  // Method to upload file and complete audit
+  Future<void> _uploadFile(String auditId) async {
+    if (_selectedFile != null) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        // Call the completeAudit method with the selected file
+        final logInProvider = Provider.of<APIProvider>(context, listen: false);
+        await logInProvider.completeAudit(auditId, _selectedFile!, context);
+
+      } catch (e) {
+
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      // Show error if no file is selected
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please select a file to upload')),
+      );
+    }
+  }
+
+  // Method to check and request permission
+  Future<bool> _checkPermission() async {
+    // Check the storage permission status
+    var status = await Permission.storage.status;
+    // For Android 11 and above, request manageExternalStorage permission
+    if (Platform.isAndroid && await Permission.manageExternalStorage.isDenied) {
+      status = await Permission.manageExternalStorage.request();
+    }
+
+    if (status.isDenied) {
+      status = await Permission.storage.request();
+    }
+
+    return status.isGranted;
   }
 }

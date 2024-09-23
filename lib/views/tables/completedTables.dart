@@ -674,8 +674,6 @@ class CompletedTable extends StatelessWidget {
 
                                    case ConstantStrings.FUEL:
 
-                                     final logInProvider = Provider.of<APIProvider>(context);
-                                     logInProvider.downloadPdf(context);
 
                                      break;
 

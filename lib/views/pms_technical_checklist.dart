@@ -32,6 +32,31 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
   TextEditingController isNetStockVariationPermissionLimit =
   TextEditingController();
 
+
+  final _headerTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+    fontWeight: FontWeight.bold,
+  );
+
+  final _headerValueTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+  );
+
+  final _expandHeaderTextStyle = TextStyle(
+    fontSize: 12,
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -111,46 +136,34 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Name"),
+                          Text("Station Name",style: _headerValueTextStyle,),
                           Text(
                             "${stockAuditsHeaderDetails['stationname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Code"),
+                          Text("Station Code",style: _headerValueTextStyle,),
                           Text(
                             "${stockAuditsHeaderDetails['stationcode']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Type"),
+                          Text("Station Type",style: _headerValueTextStyle,),
                           Text(
                             "${stockAuditsHeaderDetails['stationtype']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
@@ -175,46 +188,33 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("SM Name"),
+                          Text("SM Name",style: _headerValueTextStyle,),
                           Text(
                             "${stockAuditsHeaderDetails['smname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("RH Code"),
-                          Text(
-                            "-",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("CM Name"),
+                          /*Text("RH Code",style: _headerValueTextStyle,),
+                                  Text(
+                                    "${stockAuditsHeaderDetails['id']}",
+                                  ),*/
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("CM Name",style: _headerValueTextStyle,),
                           Text(
                             "${stockAuditsHeaderDetails['cmname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
@@ -231,54 +231,40 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 5.0, vertical: 5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Auditor Name"),
+                          Text("Auditor Name",style: _headerValueTextStyle,),
                           Text(
                             "${stockAuditsHeaderDetails['auditorname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Audit Start Time"),
+                          Text("Audit Start Time",style: _headerValueTextStyle,),
                           Text(
                             "${DateFormat('dd-MM-yyy\nkk:mm:ss').format(DateTime.now())}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Audit End Time"),
-                          Text(
+                          Text("Audit End Time",style: _headerValueTextStyle,),
+                          const Text(
                             "-",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
                           ),
                         ],
                       ),
@@ -290,6 +276,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,28 +289,18 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '1',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
-                          'Stock Reconciliation\n(All Figures in ltrs)',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Text(
+                          'Stock Reconciliation(All Figures in ltrs)',
+                          style: _expandHeaderTextStyle
                         ),
                       ),
                     ],
@@ -337,15 +316,11 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       const SizedBox(
                         height: 15.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "Sales From Dispensing Units",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
@@ -363,13 +338,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               "Total as per Totaliser",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
@@ -379,8 +350,10 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 1.0),
+                                      horizontal: 10.0, vertical: 10.0),
+                                  isDense: true,
                                 ),
+                                style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
                                   nozzleTotalizers.text = val;
                                 },
@@ -399,15 +372,11 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "Sales From UST",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
@@ -425,13 +394,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               "Total as per UST",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
@@ -441,8 +406,10 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 1.0),
+                                      horizontal: 10.0, vertical: 10.0),
+                                  isDense: true,
                                 ),
+                                style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
                                   ustTotalizers.text = val;
                                 },
@@ -461,40 +428,28 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "PMS STOCK VARIATION(Ltrs)",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
                         height: 10.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Text(
                               "(+/-)",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             )
                           ],
                         ),
@@ -527,10 +482,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   controller: grossStockVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -574,10 +531,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   controller: sumOfRecoverable,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -589,14 +548,14 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   },
                                   onChanged: (val) {
                                     var textValue =
-                                        val == '' ? 0.0 : double.parse(val);
+                                    val == '' ? 0.0 : double.parse(val);
                                     var grossStock =
-                                        grossStockVariation.text == ''
-                                            ? 0.0
-                                            : double.parse(
-                                                grossStockVariation.text);
+                                    grossStockVariation.text == ''
+                                        ? 0.0
+                                        : double.parse(
+                                        grossStockVariation.text);
                                     netVariation.text =
-                                        "${grossStock + textValue}";
+                                    "${grossStock + textValue}";
                                     calculatePMSStockVariation();
                                   },
                                 ),
@@ -634,10 +593,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   controller: netVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -676,12 +637,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   controller: stockVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0,
-                                      vertical: 1.0,
-                                    ),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -700,14 +661,13 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Text(
-                          "Permissible Stock Variation (As per company's norms)",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .85,
+                          child: Text(
+                            "Permissible Stock Variation (As per company's norms)",
+                            style: _headerTextStyle,
                           ),
                         ),
                       ),
@@ -742,10 +702,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   controller: grossStockVariationS,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -793,9 +755,10 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                   child: DropdownButtonFormField<String>(
                                     value: "Select",
                                     decoration: InputDecoration(
+                                      isDense:true,
                                       contentPadding:
                                       const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
+                                          horizontal: 10.0, vertical: 5.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -818,7 +781,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                             (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
-                                            child: Text(value),
+                                            child: Text(value, style: TextStyle(fontSize: 12.0),),
                                           );
                                         }).toList(),
                                   ),
@@ -849,6 +812,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -859,28 +825,18 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '2',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
+                        child: Text(
                           'Quality & Quantity',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                     ],
@@ -906,6 +862,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -916,28 +875,18 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '3',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
+                        child: Text(
                           'Daily Density Record Reconciliation',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                     ],
@@ -1002,7 +951,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 builder: (context, color, _) {
                                   return CircularProgressIndicator(
                                     valueColor:
-                                        AlwaysStoppedAnimation<Color>(color!),
+                                    AlwaysStoppedAnimation<Color>(color!),
                                   );
                                 },
                                 onEnd: () {
@@ -1016,20 +965,20 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           if (_formKey.currentState!.validate()) {
                             var nozzle_list = [];
                             var list_nozzle = Provider.of<AuditProvider>(
-                                    context,
-                                    listen: false)
+                                context,
+                                listen: false)
                                 .nozzelsUstsTextControllers;
                             var list_nozzle_ddrr = Provider.of<AuditProvider>(
-                                    context,
-                                    listen: false)
+                                context,
+                                listen: false)
                                 .ddrrTextControllers;
                             var ust_list = [];
                             var list_ust = Provider.of<AuditProvider>(context,
-                                    listen: false)
+                                listen: false)
                                 .ustTextControllers;
                             var list_ust_qnq = Provider.of<AuditProvider>(
-                                    context,
-                                    listen: false)
+                                context,
+                                listen: false)
                                 .ustQnQTextControllers;
 
                             list_nozzle.forEach((i, eachData) {
@@ -1040,23 +989,23 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 "productShortCode": "$i",
                                 "productUOM": "LTRS",
                                 "closedReading":
-                                    "${eachData['textControllers'][0].text}",
+                                "${eachData['textControllers'][0].text}",
                                 "openingReading":
-                                    "${eachData['textControllers'][1].text}",
+                                "${eachData['textControllers'][1].text}",
                                 "stockTransfer":
-                                    "${eachData['textControllers'][2].text}",
+                                "${eachData['textControllers'][2].text}",
                                 "grossSales":
-                                    "${eachData['textControllers'][3].text}",
+                                "${eachData['textControllers'][3].text}",
                                 "pumpTest":
-                                    "${eachData['textControllers'][4].text}",
+                                "${eachData['textControllers'][4].text}",
                                 "netNozzleSales":
-                                    "${eachData['textControllers'][5].text}",
+                                "${eachData['textControllers'][5].text}",
                                 "nozzleTestResult":
-                                    "${list_nozzle_ddrr[i]['textControllers'][1].text}",
+                                "${list_nozzle_ddrr[i]['textControllers'][1].text}",
                                 "nozzleTestQty":
-                                    "${list_nozzle_ddrr[i]['textControllers'][2].text}",
+                                "${list_nozzle_ddrr[i]['textControllers'][2].text}",
                                 "nozzleTestRemarks":
-                                    "${list_nozzle_ddrr[i]['textControllers'][3].text}",
+                                "${list_nozzle_ddrr[i]['textControllers'][3].text}",
                               });
                             });
 
@@ -1068,29 +1017,29 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 "productShortCode": "$i",
                                 "productUOM": "LTRS",
                                 "openingStock":
-                                    "${eachData['textControllers'][0].text}",
+                                "${eachData['textControllers'][0].text}",
                                 "sumOfDNote":
-                                    "${eachData['textControllers'][1].text}",
+                                "${eachData['textControllers'][1].text}",
                                 "stockTransfer":
-                                    "${eachData['textControllers'][2].text}",
+                                "${eachData['textControllers'][2].text}",
                                 "total":
-                                    "${eachData['textControllers'][3].text}",
+                                "${eachData['textControllers'][3].text}",
                                 "closingStock":
-                                    "${eachData['textControllers'][4].text}",
+                                "${eachData['textControllers'][4].text}",
                                 "salesPerUST":
-                                    "${eachData['textControllers'][5].text}",
+                                "${eachData['textControllers'][5].text}",
                                 "observedDensity":
-                                    "${list_ust_qnq[i]['textControllers'][0].text}",
+                                "${list_ust_qnq[i]['textControllers'][0].text}",
                                 "observedTemp":
-                                    "${list_ust_qnq[i]['textControllers'][1].text}",
+                                "${list_ust_qnq[i]['textControllers'][1].text}",
                                 "observedDensityAt20deg":
-                                    "${list_ust_qnq[i]['textControllers'][2].text}",
+                                "${list_ust_qnq[i]['textControllers'][2].text}",
                                 "refDensity":
-                                    "${list_ust_qnq[i]['textControllers'][3].text}",
+                                "${list_ust_qnq[i]['textControllers'][3].text}",
                                 "variation":
-                                    "${list_ust_qnq[i]['textControllers'][5].text}",
+                                "${list_ust_qnq[i]['textControllers'][5].text}",
                                 "isVariationWithinLimit":
-                                    "${list_ust_qnq[i]['textControllers'][6].text}",
+                                "${list_ust_qnq[i]['textControllers'][6].text}",
                               });
                             });
 
@@ -1103,23 +1052,23 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                               "productCategory": "FUEL",
                               "auditId": "$auditId",
                               "stationCode":
-                                  "${stockAuditsHeaderDetails['stationcode']}",
+                              "${stockAuditsHeaderDetails['stationcode']}",
                               "overallRemarks": "overallRemarks 2",
                               "NOZZLE": nozzle_list,
                               "UST": ust_list,
                               "stockVariation": {
                                 "productSubCategory": "PMS",
                                 "grossStockVariation":
-                                    "${grossStockVariation.text}",
+                                "${grossStockVariation.text}",
                                 "sumOfRecoverableStorage":
-                                    "${sumOfRecoverable.text}",
+                                "${sumOfRecoverable.text}",
                                 "netVariation": "${netVariation.text}",
                                 "stockVariationOfTotalizerSales":
-                                    "${stockVariation.text}",
+                                "${stockVariation.text}",
                                 "permittedEvaporation":
-                                    "${grossStockVariationS.text}",
+                                "${grossStockVariationS.text}",
                                 "isWithinLimit":
-                                    "${isNetStockVariationPermissionLimit.text}",
+                                "${isNetStockVariationPermissionLimit.text}",
                                 "totalizerTotal": "${nozzleTotalizers.text}",
                                 "ustTotal": "${ustTotalizers.text}"
                               }
@@ -1134,14 +1083,14 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 content: Text('PMS $result'),
                                 actions: [
                                   TextButton(
-                                    child: const Text('Close'),
-                                    onPressed: () {
-                                      Provider.of<AuditProvider>(
-                                          context,
-                                          listen: false)
-                                          .fetchStockAuditsList("Fuel");
-                                      ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-                                    }
+                                      child: const Text('Close'),
+                                      onPressed: () {
+                                        Provider.of<AuditProvider>(
+                                            context,
+                                            listen: false)
+                                            .fetchStockAuditsList("Fuel");
+                                        ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+                                      }
                                   ),
                                 ],
                               ),
@@ -1282,14 +1231,16 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachNozzle['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachNozzle['productName']}',
+            textAlign: TextAlign.start,
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1312,10 +1263,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
+                            hintText: 'Closing EMT',
                             contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
-                            hintText: 'Closing Reading of EMT',
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1337,7 +1290,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1349,10 +1302,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Reading of(EMT)',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1382,7 +1337,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1394,10 +1349,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Stock Transfer',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1419,7 +1376,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1431,10 +1388,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Gross Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1463,7 +1422,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1475,10 +1434,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][4],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Pump Test',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
@@ -1500,7 +1461,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1512,10 +1473,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Net Nozzle Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
@@ -1588,7 +1551,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     var sum_J = ustTotalizers.text == '' ? "0.0" : ustTotalizers.text;
 
     grossStockVariation.text =
-        "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
+    "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
     var l = grossStockVariation.text == '' ? "0.0" : grossStockVariation.text;
 
     var k = sumOfRecoverable.text == '' ? "0.0" : sumOfRecoverable.text;
@@ -1597,7 +1560,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
     var m = netVariation.text == '' ? "0.0" : netVariation.text;
 
     stockVariation.text =
-        '${((double.parse(m) / double.parse(sum_E)) * 100).toStringAsFixed(2)} %';
+    '${((double.parse(m) / double.parse(sum_E)) * 100).toStringAsFixed(2)} %';
 
     grossStockVariationS.text = "${double.parse(sum_E) * (-0.005)}";
   }
@@ -1622,13 +1585,13 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
           .text);
 
       var st = double.parse(ustsTextControllers['${eachUST['productName']}']
-                      ['textControllers'][2]
-                  .text ==
-              ''
+      ['textControllers'][2]
+          .text ==
+          ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-                  [2]
-              .text);
+      [2]
+          .text);
 
       /*ustsTextControllers['${eachUST['productName']}']['textControllers'][2]
           .text = "${oS + dNote}";*/
@@ -1655,14 +1618,15 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachUST['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachUST['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1673,7 +1637,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text(
@@ -1685,10 +1649,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1709,7 +1675,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(ΣH)->S of D-Note'),
@@ -1719,10 +1685,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sum of D-Note',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           maxLines: 1,
@@ -1752,7 +1720,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('ST'),
@@ -1762,10 +1730,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Stock Transfer',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1786,7 +1756,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(J=G+ΣH-I) ->T '),
@@ -1796,10 +1766,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Total',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1827,7 +1799,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(K)->CS'),
@@ -1839,10 +1811,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Closing Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
                             ['textControllers'][4]
@@ -1861,7 +1835,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(L=J-K)->Sales/UST'),
@@ -1871,10 +1845,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sales as per UST',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1933,14 +1909,15 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachUST['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachUST['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1957,18 +1934,18 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         Text("OD - Nor. Ambient"),
                         TextFormField(
                           controller:
-                              qnqTextControllers["${eachUST['productName']}"]
-                                  ['textControllers'][0],
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][0],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'OD - Nor. Ambient',
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 5.0,
-                              vertical: 1.0,
-                            ),
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter PMS Quality & Quantity Data';
@@ -1987,16 +1964,18 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           const Text("Observed Temp."),
                           TextFormField(
                             controller:
-                                qnqTextControllers["${eachUST['productName']}"]
-                                    ['textControllers'][1],
+                            qnqTextControllers["${eachUST['productName']}"]
+                            ['textControllers'][1],
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 1.0),
                               hintText: 'Observed Temp.',
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 10.0),
+                              isDense: true,
                             ),
+                            style: TextStyle(fontSize: 12.0),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter PMS Quality & Quantity Data';
@@ -2022,26 +2001,28 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text("OD at 20deg C"),
                         TextFormField(
                           controller:
-                              qnqTextControllers["${eachUST['productName']}"]
-                                  ['textControllers'][2],
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][2],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'OD at 20deg C',
                             hintMaxLines: 3,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (value) {
                             var od_val =
                                 qnqTextControllers["${eachUST['productName']}"]
-                                        ['textControllers'][2]
+                                ['textControllers'][2]
                                     .text;
 
                             var rd_val =
                                 qnqTextControllers["${eachUST['productName']}"]
-                                        ['textControllers'][3]
+                                ['textControllers'][3]
                                     .text;
 
                             if (od_val == '') {
@@ -2056,7 +2037,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             }
                             var result = rd_val - od_val;
                             qnqTextControllers["${eachUST['productName']}"]
-                                    ['textControllers'][4]
+                            ['textControllers'][4]
                                 .text = '${result.toStringAsFixed(2)}';
                           },
                           validator: (value) {
@@ -2077,25 +2058,27 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         const Text("RD at 20deg C"),
                         TextFormField(
                           controller:
-                              qnqTextControllers["${eachUST['productName']}"]
-                                  ['textControllers'][3],
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][3],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'RD at 20deg C',
                             hintMaxLines: 4,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (value) {
                             var od_val =
                                 qnqTextControllers["${eachUST['productName']}"]
-                                        ['textControllers'][2]
+                                ['textControllers'][2]
                                     .text;
                             var rd_val =
                                 qnqTextControllers["${eachUST['productName']}"]
-                                        ['textControllers'][3]
+                                ['textControllers'][3]
                                     .text;
 
                             if (od_val == '') {
@@ -2110,7 +2093,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             }
                             var result = rd_val - od_val;
                             qnqTextControllers["${eachUST['productName']}"]
-                                    ['textControllers'][4]
+                            ['textControllers'][4]
                                 .text = '${result.toStringAsFixed(2)}';
                           },
                           validator: (value) {
@@ -2147,10 +2130,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Variation ( + / -)',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter PMS Quality & Quantity Data';
@@ -2181,10 +2166,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sales as per UST',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter PMS Quality & Quantity Data';
@@ -2220,8 +2207,9 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     child: DropdownButtonFormField<String>(
                       value: "Select",
                       decoration: InputDecoration(
+                        isDense:true,
                         contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 10.0),
+                        const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                         border: const OutlineInputBorder(),
                         errorBorder: OutlineInputBorder(
                           borderSide:
@@ -2244,7 +2232,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(value, style: TextStyle(fontSize: 12.0),),
                         );
                       }).toList(),
                     ),
@@ -2287,14 +2275,15 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachNozzleDDRR['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachNozzleDDRR['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -2305,7 +2294,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2315,10 +2304,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Result ',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       onChanged: (val) async {
                         var final_result = 'Ok';
 
@@ -2344,7 +2335,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2352,10 +2343,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       ['textControllers'][1],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Results',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       textAlign: TextAlign.center,
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -2374,7 +2367,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2382,10 +2375,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       ['textControllers'][2],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Qty(lts)',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       validator: (String? value) {
@@ -2397,7 +2392,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2405,10 +2400,12 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       ['textControllers'][3],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Remarks',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       textAlign: TextAlign.center,
                       /*validator: (String? value) {
                         if (value == null || value.isEmpty) {

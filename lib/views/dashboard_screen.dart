@@ -36,6 +36,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
       await apiProvider.getperformingstations(context);
       await apiProvider.getperformingstationsBottom(context);
       await apiProvider.getAllDashBoard(context);
+      await apiProvider.getNCDashboard(context);
     });
   }
 
@@ -65,20 +66,37 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
   Widget build(BuildContext context) {
 
 
-
-    final List<BarChartData> barChart = [
-      BarChartData('<1', 500, 2, 3, 3),
-      BarChartData('<6', 750, 2, 3, 3),
-      BarChartData('1-3', 900, 2, 3, 3),
-      BarChartData('3-6', 1250, 2, 3, 3),
-    ];
+    final logInProvider = Provider.of<APIProvider>(context);
+    int numberofERBCONAaudits_gb =logInProvider.numberofERBCONAaudits;
+    int numberofERBTECHaudits_gb =logInProvider.numberofERBTECHaudits;
+    int numberofHSEaudits_gb = logInProvider.numberofHSEaudits;
+    int numberofFUELaudits_gb = logInProvider.numberofFUELaudits;
 
     final List<NChartData> ndata = [
-      NChartData('ERBCONA  - 1', 1),
-      NChartData('ERBTECH - 1', 1),
-      NChartData('HSE   - 2', 2),
-      NChartData('FUEL - 2', 2),
+      NChartData("Consumer: "+numberofERBCONAaudits_gb.toString(), numberofERBCONAaudits_gb),
+      NChartData("Technical: "+numberofERBTECHaudits_gb.toString(), numberofERBCONAaudits_gb),
+      NChartData("Stock: "+numberofFUELaudits_gb.toString(), numberofFUELaudits_gb)
     ];
+
+
+    int _lessThan30 = logInProvider.lessThan30;
+    int _lessThan90 = logInProvider.lessThan90;
+    int _lessThan180 = logInProvider.lessThan180;
+    int _morethan188 = logInProvider.morethan188;
+
+
+    print("Value of NC aging"+_lessThan30.toString());
+
+
+
+
+    final List<BarChartData> barChart = [
+      BarChartData('<1\nMonths', _lessThan30, 2, 3, 3),
+      BarChartData('<6\nMonths', _lessThan90, 2, 3, 3),
+      BarChartData('1-3\nMonths', _lessThan180, 2, 3, 3),
+      BarChartData('3-6\nMonths', _morethan188, 2, 3, 3),
+    ];
+
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -151,14 +169,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
               margin: EdgeInsets.only(right: 16.0),
               width: 40,
               height: 40,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.red, // Background color of the circle
                 shape: BoxShape.circle,
               ),
               child: Center(
                 child: Text(
                   '$initials',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white, // Text color
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
@@ -236,14 +254,14 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
               margin: EdgeInsets.only(right: 16.0),
               width: 40,
               height: 40,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.red, // Background color of the circle
                 shape: BoxShape.circle,
               ),
               child: Center(
                 child: Text(
                   '$initials',
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white, // Text color
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
@@ -341,7 +359,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                         margin: EdgeInsets.fromLTRB(16, 2, 16, 2),
                         child: Container(
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
+                            gradient: LinearGradient(
                               colors: [
                                 Colors.white,
                                 Colors.white,
@@ -377,7 +395,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                             padding: const EdgeInsets.all(12.0),
                                             child: Text(
                                               logInProvider.avgMessageDB,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 color: AppColors.meruBlack,
                                                 fontSize: 12.0,
@@ -450,7 +468,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                                         8.0),
                                                     child: Text(
                                                       '\n\n\n\nAverage Score : $roundoff_avgScore%\nAverage Grade : $gradeValue',
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                         fontFamily: 'Poppins',
                                                         color: Colors.black,
                                                         fontSize: 12.0,
@@ -796,7 +814,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                           ),
                                         ),
                                       ),
-                                      Center(
+                                      /*Center(
                                         child: Padding(
                                           padding: const EdgeInsets.fromLTRB(
                                               10, 10, 10, 2),
@@ -812,7 +830,7 @@ class _DM_DashboardScreenState extends State<DM_DashboardScreen> {
                                             textAlign: TextAlign.left,
                                           ),
                                         ),
-                                      ),
+                                      ),*/
 
                                       Center(
                                         child: GestureDetector(

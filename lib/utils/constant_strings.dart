@@ -1,6 +1,8 @@
 class ConstantStrings {
   static const String userIdLoggedIn = 'userIdLoggedIn';
   static const String selectedStockAuditID = 'selectedStockAuditID';
+  static const String selectedNCAuditId = 'selectedNCAuditId';
+  static const String selectedNCIndex = 'selectedNCIndex';
   static const String ERBCONA = 'ERBCONA';
   static const String ERBTECH = 'ERBTECH';
   static const String HSE = 'HSE';

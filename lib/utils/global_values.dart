@@ -1,6 +1,8 @@
 import '../response/all_dashboard_response.dart';
+import '../response/com_audit_list.dart';
 import '../response/nc_response.dart';
 import '../response/performing_stations.dart';
+import '../response/submitted_auditResponse.dart';
 
 class GlobalVariables {
   GlobalVariables._privateConstructor();
@@ -23,11 +25,21 @@ class GlobalVariables {
   int savedScore_gb = 0;
   Map<String, List<Map<String, dynamic>>>? selection_audit_gb;
   List<TableData>  pendingAuditTable_gb = [];
+  List<SubmittedAuditBody>  submittedAuditTable_gb = [];
   List<Data>  ncAuditTable_gb = [];
+
+  int index = 0;
+  int ncAudit = 0;
+
   List<CompletedAudit> completedAuditList_gb = [];
   String numberOfAuditsCompleted_gb = "";
   String upcomingAuditMessage_gb = "";
   String numberOfAuditsUpcoming_gb = "";
+  String numberOfAuditsSubmitted_gb = "";
+
+  String schedulableAuditsCount_gb = "";
+  List<AuditBody>? schedulableAuditsList_gb = [];
+
   String auditId_gb = "";
   String completed_auditId_gb = "";
   String completedaudits_gb ="";

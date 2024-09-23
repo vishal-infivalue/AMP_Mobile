@@ -1,18 +1,14 @@
 import 'dart:convert';
 
-import 'package:amp/utils/CommonFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers_vm/generateOtp_provider.dart';
-import '../../routes/route_names.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/constant_strings.dart';
 import '../../utils/global_values.dart';
+import 'all_auditors_response.dart';
 
-
-
-  class ScheduleAuditTable extends StatelessWidget {
+class ScheduleAuditTable extends StatelessWidget {
   const ScheduleAuditTable({super.key});
 
   @override
@@ -24,7 +20,7 @@ import '../../utils/global_values.dart';
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Scheduled Audits',
+          'Schedule Audits',
           style: TextStyle(
             fontFamily: 'Montserrat',
             color: AppColors.meruRed,
@@ -47,8 +43,8 @@ import '../../utils/global_values.dart';
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                          gb.upcomingAuditMessage_gb,
-                        style: const TextStyle(
+                  "",
+                  style: const TextStyle(
                           fontFamily: 'Poppins',
                           color: AppColors.meruBlack,
                           fontSize: 12.0,
@@ -70,8 +66,8 @@ import '../../utils/global_values.dart';
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              ' List of audits pending final signature and submission',
-                              style: TextStyle(
+                        "Number of Stations for which ERB\n Compliance Team Audit hasn't\n been performed for last 45 days ",
+                        style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 12,
                                 color: Colors.black,
@@ -84,8 +80,8 @@ import '../../utils/global_values.dart';
                               ),
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                gb.numberOfAuditsUpcoming_gb,
-                                style: const TextStyle(
+                          gb.schedulableAuditsCount_gb,
+                          style: const TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -143,21 +139,7 @@ import '../../utils/global_values.dart';
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Due Date',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: AppColors.meruWhite,
-                                    fontSize: 12.0,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
-                                  ),
-                                ),
-                              ),
-                              Padding(
+                        Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
                                   'Last Audit Date',
@@ -174,22 +156,8 @@ import '../../utils/global_values.dart';
                               Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Status',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: AppColors.meruWhite,
-                                    fontSize: 12.0,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  'Perform Audit',
-                                  style: TextStyle(
+                            'Schedule Audit',
+                            style: TextStyle(
                                     fontFamily: 'Poppins',
                                     color: AppColors.meruWhite,
                                     fontSize: 12.0,
@@ -201,15 +169,15 @@ import '../../utils/global_values.dart';
                               ),
                             ],
                           ),
-                          ...gb.pendingAuditTable_gb.map((audit) {
-                            return TableRow(
+                    ...?gb.schedulableAuditsList_gb?.map((audit) {
+                      return TableRow(
                               children: [
                                 Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      audit.stationname+audit.auditid,
-                                      // audit.stationname,
+                                audit.stationCode!,
+                                // audit.stationname,
                                       style: const TextStyle(
                                         fontFamily: 'Montserrat',
                                         color: AppColors.meruBlack,
@@ -223,8 +191,8 @@ import '../../utils/global_values.dart';
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      audit.audittype,
-                                      style: const TextStyle(
+                                audit.type!,
+                                style: const TextStyle(
                                         fontFamily: 'Montserrat',
                                         color: AppColors.meruBlack,
                                         fontSize: 10.0,
@@ -233,40 +201,12 @@ import '../../utils/global_values.dart';
                                     ),
                                   ),
                                 ),
-                                Center(
+                          Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      audit.duedate,
-                                      style: const TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        color: AppColors.meruBlack,
-                                        fontSize: 10.0,
-                                        fontStyle: FontStyle.normal,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      audit.lastauditdate,
-                                      style: const TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        color: AppColors.meruBlack,
-                                        fontSize: 10.0,
-                                        fontStyle: FontStyle.normal,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Pending",
-                                      style: const TextStyle(
+                                audit.scheduledDate!.toString(),
+                                style: const TextStyle(
                                         fontFamily: 'Montserrat',
                                         color: AppColors.meruBlack,
                                         fontSize: 10.0,
@@ -290,182 +230,15 @@ import '../../utils/global_values.dart';
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () async {
-
-                                         /* String auditId = audit.auditid;
-                                          late Future<void> auditLoadData;
-                                          Map<String, dynamic> data = {
-                                            "id": "$auditId",
-                                          };
-
-                                          String jsonData = jsonEncode(data);
-                                          print(jsonData);
-
-                                          final logInProvider = Provider.of<APIProvider>(context);
-                                          logInProvider.getclusteravgscore(context);
-                                          auditLoadData = logInProvider.getAuditScreenData(jsonData, context);*/
-
-
-
-                                          gb.auditId_gb = audit.auditid;
-
-                                          switch (audit.audittype) {
-                                            case ConstantStrings.ERBTECH:
-
-                                              final apiProvider = Provider.of<APIProvider>(context, listen: false);
-                                              GlobalVariables gb = GlobalVariables();
-                                              String auditId = gb.auditId_gb;
-                                              Map<String, dynamic> data = {
-                                                "id": "$auditId",
-                                              };
-                                              // Map<String, dynamic> data = {"id": "260720240001"};
-                                              String jsonData = jsonEncode(data);
-                                              await apiProvider.getAuditScreenData(jsonData, context);
-
-                                             print("TESTTESTTEST"+auditId);
-
-                                              // Fluttertoast.showToast(
-                                              //   msg: auditId,
-                                              //   toastLength: Toast.LENGTH_SHORT,
-                                              //   gravity: ToastGravity.BOTTOM,
-                                              //   backgroundColor: Colors.black54,
-                                              //   textColor: Colors.white,
-                                              // );
-
-                                              showDialog(
-                                                context: context,
-                                                barrierDismissible: false,
-                                                builder: (BuildContext context) {
-                                                  return Center(
-                                                    child: TweenAnimationBuilder<Color?>(
-                                                      tween: ColorTween(begin: Colors.red, end: Colors.yellow),
-                                                      duration: Duration(seconds: 1),
-                                                      builder: (context, color, _) {
-                                                        return CircularProgressIndicator(
-                                                          valueColor: AlwaysStoppedAnimation<Color>(color!),
-                                                        );
-                                                      },
-                                                      onEnd: () {
-                                                        // No need to do anything here
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              );
-
-                                              // Simulate a delay of 4 seconds
-                                              Future.delayed(Duration(seconds: 1), () {
-                                                Navigator.of(context)
-                                                    .pop(); // Close the CircularProgressIndicator dialog
-
-                                                if(auditId == "10000000006"){
-
-                                                  CommonFunctions.showMessageDialog
-                                                    (context: context,
-                                                      message: "You are not in radius specified for this Station. Please launch Audit when you are at Station Location",
-                                                      onYesPressed: () {
-
-                                                      });
-
-                                                }else{
-                                                  Navigator.pushNamed(
-                                                      context, Routenames.ERBScreen_Tech);
-                                                }
-
-                                              });
-
-
-                                              break;
-
-
-                                            case ConstantStrings.FUEL:
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                      content: Text(
-                                                          "Under Development")));
-                                              break;
-                                            case ConstantStrings.HSE:
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                      content: Text(
-                                                          "Under Development")));
-                                              break;
-                                            case ConstantStrings.ERBCONA:
-
-                                              final apiProvider = Provider.of<APIProvider>(context, listen: false);
-                                              GlobalVariables gb = GlobalVariables();
-                                              String auditId = gb.auditId_gb;
-                                              Map<String, dynamic> data = {
-                                                "id": "$auditId",
-                                              };
-                                              // Map<String, dynamic> data = {"id": "260720240001"};
-                                              String jsonData = jsonEncode(data);
-                                              await apiProvider.getAuditScreenData(jsonData, context);
-
-                                              print("TESTTESTTEST"+auditId);
-
-                                              /*Fluttertoast.showToast(
-                                                msg: auditId,
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.BOTTOM,
-                                                backgroundColor: Colors.black54,
-                                                textColor: Colors.white,
-                                              );*/
-
-                                              showDialog(
-                                                context: context,
-                                                barrierDismissible: false,
-                                                builder: (BuildContext context) {
-                                                  return Center(
-                                                    child: TweenAnimationBuilder<Color?>(
-                                                      tween: ColorTween(begin: Colors.red, end: Colors.yellow),
-                                                      duration: Duration(seconds: 1),
-                                                      builder: (context, color, _) {
-                                                        return CircularProgressIndicator(
-                                                          valueColor: AlwaysStoppedAnimation<Color>(color!),
-                                                        );
-                                                      },
-                                                      onEnd: () {
-                                                        // No need to do anything here
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                              );
-
-                                              // Simulate a delay of 4 seconds
-                                              Future.delayed(Duration(seconds: 1), () {
-                                                Navigator.of(context)
-                                                    .pop(); // Close the CircularProgressIndicator dialog
-
-                                                if(auditId == "10000000005"){
-
-                                                  CommonFunctions.showMessageDialog
-                                                    (context: context,
-                                                      message: "You are not in radius specified for this Station. Please launch Audit when you are at Station Location",
-                                                      onYesPressed: () {
-
-                                                      });
-
-                                                }else{
-                                                  Navigator.pushNamed(
-                                                      context, Routenames.ERBScreen);
-                                                }
-
-
-                                              });
-
-                                              break;
-                                            default:
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                      content: Text(
-                                                          "Under Development")));
-                                          }
-                                        },
+                                  onTap: () {
+                                    _openFilterDrawer(
+                                        context,
+                                        audit.stationCode.toString(),
+                                        audit.type.toString());
+                                  },
                                         child: const Text(
-                                          'Start\n',
-                                          style: TextStyle(
+                                    'Create\n',
+                                    style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             color: Colors.blue,
                                             fontSize: 10.0,
@@ -490,4 +263,254 @@ import '../../utils/global_values.dart';
             ),
     );
   }
+}
+
+_openFilterDrawer(BuildContext context, String stationCode, String auditType) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Prevents closing the dialog by tapping outside
+    builder: (BuildContext context) {
+      DateTime? selectedFromDate;
+      DateTime? selectedToDate;
+      String? selectedAuditorName; // To store selected auditor's name
+      int? selectedAuditorId;
+
+      final logInProvider = Provider.of<APIProvider>(context,
+          listen: false); // To store selected auditor's ID
+
+      return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.all(16.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Create Audits',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      color: AppColors.meruBlack,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+
+                  Text(
+                    "Station Code: $stationCode",
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      color: AppColors.meruBlack,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    "Audit Type: $auditType",
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      color: AppColors.meruBlack,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+
+                  DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      labelText: 'Assign Auditor',
+                      border: OutlineInputBorder(),
+                    ),
+                    // Populate the dropdown menu dynamically
+                    items: logInProvider.bodyAuditor!
+                        .map<DropdownMenuItem<String>>((Auditor auditor) {
+                      return DropdownMenuItem<String>(
+                        value: auditor.id.toString(), // Use auditor ID as value
+                        child: Text(
+                          "${auditor.firstname} ${auditor.lastname}",
+                          // Display full name
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: AppColors.meruBlack,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        // Find the selected auditor by matching ID
+                        var selectedAuditor = logInProvider.bodyAuditor
+                            ?.firstWhere(
+                                (auditor) => auditor.id.toString() == newValue);
+                        selectedAuditorName =
+                            "${selectedAuditor?.firstname} ${selectedAuditor?.lastname}";
+                        selectedAuditorId = selectedAuditor?.id;
+
+                        // Handle dropdown value change here
+                        print(
+                            "Selected Auditor: $selectedAuditorName, ID: $selectedAuditorId");
+                      });
+                    },
+                    // Ensure the selected value exists in the list
+                    value: selectedAuditorId != null &&
+                            logInProvider.bodyAuditor!.any(
+                                (auditor) => auditor.id == selectedAuditorId)
+                        ? selectedAuditorId.toString()
+                        : null,
+                  ),
+
+                  const SizedBox(height: 16.0),
+
+                  // From Date Picker
+                  /*SizedBox(
+                    width: double.infinity,
+                    // Ensures the width matches other items
+                    child: GestureDetector(
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: selectedFromDate ?? DateTime.now(),
+                          firstDate: DateTime.now(), // Restrict past dates
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDate != null) {
+                          setState(() {
+                            selectedFromDate = pickedDate;
+                            if (selectedToDate != null &&
+                                selectedToDate!.isBefore(selectedFromDate!)) {
+                              selectedToDate = null; // Reset To Date if invalid
+                            }
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Text(
+                          selectedFromDate != null
+                              ? 'From: ${selectedFromDate!.toLocal().toString().split(' ')[0]}'
+                              : 'From',
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            color: AppColors.meruBlack,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),*/
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: selectedFromDate ?? DateTime.now(),
+                          firstDate: DateTime.now(), // Restrict past dates
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDate != null) {
+                          setState(() {
+                            selectedFromDate = pickedDate;
+                            if (selectedToDate != null &&
+                                selectedToDate!.isBefore(selectedFromDate!)) {
+                              selectedToDate = null; // Reset To Date if invalid
+                            }
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Text(
+                          selectedFromDate != null
+                              ? 'From: ${selectedFromDate!.toUtc().toIso8601String()}' // Format to "2024-10-29T18:30:00.000+00:00"
+                              : 'From',
+                          style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            color: AppColors.meruBlack,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 16.0),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                          ),
+                        ),
+                        child: const Text(
+                          "Schedule",
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: AppColors.meruWhite,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        onPressed: () {
+                          Map<String, dynamic> data = {
+                            "due_Date": "2024-10-29T18:30:00.000+00:00",
+                            "type": auditType,
+                            "stationcode": stationCode,
+                            "auditor": selectedAuditorId.toString()
+                          };
+
+                          String jsonData = jsonEncode(data);
+                          print(jsonData);
+                          logInProvider.createAudit(jsonData, context);
+                        },
+                      ),
+                      const SizedBox(width: 8.0),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                          ),
+                        ),
+                        child: const Text(
+                          "Cancel",
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: AppColors.meruWhite,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close dialog
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
 }

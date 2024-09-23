@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigator.pushNamed(context, Routenames.dmDashboardScreen);
       // Navigator.pushNamed(context, Routenames.smDashboardScreen);
       // Navigator.pushNamed(context, Routenames.cmDashboardScreen);
-      // Navigator.pushNamed(context, Routenames.stockAuditList);
+      // Navigator.pushNamed(context, Routenames.);
       // Navigator.pushNamed(context, Routenames.ERBScreen_Tech);
     });
     super.initState();

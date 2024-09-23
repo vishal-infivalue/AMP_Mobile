@@ -88,20 +88,15 @@ class _EvaluationScorePageState extends State<EvaluationScorePage> {
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                // Center the entire column vertically
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    // Center the entire row horizontally
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    // Align items in the row to the center
                     children: [
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          // Center content within the column
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          // Center align text within the column
                           children: [
                             Text(
                               logInProvider.heading,
@@ -120,9 +115,7 @@ class _EvaluationScorePageState extends State<EvaluationScorePage> {
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          // Center content within the column
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          // Center align text within the column
                           children: [
                             Text(
                               'Total Score',
@@ -136,7 +129,6 @@ class _EvaluationScorePageState extends State<EvaluationScorePage> {
                                   TextAlign.center, // Center the text itself
                             ),
                             SizedBox(height: 8.0),
-                            // Space between text and container
                             Container(
                               padding: EdgeInsets.all(14.0),
                               decoration: BoxDecoration(
@@ -218,7 +210,6 @@ class _EvaluationScorePageState extends State<EvaluationScorePage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // First column
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),

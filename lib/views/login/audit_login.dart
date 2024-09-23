@@ -4,8 +4,8 @@ import 'package:amp/utils/constant_strings.dart';
 import 'package:amp/utils/shared_preference_helper.dart';
 import 'package:amp/utils/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../providers_vm/generateOtp_provider.dart';
 import '../../routes/route_names.dart';
@@ -36,6 +36,7 @@ class _AuditLoginState extends State<AuditLogin> {
   Widget build(BuildContext context) {
 
     final logInProvider = Provider.of<APIProvider>(context);
+    _checkAndRequestPermissions();
     return Scaffold(
       backgroundColor: AppColors.meruYellow,
       body: Center(
@@ -214,8 +215,7 @@ class _AuditLoginState extends State<AuditLogin> {
           jsonEncode({"id": _employeeIdController.text}), context);
 
       if (logInProvider.userId == _employeeIdController.text) {
-        await logInProvider.generateOtp(
-            jsonEncode({"id": _employeeIdController.text}), context);
+        await logInProvider.generateOtp(jsonEncode({"id": _employeeIdController.text}), context);
         sharedPrefs.saveString(ConstantStrings.userIdLoggedIn,logInProvider.userId);
         Navigator.pushNamed(context, Routenames.otpScreen);
       }
@@ -223,4 +223,46 @@ class _AuditLoginState extends State<AuditLogin> {
       print('Error during API call: $error');
     }
   }
+
+
+  Future<void> _checkAndRequestPermissions() async {
+    // Check for specific permissions based on Android versions
+    if (await Permission.mediaLibrary.request().isDenied) {
+      var status = await [
+        Permission.camera,
+        Permission.location,
+        Permission.storage,
+        Permission.manageExternalStorage,
+        Permission.mediaLibrary,
+      ].request();
+
+      if (status[Permission.camera]!.isDenied ||
+          status[Permission.location]!.isDenied ||
+          status[Permission.storage]!.isDenied ||
+          status[Permission.manageExternalStorage]!.isDenied ||
+          status[Permission.mediaLibrary]!.isDenied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Permissions are required to proceed.')),
+        );
+      }
+    }
+  }
+
+
+/*  Future<void> _checkAndRequestPermissions() async {
+    var status = await [
+      Permission.camera,
+      Permission.location,
+      Permission.storage,
+    ].request();
+
+    if (status[Permission.camera]!.isDenied ||
+        status[Permission.location]!.isDenied ||
+        status[Permission.storage]!.isDenied) {
+      // Handle the case when permissions are denied
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Permissions are required to proceed.')),
+      );
+    }
+  }*/
 }

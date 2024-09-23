@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:amp/providers_vm/audit_provider.dart';
 import 'package:amp/utils/app_colors.dart';
 import 'package:amp/utils/constant_strings.dart';
@@ -25,6 +27,28 @@ class _StockAuditListPageState extends State<StockAuditListPage>
 
   final _formKeyLube = GlobalKey<FormState>();
   final _formKeyLpg = GlobalKey<FormState>();
+
+  final _headerTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+    fontWeight: FontWeight.bold,
+  );
+
+  final _headerValueTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+  );
+
+  final _expandHeaderTextStyle = TextStyle(
+    fontSize: 12,
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
 
   // Lube form
   TextEditingController _oneTextControllerLU =
@@ -128,7 +152,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
             color: AppColors.meruRed,
-            fontSize: 15.0,
+            fontSize: 14.0,
             fontStyle: FontStyle.normal,
           ),
         ),
@@ -170,7 +194,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: 15.0,
+                  fontSize: 14.0,
                   fontStyle: FontStyle.normal,
                 ),
               ),
@@ -181,7 +205,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: 15.0,
+                  fontSize: 14.0,
                   fontStyle: FontStyle.normal,
                 ),
               ),
@@ -192,7 +216,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: 15.0,
+                  fontSize: 14.0,
                   fontStyle: FontStyle.normal,
                 ),
               ),
@@ -234,9 +258,8 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               '${stockAuditsTypeListFuel[index]['productshortcode']}',
                               style: const TextStyle(
                                 fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
                                 color: AppColors.meruBlack,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                                 fontStyle: FontStyle.normal,
                               ),
                             ),
@@ -296,46 +319,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Station Name"),
+                                  Text("Station Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['stationname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Station Code"),
+                                  Text("Station Code",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['stationcode']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Station Type"),
+                                  Text("Station Type",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['stationtype']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
@@ -360,46 +371,33 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("SM Name"),
+                                  Text("SM Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['smname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("RH Code"),
-                                  Text(
-                                    "-",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("CM Name"),
+                                  /*Text("RH Code",style: _headerValueTextStyle,),
+                                  Text(
+                                    "${stockAuditsHeaderDetails['id']}",
+                                  ),*/
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("CM Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['cmname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
@@ -416,54 +414,40 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5.0, vertical: 5.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Auditor Name"),
+                                  Text("Auditor Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['auditorname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Audit Start Time"),
+                                  Text("Audit Start Time",style: _headerValueTextStyle,),
                                   Text(
                                     "${DateFormat('dd-MM-yyy\nkk:mm:ss').format(DateTime.now())}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Audit End Time"),
-                                  Text(
+                                  Text("Audit End Time",style: _headerValueTextStyle,),
+                                  const Text(
                                     "-",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
                                   ),
                                 ],
                               ),
@@ -475,6 +459,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         padding: const EdgeInsets.all(5.0),
                         child: TapToExpand(
                           backgroundcolor: AppColors.meruWhite,
+                          iconSize: 18.0,
+                          titlePadding: EdgeInsets.all(10.0),
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
                           iconColor: AppColors.meruBlack,
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -485,28 +472,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                   color: AppColors.meruYellow,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
-                                padding: const EdgeInsets.all(13.0),
-                                child: const Text(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
                                   '1',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
+                                  style: _expandHeaderTextStyle,
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(right: 10.0),
-                                width: MediaQuery.of(context).size.width * .50,
-                                child: const Text(
-                                  'Stocks Reconciliation\n(All Figures in ltrs)',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.meruBlack,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                margin: const EdgeInsets.only(right: 1.0),
+                                width: MediaQuery.of(context).size.width * .55,
+                                child: Text(
+                                  'Stocks Reconciliation(All Figures in ltrs)',
+                                  style: _expandHeaderTextStyle,
                                 ),
                               ),
                             ],
@@ -531,9 +508,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     const EdgeInsets.symmetric(vertical: 1.0),
                                 child: const Text(
                                   "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black38,
-                                    fontSize: 15.0,
+                                    fontSize: 12.0,
                                   ),
                                 ),
                               ),
@@ -549,8 +527,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         child: Text(
                           "Lubes Hygiene Checklist",
                           style: TextStyle(
+                            fontSize: 15.0,
+                            fontFamily: 'Poppins',
                             color: Colors.black,
-                            fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -560,12 +539,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -579,11 +558,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is online DSR is updated daily (check online register)?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 2.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -599,13 +578,16 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     decoration: InputDecoration(
                                       contentPadding:
                                           const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                              horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _oneTextControllerLU.text = newValue!;
@@ -624,7 +606,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(fontSize: 12.0),
+                                        ),
                                       );
                                     }).toList(),
                                   ),
@@ -640,9 +625,13 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 5.0, vertical: 1.0),
+                                          horizontal: 5.0,
+                                          vertical: 11.0,
+                                        ),
                                         hintText: 'Remark',
+                                        isDense: true,
                                       ),
+                                      style: const TextStyle(fontSize: 12.0),
                                       /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
@@ -660,12 +649,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -679,11 +668,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is Stock & Sales Matched in the Online DSR?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 3.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -698,14 +687,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _threeTextControllerLU.text = newValue!;
@@ -724,7 +716,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(value, style: TextStyle(fontSize: 12.0),),
                                       );
                                     }).toList(),
                                   ),
@@ -740,9 +732,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 5.0, vertical: 1.0),
+                                            horizontal: 5.0, vertical: 11.0),
                                         hintText: 'Remark',
+                                        isDense: true,
                                       ),
+                                      style: const TextStyle(fontSize: 12.0),
                                       /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
@@ -760,12 +754,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -779,18 +773,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is Lubes display stand is clean & well Branded?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 3.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                      MediaQuery.of(context).size.width * 0.33,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -798,14 +792,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _fiveTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _fiveTextControllerLU.text = newValue!;
@@ -824,7 +821,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(value, style: const TextStyle(fontSize: 12.0),),
                                       );
                                     }).toList(),
                                   ),
@@ -840,9 +837,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 5.0, vertical: 1.0),
+                                            horizontal: 5.0, vertical: 10.0),
                                         hintText: 'Remark',
+                                        isDense: true,
                                       ),
+                                      style: TextStyle(fontSize: 12.0),
                                       /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
@@ -860,12 +859,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -879,18 +878,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is updated price board is displayed at forecourt?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 3.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.32,
+                                      MediaQuery.of(context).size.width * 0.33,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 1.0,
                                   ),
@@ -898,14 +897,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _sevenTextControllerLU.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _sevenTextControllerLU.text = newValue!;
@@ -924,7 +926,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(value, style: TextStyle(fontSize: 12.0),),
                                       );
                                     }).toList(),
                                   ),
@@ -940,9 +942,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 5.0, vertical: 1.0),
+                                            horizontal: 5.0, vertical: 10.0),
                                         hintText: 'Remark',
+                                        isDense: true
                                       ),
+                                      style: TextStyle(fontSize: 12.0),
                                       /* validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LUBE Checklist Remark';
@@ -958,24 +962,32 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 18.0),
-                        child: TextFormField(
-                          controller: _nineTextControllerLU,
-                          textAlign: TextAlign.center,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Remarks',
-                            hintText: 'Remarks',
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 5.0),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 20.0),
+                          child: TextFormField(
+                            controller: _nineTextControllerLU,
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 5.0, vertical: 15.0,
+                                ),
+                                hintText: 'Remarks',
+                                isDense: true
+                            ),
+                            style: const TextStyle(fontSize: 12.0),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter LUBE Audit Remarks';
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter LUBE Audit Remarks';
-                            } else {
-                              return null;
-                            }
-                          },
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -1214,46 +1226,34 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Station Name"),
+                                  Text("Station Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['stationname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Station Code"),
+                                  Text("Station Code",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['stationcode']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Station Type"),
+                                  Text("Station Type",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['stationtype']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
@@ -1278,46 +1278,33 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("SM Name"),
+                                  Text("SM Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['smname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("RH Code"),
-                                  Text(
-                                    "-",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("CM Name"),
+                                  /*Text("RH Code",style: _headerValueTextStyle,),
+                                  Text(
+                                    "${stockAuditsHeaderDetails['id']}",
+                                  ),*/
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("CM Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['cmname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
@@ -1334,54 +1321,40 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 5.0, vertical: 5.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Auditor Name"),
+                                  Text("Auditor Name",style: _headerValueTextStyle,),
                                   Text(
                                     "${stockAuditsHeaderDetails['auditorname']}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Audit Start Time"),
+                                  Text("Audit Start Time",style: _headerValueTextStyle,),
                                   Text(
                                     "${DateFormat('dd-MM-yyy\nkk:mm:ss').format(DateTime.now())}",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: _headerTextStyle,
                                   ),
                                 ],
                               ),
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Audit End Time"),
-                                  Text(
+                                  Text("Audit End Time",style: _headerValueTextStyle,),
+                                  const Text(
                                     "-",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
                                   ),
                                 ],
                               ),
@@ -1394,6 +1367,10 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         child: TapToExpand(
                           backgroundcolor: AppColors.meruWhite,
                           iconColor: AppColors.meruBlack,
+                          iconSize: 18.0,
+                          titlePadding: const EdgeInsets.all(10.0),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0)),
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1403,28 +1380,18 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                   color: AppColors.meruYellow,
                                   borderRadius: BorderRadius.circular(4),
                                 ),
-                                padding: const EdgeInsets.all(13.0),
-                                child: const Text(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
                                   '1',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
+                                  style: _expandHeaderTextStyle,
                                 ),
                               ),
                               Container(
                                 margin: const EdgeInsets.only(right: 10.0),
-                                width: MediaQuery.of(context).size.width * .50,
-                                child: const Text(
-                                  'Stocks Reconciliation\n(All Figures in ltrs)',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.meruBlack,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                width: MediaQuery.of(context).size.width * .55,
+                                child: Text(
+                                  'Stocks Reconciliation (All Figures in ltrs)',
+                                  style: _expandHeaderTextStyle,
                                 ),
                               ),
                             ],
@@ -1444,14 +1411,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               ),
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 2.0),
+                                  horizontal: 10.0,
+                                  vertical: 2.0,
+                                ),
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 1.0),
                                 child: const Text(
                                   "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black38,
-                                    fontSize: 15.0,
+                                    fontSize: 12.0,
                                   ),
                                 ),
                               ),
@@ -1467,8 +1437,9 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         child: Text(
                           "LPGs Hygiene Checklist",
                           style: TextStyle(
+                            fontSize: 15.0,
+                            fontFamily: 'Poppins',
                             color: Colors.black,
-                            fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -1478,12 +1449,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -1497,11 +1468,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is online DSR is updated daily (check online register)?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 2.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1516,14 +1487,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _oneTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _oneTextControllerLP.text = newValue!;
@@ -1542,7 +1516,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(value, style: TextStyle(fontSize: 12.0),),
                                       );
                                     }).toList(),
                                   ),
@@ -1558,11 +1532,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 5.0,
-                                          vertical: 1.0,
-                                        ),
+                                            horizontal: 5.0, vertical: 11.0),
                                         hintText: 'Remark',
+                                        isDense: true,
                                       ),
+                                      style: const TextStyle(fontSize: 12.0),
                                       /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
@@ -1580,12 +1554,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -1599,11 +1573,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is Stock & Sales Matched in the Online DSR?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 12.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 2.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1618,14 +1592,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _threeTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _threeTextControllerLP.text = newValue!;
@@ -1644,7 +1621,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(value, style: TextStyle(fontSize: 12.0),),
                                       );
                                     }).toList(),
                                   ),
@@ -1660,9 +1637,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 5.0, vertical: 1.0),
+                                            horizontal: 5.0, vertical: 11.0),
                                         hintText: 'Remark',
+                                        isDense: true,
                                       ),
+                                      style: const TextStyle(fontSize: 12.0),
                                       /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
@@ -1680,12 +1659,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -1699,11 +1678,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is LPGs display stand is clean & well Branded?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 12.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 2.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1718,14 +1697,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _fiveTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _fiveTextControllerLP.text = newValue!;
@@ -1744,7 +1726,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(value, style: TextStyle(fontSize: 12.0),),
                                       );
                                     }).toList(),
                                   ),
@@ -1760,9 +1742,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 5.0, vertical: 1.0),
+                                            horizontal: 5.0, vertical: 11.0),
                                         hintText: 'Remark',
+                                        isDense: true,
                                       ),
+                                      style: const TextStyle(fontSize: 12.0),
                                       /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
@@ -1780,12 +1764,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 15.0,
+                          horizontal: 10.0,
+                          vertical: 10.0,
                         ),
                         margin: const EdgeInsets.symmetric(
                           vertical: 2.5,
-                          horizontal: 15.0,
+                          horizontal: 20.0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -1799,11 +1783,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                               "Is updated price board is displayed at forecourt?",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 12.0,
                               ),
                             ),
                             const SizedBox(
-                              height: 5.0,
+                              height: 2.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1818,14 +1802,17 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                     value: _sevenTextControllerLP.text,
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 10.0),
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
+                                          width: 1,
+                                          color: Colors.red,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
+                                      isDense: true,
                                     ),
                                     onChanged: (String? newValue) {
                                       _sevenTextControllerLP.text = newValue!;
@@ -1844,7 +1831,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(value),
+                                        child: Text(value, style: TextStyle(fontSize: 12.0),),
                                       );
                                     }).toList(),
                                   ),
@@ -1860,9 +1847,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 5.0, vertical: 1.0),
+                                            horizontal: 5.0, vertical: 11.0),
                                         hintText: 'Remark',
+                                        isDense: true,
                                       ),
+                                      style: const TextStyle(fontSize: 12.0),
                                       /*validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter LPG Checklist Remark';
@@ -1878,23 +1867,32 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 18.0),
-                        child: TextFormField(
-                          controller: _nineTextControllerLP,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Remarks',
-                            hintText: 'Remarks',
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 5.0),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 20.0),
+                          child: TextFormField(
+                            controller: _nineTextControllerLP,
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 15.0,
+                                ),
+                                hintText: 'Remarks',
+                                isDense: true
+                            ),
+                            style: const TextStyle(fontSize: 12.0),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter LPG Audit Remarks';
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          /*validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter LPG Audit Remarks';
-                            } else {
-                              return null;
-                            }
-                          },*/
                         ),
                       ),
                       const SizedBox(height: 10.0),
@@ -2257,19 +2255,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
         iconColor: AppColors.meruBlack,
-        title: Flexible(
+        iconSize: 18.0,
+        titlePadding: const EdgeInsets.all(15.0),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
           child: Text(
             '${eachProduct['productname']}',
             textAlign: TextAlign.start,
-            style: const TextStyle(
-              color: AppColors.meruBlack,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -2280,12 +2278,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Opening Stock"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
@@ -2294,10 +2292,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           /*validator: (value) {
                             if (value == null || value == "") {
                               return 'Lube data required';
@@ -2311,12 +2311,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Receipts"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
@@ -2325,10 +2325,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Receipts',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2350,12 +2352,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Returns"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
@@ -2364,10 +2366,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Returns',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2381,12 +2385,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Total Sales"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
@@ -2395,10 +2399,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Total Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2420,12 +2426,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Book Stocks"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
@@ -2434,10 +2440,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Book Stocks',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2451,12 +2459,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('Closing Stocks'),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
@@ -2465,10 +2473,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Closing Stocks',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2489,12 +2499,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Diff"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
@@ -2503,10 +2513,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Diff',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2520,22 +2532,24 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Remarks"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller: lubeProductsTextControllers[
                               '${eachProduct['id']}']["textControllers"][7],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Remarks',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           /*validator: (value) {
                             if (value == null || value == "") {
@@ -2610,19 +2624,19 @@ class _StockAuditListPageState extends State<StockAuditListPage>
     }
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
         iconColor: AppColors.meruBlack,
-        title: Flexible(
+        iconSize: 18.0,
+        titlePadding: const EdgeInsets.all(15.0),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
           child: Text(
             '${eachProduct['productname']}',
             textAlign: TextAlign.start,
-            style: const TextStyle(
-              color: AppColors.meruBlack,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -2633,12 +2647,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Opening Stock"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2648,10 +2662,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2665,12 +2681,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Receipts"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2680,10 +2696,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Receipts',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2705,12 +2723,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Returns"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2720,10 +2738,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Returns',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2737,12 +2757,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Total Sales"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2752,10 +2772,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Total Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2777,12 +2799,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text("Book Stocks"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2793,9 +2815,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
+                                horizontal: 5.0, vertical: 10.0),
                             hintText: 'Book Stocks',
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2814,7 +2838,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       children: [
                         const Text('Closing Stocks'),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2824,10 +2848,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Closing Stocks',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2853,7 +2879,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       children: [
                         const Text("Diff"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2863,10 +2889,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Diff',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             calculate_product();
                           },
@@ -2885,7 +2913,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                       children: [
                         const Text("Remarks"),
                         const SizedBox(
-                          height: 5.0,
+                          height: 3.0,
                         ),
                         TextFormField(
                           controller:
@@ -2894,10 +2922,12 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Remarks',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           /*validator: (value) {
                             if (value == null || value == "") {
                               return 'LPG data required';

@@ -10,6 +10,7 @@ import '../../response/nc_response.dart';
 import '../../routes/route_names.dart';
 import '../../utils/CommonFunctions.dart';
 import '../../utils/app_colors.dart';
+import '../../utils/constant_strings.dart';
 
 class NonComplianceTable extends StatefulWidget {
   @override
@@ -18,73 +19,13 @@ class NonComplianceTable extends StatefulWidget {
 
 
 class _NonComplianceTableState extends State<NonComplianceTable> {
-  GlobalVariables gb = GlobalVariables();
-  List<Data> _ncAuditTable = [];
-  bool _isLoading = true;
+  bool _isLoading = true; // State for loading indicator
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _fetchData();
   }
-
-  Future<void> _loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Try to load data from SharedPreferences
-    String? storedData = prefs.getString('nc_audit_table');
-
-    if (storedData != null) {
-      // Data found in SharedPreferences, load it
-      List<dynamic> jsonList = jsonDecode(storedData);
-      setState(() {
-        _ncAuditTable = jsonList.map((json) => Data.fromJson(json)).toList();
-        _isLoading = false;
-      });
-      print("Data loaded from SharedPreferences: $_ncAuditTable");
-    } else {
-      // No data in SharedPreferences, fetch from API
-      await _fetchDataFromAPI();
-    }
-  }
-
-
-  Future<void> _fetchDataFromAPI() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      // Fetch data from the API
-      var response = await Provider.of<APIProvider>(context, listen: false).getNCData(context);
-
-      if (response != null && response.data != null) {
-        // Ensure the response data is of the correct type
-        List<Data> dataList = response.data as List<Data>;
-
-        // Update local variable
-        setState(() {
-          _ncAuditTable = dataList;
-        });
-
-        // Store the data in SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        String jsonData = jsonEncode(_ncAuditTable.map((data) => data.toJson()).toList());
-        await prefs.setString('nc_audit_table', jsonData);
-
-        print("Data fetched from API and stored in SharedPreferences: $_ncAuditTable");
-      } else {
-        print("No data received from API");
-      }
-    } catch (e) {
-      print("Error fetching data from API: $e");
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
 
   void _openFilterDrawer() {
     showModalBottomSheet(
@@ -144,7 +85,7 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
                         labelText: 'Audit Type',
                         border: OutlineInputBorder(),
                       ),
-                      items: <String>["ERB CONA", "ERB TECH", "HSE"]
+                      items: <String>["Consumer", "Technical", "Fuel", "Services"]
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -189,7 +130,7 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
                         labelText: 'NC Status',
                         border: OutlineInputBorder(),
                       ),
-                      items: <String>['In Progress', 'Submitted', 'Closed']
+                      items: <String>['Open','In Progress', 'Submitted']
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -371,7 +312,7 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
                               ),
                             ),
                             onPressed: () {
-
+                              Navigator.of(context).pop();
                             },
                           ),
                         ),
@@ -387,8 +328,19 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
     );
   }
 
+  Future<void> _fetchData() async {
+    final logInProvider = Provider.of<APIProvider>(context, listen: false);
+    await logInProvider.getNCData(context);
+
+    setState(() {
+      _isLoading = false; // Set loading to false once data is fetched
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final logInProvider = Provider.of<APIProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -406,7 +358,10 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
         ),
         actions: [
           TextButton(
-            onPressed: _openFilterDrawer,
+            onPressed: () {
+              _openFilterDrawer();
+              print("Filter button tapped");
+            },
             child: Text(
               'Filter',
               style: TextStyle(
@@ -419,48 +374,54 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
         ],
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : _ncAuditTable.isEmpty
+          ? Center(child: CircularProgressIndicator()) // Show loading indicator
+          : logInProvider.ncAuditTable.isEmpty
           ? Center(child: Text('No data available.'))
-          : SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: 17.0),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Number of open NCs by age',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: AppColors.meruBlack,
-                    fontSize: 12.0,
-                    letterSpacing: 1,
-                  ),
-                  textAlign: TextAlign.left,
+          : _buildTable(logInProvider),
+    );
+  }
+
+  Widget _buildTable(APIProvider logInProvider) {
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(height: 17.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Number of open NCs by age',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  color: AppColors.meruBlack,
+                  fontSize: 12.0,
+                  letterSpacing: 1,
                 ),
+                textAlign: TextAlign.left,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Table(
-                  border: TableBorder.all(color: Colors.black),
-                  columnWidths: const {
-                    0: FlexColumnWidth(),
-                    1: FlexColumnWidth(),
-                    2: FlexColumnWidth(),
-                    3: FlexColumnWidth(),
-                    4: FlexColumnWidth(),
-                    5: FlexColumnWidth(),
-                  },
-                  children: [
-                    _buildTableHeader(),
-                    ..._ncAuditTable.map((audit) => _buildTableRow(audit)).toList(),
-                  ],
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Table(
+                border: TableBorder.all(color: Colors.black),
+                columnWidths: const {
+                  0: FlexColumnWidth(),
+                  1: FlexColumnWidth(),
+                  2: FlexColumnWidth(),
+                  3: FlexColumnWidth(),
+                  4: FlexColumnWidth(),
+                  5: FlexColumnWidth(),
+                },
+                children: [
+                  _buildTableHeader(),
+                  ...logInProvider.ncAuditTable
+                      .map((audit) => _buildTableRow(audit,logInProvider.ncAuditTable.indexOf(audit)))
+                      .toList(),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -480,7 +441,7 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
     );
   }
 
-  TableRow _buildTableRow(Data audit) {
+  TableRow _buildTableRow(Data audit, int index) {
     return TableRow(
       children: [
         _buildTableCell(audit.station?.stationname ?? 'N/A'),
@@ -488,7 +449,7 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
         _buildTableCell(audit.status?.toString() ?? 'N/A'),
         _buildTableCell(audit.station?.clusterid?.toString() ?? 'N/A'),
         _buildTableCell('Pending'),
-        _buildTableCellWithAction(),
+        _buildTableCellWithAction(audit.id ?? 0,index),
       ],
     );
   }
@@ -509,7 +470,7 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
     );
   }
 
-  Widget _buildTableCellWithAction() {
+  Widget _buildTableCellWithAction(int auditId, int index) {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -523,7 +484,18 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
             child: Image.asset('assets/images/icon_start.png'),
           ),
           InkWell(
-            onTap: () {
+            onTap: () async {
+              SharedPreferences prefs =
+                  await SharedPreferences .getInstance();
+              prefs.setInt(ConstantStrings.selectedNCAuditId, auditId);
+              prefs.setInt(ConstantStrings.selectedNCIndex, index);
+
+              GlobalVariables gb = GlobalVariables();
+              gb.index=index;
+              gb.ncAudit = auditId;
+
+
+
               Navigator.pushNamed(context, Routenames.ncDetailPage);
             },
             child: const Text(
@@ -542,6 +514,8 @@ class _NonComplianceTableState extends State<NonComplianceTable> {
     );
   }
 }
+
+
 
 
 

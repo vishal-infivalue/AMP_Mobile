@@ -49,7 +49,7 @@ class _TechnicalTestState extends State<TechnicalTest> {
     };
 
     String jsonData = jsonEncode(data);
-    logInProvider.startAudit(jsonData, context);
+    logInProvider.createAudit(jsonData, context);
     await apiProvider.getAuditScreenData(jsonData, context);
     responseJson = jsonEncode(apiProvider.erbCustomerCheckListResponse);
     await prefs.setString('ERBCustomerCheckListResponse', responseJson);
@@ -366,8 +366,8 @@ class _TechnicalTestState extends State<TechnicalTest> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _buildActionButton("Save", context),
-            _buildActionButton("Delete", context),
-            _buildActionButton("Hold", context),
+           /* _buildActionButton("Delete", context),
+            _buildActionButton("Hold", context),*/
             _buildActionButton("Submit to station", context),
           ],
         ),

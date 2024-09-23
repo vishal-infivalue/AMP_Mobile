@@ -1,10 +1,10 @@
 /*
 import 'package:amp/views/dashboard_screen.dart';
-import 'package:amp/views/tables/pending_table.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import '../../utils/app_colors.dart';
+
 
 class OtpTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -116,28 +116,28 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
     return Scaffold(
       backgroundColor: Colors.yellow,
       appBar: AppBar(
-        title: const Center(
-            child: Text('Audit Management Platform',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.meruWhite,
-                  fontSize: 14.0,
-                  fontStyle: FontStyle.normal,
-                ))),
+        title:
+         Center(child: Text('Audit Management Platform',
+             style: TextStyle(
+               fontFamily: 'Montserrat',
+               fontWeight: FontWeight.bold,
+               color: AppColors.meruWhite,
+               fontSize: 14.0,
+               fontStyle: FontStyle.normal,
+             ))),
         backgroundColor: AppColors.meruRed,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_circle_left_sharp, color: Colors.white),
-          // Blue icon
+          icon: Icon(Icons.arrow_circle_left_sharp, color: Colors.white), // Blue icon
           onPressed: () => Navigator.pop(context), // Handle back button press
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+             Text(
               'OTP Validation',
               style: TextStyle(
                 fontFamily: 'Montserrat',
@@ -148,10 +148,12 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
               ),
             ),
             const SizedBox(height: 40.0),
+
+
             Center(
               child: Column(
                 children: [
-                  const Text(
+                   Text(
                     'Please enter the OTP sent to your mobile number',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
@@ -236,6 +238,7 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
+
                   ElevatedButton(
                     onPressed: () async {
                       if (_getEnteredOtp() == '123456') {
@@ -246,10 +249,8 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DM_DashboardScreen()),
+                              builder: (context) =>   DM_DashboardScreen()),
                         );
-
-
                       } else {
                         // Show error message for invalid OTP
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -268,37 +269,38 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                         minimumSize: Size(
                             MediaQuery.of(context).size.width * 0.2,
                             50.0) // Adjust width and height
-                        ),
+                    ),
                     child: _showLoading
                         ? CircularProgressIndicator(
-                            color: AppColors.meruYellow,
-                            strokeWidth: 1.0,
-                          )
-                        : Text(
-                            "Submit",
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.meruWhite,
-                              fontSize: 12.0,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ),
+                      color: AppColors.meruYellow,
+                      strokeWidth: 1.0,
+                    )
+                        : Text("Submit",style:
+                    TextStyle(
+
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.meruWhite,
+                      fontSize: 12.0,
+                      fontStyle: FontStyle.normal,
+
+                    ),),
                   ),
+
                   const SizedBox(height: 20.0),
+
                   if (_timer > 0)
                     Text(
                       'Resend code in $_timer seconds',
-                      style:
-                          const TextStyle(fontSize: 12.0, color: Colors.black),
+                      style: const TextStyle(fontSize: 12.0, color: Colors.black),
                     ),
+
                   const SizedBox(height: 20.0),
+
                   ElevatedButton(
                     onPressed: _isResendButtonEnabled ? _startTimer : null,
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: _isResendButtonEnabled
-                            ? AppColors.meruRed
-                            : Colors.grey,
+                        backgroundColor: _isResendButtonEnabled ? AppColors.meruRed : Colors.grey,
                         foregroundColor: AppColors.meruWhite,
                         shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(
@@ -306,22 +308,21 @@ class _OtpValidationScreenState extends State<OtpValidationScreen> {
                         minimumSize: Size(
                             MediaQuery.of(context).size.width * 0.2,
                             50.0) // Adjust width and height
-                        ),
-                    child: Text(
-                      "Resend Code",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.meruWhite,
-                        fontSize: 12.0,
-                        fontStyle: FontStyle.normal,
-                      ),
                     ),
+                    child: Text("Resend Code",style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.meruWhite,
+                      fontSize: 12.0,
+                      fontStyle: FontStyle.normal,
+                    ),),
                   ),
+
                   SizedBox(
                     height: 50,
                     width: 100,
                   ),
+
                   SizedBox(
                     height: 50,
                     width: 100,
