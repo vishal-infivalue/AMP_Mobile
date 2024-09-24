@@ -30,7 +30,29 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
   TextEditingController stockVariation = TextEditingController();
   TextEditingController grossStockVariationS = TextEditingController();
   TextEditingController isNetStockVariationPermissionLimit =
-  TextEditingController();
+      TextEditingController();
+
+  final _headerTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+    fontWeight: FontWeight.bold,
+  );
+
+  final _headerValueTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+  );
+
+  final _expandHeaderTextStyle = TextStyle(
+    fontSize: 12,
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
 
   @override
   void didChangeDependencies() {
@@ -96,7 +118,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                   value: (_currentStep + 1) / 4,
                   backgroundColor: Colors.grey[200],
                   valueColor:
-                  const AlwaysStoppedAnimation<Color>(AppColors.meruYellow),
+                      const AlwaysStoppedAnimation<Color>(AppColors.meruYellow),
                   minHeight: 10,
                 ),
               ),
@@ -111,46 +133,43 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Name"),
+                          Text(
+                            "Station Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['stationname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Code"),
+                          Text(
+                            "Station Code",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['stationcode']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Type"),
+                          Text(
+                            "Station Type",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['stationtype']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
@@ -175,46 +194,39 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("SM Name"),
+                          Text(
+                            "SM Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['smname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("RH Code"),
-                          Text(
-                            "-",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("CM Name"),
+                          /*Text("RH Code",style: _headerValueTextStyle,),
+                                  Text(
+                                    "${stockAuditsHeaderDetails['id']}",
+                                  ),*/
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "CM Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['cmname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
@@ -239,46 +251,42 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Auditor Name"),
+                          Text(
+                            "Auditor Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['auditorname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Audit Start Time"),
+                          Text(
+                            "Audit Start Time",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${DateFormat('dd-MM-yyy\nkk:mm:ss').format(DateTime.now())}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Audit End Time"),
                           Text(
+                            "Audit End Time",
+                            style: _headerValueTextStyle,
+                          ),
+                          const Text(
                             "-",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
                           ),
                         ],
                       ),
@@ -290,6 +298,9 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,29 +311,17 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '1',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
-                          'Stock Reconciliation\n(All Figures in ltrs)',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: Text('Stock Reconciliation(All Figures in ltrs)',
+                            style: _expandHeaderTextStyle),
                       ),
                     ],
                   ),
@@ -337,15 +336,11 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       const SizedBox(
                         height: 15.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "Sales From Dispensing Units",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
@@ -354,7 +349,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       ...buildEachNozzleTapToExpandSectionDK(
                           ((nozzelsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['NOZZLE'] ?? [])
-                          as List)),
+                              as List)),
                       const SizedBox(
                         height: 10.0,
                       ),
@@ -363,13 +358,9 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               "Total as per Totaliser",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
@@ -379,8 +370,10 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 1.0),
+                                      horizontal: 10.0, vertical: 10.0),
+                                  isDense: true,
                                 ),
+                                style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
                                   nozzleTotalizers.text = val;
                                 },
@@ -399,15 +392,11 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "Sales From UST",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
@@ -416,7 +405,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       ...buildEachUSTTapToExpandSectionDK(
                           ((ustsTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['UST'] ?? [])
-                          as List)),
+                              as List)),
                       const SizedBox(
                         height: 10.0,
                       ),
@@ -425,13 +414,9 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               "Total as per UST",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
@@ -441,8 +426,10 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 1.0),
+                                      horizontal: 10.0, vertical: 10.0),
+                                  isDense: true,
                                 ),
+                                style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
                                   ustTotalizers.text = val;
                                 },
@@ -461,40 +448,28 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "DK STOCK VARIATION(Ltrs)",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
                         height: 10.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Text(
                               "(+/-)",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             )
                           ],
                         ),
@@ -515,7 +490,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               "Gross Stock Variation(L)=Totalizer sales(Σ E)-UST sales(Σ J)  L",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -527,10 +502,12 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   controller: grossStockVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -562,7 +539,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               "Sum of recoverable shortage from Transporter in (PODs) between at last audit & current audit date  Σ K",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -574,10 +551,12 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   controller: sumOfRecoverable,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -589,14 +568,14 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   },
                                   onChanged: (val) {
                                     var textValue =
-                                    val == '' ? 0.0 : double.parse(val);
+                                        val == '' ? 0.0 : double.parse(val);
                                     var grossStock =
-                                    grossStockVariation.text == ''
-                                        ? 0.0
-                                        : double.parse(
-                                        grossStockVariation.text);
+                                        grossStockVariation.text == ''
+                                            ? 0.0
+                                            : double.parse(
+                                                grossStockVariation.text);
                                     netVariation.text =
-                                    "${grossStock + textValue}";
+                                        "${grossStock + textValue}";
                                     calculateDKStockVariation();
                                   },
                                 ),
@@ -622,7 +601,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               "Net Variation (M) = (L + ΣK)  M",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -634,10 +613,12 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   controller: netVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -664,7 +645,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               "Stock Variation as %age  Of Totalizer sales M/ΣE= DK %",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -676,12 +657,12 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   controller: stockVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0,
-                                      vertical: 1.0,
-                                    ),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -700,14 +681,13 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Text(
-                          "Permissible Stock Variation (As per company's norms)",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .85,
+                          child: Text(
+                            "Permissible Stock Variation (As per company's norms)",
+                            style: _headerTextStyle,
                           ),
                         ),
                       ),
@@ -730,7 +710,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               "Permitted Evaporation / Handling loss as per control order  (only in case of negative stock variation)",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -742,10 +722,12 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   controller: grossStockVariationS,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -777,7 +759,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               "Is Net Stock Variation within permissible limit (Q)",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -787,15 +769,16 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 width: 100.0,
                                 child: Container(
                                   width:
-                                  MediaQuery.of(context).size.width * 0.40,
+                                      MediaQuery.of(context).size.width * 0.40,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 5.0),
                                   child: DropdownButtonFormField<String>(
                                     value: "Select",
                                     decoration: InputDecoration(
+                                      isDense: true,
                                       contentPadding:
-                                      const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 10.0, vertical: 5.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -805,7 +788,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                     ),
                                     onChanged: (String? newValue) {
                                       isNetStockVariationPermissionLimit.text =
-                                      newValue!;
+                                          newValue!;
                                     },
                                     validator: (String? value) {
                                       if (value == null) {
@@ -816,11 +799,14 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                     items: ['Select', 'Yes', 'No']
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(fontSize: 12.0),
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
                                 ),
                               ),
@@ -830,14 +816,15 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 2.0),
+                            horizontal: 10.0, vertical: 1.0),
                         margin: const EdgeInsets.symmetric(
-                            vertical: 1.0, horizontal: 15.0),
+                            vertical: 10.0, horizontal: 15.0),
                         child: const Text(
                           "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black38,
-                            fontSize: 15.0,
+                            fontSize: 13.0,
                           ),
                         ),
                       ),
@@ -849,6 +836,9 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -859,28 +849,18 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '2',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
+                        child: Text(
                           'Quality & Quantity',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                     ],
@@ -897,7 +877,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       ...buildEachUSTTapToExpandSectionDKQualityQuantity(
                           ((qnqTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['UST'] ?? [])
-                          as List))
+                              as List))
                     ],
                   ),
                 ),
@@ -906,6 +886,9 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -916,28 +899,18 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '3',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
+                        child: Text(
                           'Daily Density Record Reconciliation',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                     ],
@@ -956,7 +929,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       ...buildEachNozzleTapToExpandSectionDKDDRR(
                           ((ddrrTextControllers ?? {}) as Map),
                           ((stockAuditsFuelDKNozzleUSTDetails['NOZZLE'] ?? [])
-                          as List)),
+                              as List)),
                     ],
                   ),
                 ),
@@ -1002,12 +975,10 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 builder: (context, color, _) {
                                   return CircularProgressIndicator(
                                     valueColor:
-                                    AlwaysStoppedAnimation<Color>(color!),
+                                        AlwaysStoppedAnimation<Color>(color!),
                                   );
                                 },
-                                onEnd: () {
-                                  // No need to do anything here
-                                },
+                                onEnd: () {},
                               ),
                             );
                           },
@@ -1016,20 +987,20 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                           if (_formKey.currentState!.validate()) {
                             var nozzle_list = [];
                             var list_nozzle = Provider.of<AuditProvider>(
-                                context,
-                                listen: false)
+                                    context,
+                                    listen: false)
                                 .nozzelsUstsTextControllers;
                             var list_nozzle_ddrr = Provider.of<AuditProvider>(
-                                context,
-                                listen: false)
+                                    context,
+                                    listen: false)
                                 .ddrrTextControllers;
                             var ust_list = [];
                             var list_ust = Provider.of<AuditProvider>(context,
-                                listen: false)
+                                    listen: false)
                                 .ustTextControllers;
                             var list_ust_qnq = Provider.of<AuditProvider>(
-                                context,
-                                listen: false)
+                                    context,
+                                    listen: false)
                                 .ustQnQTextControllers;
 
                             list_nozzle.forEach((i, eachData) {
@@ -1040,23 +1011,23 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 "productShortCode": "$i",
                                 "productUOM": "LTRS",
                                 "closedReading":
-                                "${eachData['textControllers'][0].text}",
+                                    "${eachData['textControllers'][0].text}",
                                 "openingReading":
-                                "${eachData['textControllers'][1].text}",
+                                    "${eachData['textControllers'][1].text}",
                                 "stockTransfer":
-                                "${eachData['textControllers'][2].text}",
+                                    "${eachData['textControllers'][2].text}",
                                 "grossSales":
-                                "${eachData['textControllers'][3].text}",
+                                    "${eachData['textControllers'][3].text}",
                                 "pumpTest":
-                                "${eachData['textControllers'][4].text}",
+                                    "${eachData['textControllers'][4].text}",
                                 "netNozzleSales":
-                                "${eachData['textControllers'][5].text}",
+                                    "${eachData['textControllers'][5].text}",
                                 "nozzleTestResult":
-                                "${list_nozzle_ddrr[i]['textControllers'][1].text}",
+                                    "${list_nozzle_ddrr[i]['textControllers'][1].text}",
                                 "nozzleTestQty":
-                                "${list_nozzle_ddrr[i]['textControllers'][2].text}",
+                                    "${list_nozzle_ddrr[i]['textControllers'][2].text}",
                                 "nozzleTestRemarks":
-                                "${list_nozzle_ddrr[i]['textControllers'][3].text}",
+                                    "${list_nozzle_ddrr[i]['textControllers'][3].text}",
                               });
                             });
 
@@ -1068,34 +1039,34 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                 "productShortCode": "$i",
                                 "productUOM": "LTRS",
                                 "openingStock":
-                                "${eachData['textControllers'][0].text}",
+                                    "${eachData['textControllers'][0].text}",
                                 "sumOfDNote":
-                                "${eachData['textControllers'][1].text}",
+                                    "${eachData['textControllers'][1].text}",
                                 "stockTransfer":
-                                "${eachData['textControllers'][2].text}",
+                                    "${eachData['textControllers'][2].text}",
                                 "total":
-                                "${eachData['textControllers'][3].text}",
+                                    "${eachData['textControllers'][3].text}",
                                 "closingStock":
-                                "${eachData['textControllers'][4].text}",
+                                    "${eachData['textControllers'][4].text}",
                                 "salesPerUST":
-                                "${eachData['textControllers'][5].text}",
+                                    "${eachData['textControllers'][5].text}",
                                 "observedDensity":
-                                "${list_ust_qnq[i]['textControllers'][0].text}",
+                                    "${list_ust_qnq[i]['textControllers'][0].text}",
                                 "observedTemp":
-                                "${list_ust_qnq[i]['textControllers'][1].text}",
+                                    "${list_ust_qnq[i]['textControllers'][1].text}",
                                 "observedDensityAt20deg":
-                                "${list_ust_qnq[i]['textControllers'][2].text}",
+                                    "${list_ust_qnq[i]['textControllers'][2].text}",
                                 "refDensity":
-                                "${list_ust_qnq[i]['textControllers'][3].text}",
+                                    "${list_ust_qnq[i]['textControllers'][3].text}",
                                 "variation":
-                                "${list_ust_qnq[i]['textControllers'][5].text}",
+                                    "${list_ust_qnq[i]['textControllers'][5].text}",
                                 "isVariationWithinLimit":
-                                "${list_ust_qnq[i]['textControllers'][6].text}",
+                                    "${list_ust_qnq[i]['textControllers'][6].text}",
                               });
                             });
 
                             final SharedPreferenceHelper _sharedPrefs =
-                            SharedPreferenceHelper();
+                                SharedPreferenceHelper();
                             String? auditId = await _sharedPrefs.getString(
                                 ConstantStrings.selectedStockAuditID);
 
@@ -1103,48 +1074,49 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                               "productCategory": "FUEL",
                               "auditId": "$auditId",
                               "stationCode":
-                              "${stockAuditsHeaderDetails['stationcode']}",
+                                  "${stockAuditsHeaderDetails['stationcode']}",
                               "overallRemarks": "overallRemarks 2",
                               "NOZZLE": nozzle_list,
                               "UST": ust_list,
                               "stockVariation": {
                                 "productSubCategory": "DK",
                                 "grossStockVariation":
-                                "${grossStockVariation.text}",
+                                    "${grossStockVariation.text}",
                                 "sumOfRecoverableStorage":
-                                "${sumOfRecoverable.text}",
+                                    "${sumOfRecoverable.text}",
                                 "netVariation": "${netVariation.text}",
                                 "stockVariationOfTotalizerSales":
-                                "${stockVariation.text}",
+                                    "${stockVariation.text}",
                                 "permittedEvaporation":
-                                "${grossStockVariationS.text}",
+                                    "${grossStockVariationS.text}",
                                 "isWithinLimit":
-                                "${isNetStockVariationPermissionLimit.text}",
+                                    "${isNetStockVariationPermissionLimit.text}",
                                 "totalizerTotal": "${nozzleTotalizers.text}",
                                 "ustTotal": "${ustTotalizers.text}"
                               }
                             };
 
                             var result = await Provider.of<AuditProvider>(
-                                context,
-                                listen: false)
+                                    context,
+                                    listen: false)
                                 .saveStockAuditData(stockAuditData: payload);
+
                             Navigator.of(context)
                                 .pop(); // Close the CircularProgressIndicator dialog
+
                             ScaffoldMessenger.of(context).showMaterialBanner(
                               MaterialBanner(
                                 content: Text('DK $result'),
                                 actions: [
                                   TextButton(
-                                    child: const Text('Close'),
-                                    onPressed: () {
-                                      Provider.of<AuditProvider>(context,
-                                          listen: false)
-                                          .fetchStockAuditsList("Fuel");
-                                      ScaffoldMessenger.of(context)
-                                          .hideCurrentMaterialBanner();
-                                    },
-                                  ),
+                                      child: const Text('Close'),
+                                      onPressed: () {
+                                        Provider.of<AuditProvider>(context,
+                                                listen: false)
+                                            .fetchStockAuditsList("Fuel");
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentMaterialBanner();
+                                      }),
                                 ],
                               ),
                             );
@@ -1223,57 +1195,57 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     void nozzleCalculation() {
       var cR = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][0]
-              .text ==
-              ''
+                          ['textControllers'][0]
+                      .text ==
+                  ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][0]
-              .text);
+                      ['textControllers'][0]
+                  .text);
       var oPR = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][1]
-              .text ==
-              ''
+                          ['textControllers'][1]
+                      .text ==
+                  ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][1]
-              .text);
+                      ['textControllers'][1]
+                  .text);
       var sT = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][2]
-              .text ==
-              ''
+                          ['textControllers'][2]
+                      .text ==
+                  ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][2]
-              .text);
+                      ['textControllers'][2]
+                  .text);
       var pT = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][4]
-              .text ==
-              ''
+                          ['textControllers'][4]
+                      .text ==
+                  ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][4]
-              .text);
+                      ['textControllers'][4]
+                  .text);
 
       nozzelsTextControllers['${eachNozzle['productName']}']['textControllers']
-      [3]
+              [3]
           .text = '${cR - oPR - sT}';
 
       var gS = double.parse(
           nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][3]
-              .text ==
-              ''
+                          ['textControllers'][3]
+                      .text ==
+                  ''
               ? '0.0'
               : nozzelsTextControllers['${eachNozzle['productName']}']
-          ['textControllers'][3]
-              .text);
+                      ['textControllers'][3]
+                  .text);
 
       nozzelsTextControllers['${eachNozzle['productName']}']['textControllers']
-      [5]
+              [5]
           .text = '${gS - pT}';
 
       calculateNozzletotalizers();
@@ -1283,14 +1255,16 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachNozzle['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachNozzle['productName']}',
+            textAlign: TextAlign.start,
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1309,20 +1283,22 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         const Text('(A)->CR'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                          '${eachNozzle['productName']}']
-                          ['textControllers'][0],
+                                  '${eachNozzle['productName']}']
+                              ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
+                            hintText: 'Closing EMT',
                             contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
-                            hintText: 'Closing Reading of EMT',
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                            '${eachNozzle['productName']}']
-                            ['textControllers'][0]
+                                        '${eachNozzle['productName']}']
+                                    ['textControllers'][0]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1338,7 +1314,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1346,20 +1322,22 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         const Text('(B)->OPR'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                          '${eachNozzle['productName']}']
-                          ['textControllers'][1],
+                                  '${eachNozzle['productName']}']
+                              ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Reading of(EMT)',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                            '${eachNozzle['productName']}']
-                            ['textControllers'][1]
+                                        '${eachNozzle['productName']}']
+                                    ['textControllers'][1]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1383,7 +1361,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1391,20 +1369,22 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         const Text('(C)->ST'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                          '${eachNozzle['productName']}']
-                          ['textControllers'][2],
+                                  '${eachNozzle['productName']}']
+                              ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Stock Transfer',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                            '${eachNozzle['productName']}']
-                            ['textControllers'][2]
+                                        '${eachNozzle['productName']}']
+                                    ['textControllers'][2]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1420,7 +1400,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1428,20 +1408,22 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         const Text('(D=A-B-C)->GS'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                          '${eachNozzle['productName']}']
-                          ['textControllers'][3],
+                                  '${eachNozzle['productName']}']
+                              ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Gross Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                            '${eachNozzle['productName']}']
-                            ['textControllers'][3]
+                                        '${eachNozzle['productName']}']
+                                    ['textControllers'][3]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1464,7 +1446,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1472,20 +1454,22 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         const Text('(E)->PT'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                          '${eachNozzle['productName']}']
-                          ['textControllers'][4],
+                                  '${eachNozzle['productName']}']
+                              ['textControllers'][4],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Pump Test',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                            '${eachNozzle['productName']}']
-                            ['textControllers'][4]
+                                        '${eachNozzle['productName']}']
+                                    ['textControllers'][4]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1501,7 +1485,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1509,20 +1493,22 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         const Text('(F=D-E)->NNS'),
                         TextFormField(
                           controller: nozzelsTextControllers[
-                          '${eachNozzle['productName']}']
-                          ['textControllers'][5],
+                                  '${eachNozzle['productName']}']
+                              ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Net Nozzle Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             nozzelsTextControllers[
-                            '${eachNozzle['productName']}']
-                            ['textControllers'][5]
+                                        '${eachNozzle['productName']}']
+                                    ['textControllers'][5]
                                 .text = val;
                             nozzleCalculation();
                           },
@@ -1589,7 +1575,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     var sum_J = ustTotalizers.text == '' ? "0.0" : ustTotalizers.text;
 
     grossStockVariation.text =
-    "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
+        "${(double.parse(sum_E) - double.parse(sum_J)).toStringAsFixed(2)}";
     var l = grossStockVariation.text == '' ? "0.0" : grossStockVariation.text;
 
     var k = sumOfRecoverable.text == '' ? "0.0" : sumOfRecoverable.text;
@@ -1598,7 +1584,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
     var m = netVariation.text == '' ? "0.0" : netVariation.text;
 
     stockVariation.text =
-    '${((double.parse(m) / double.parse(sum_E)) * 100).toStringAsFixed(2)} %';
+        '${((double.parse(m) / double.parse(sum_E)) * 100).toStringAsFixed(2)} %';
 
     grossStockVariationS.text = "${double.parse(sum_E) * (-0.005)}";
   }
@@ -1606,44 +1592,45 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
   Widget buildUSTTapToExpandSectionFule(Map ustsTextControllers, Map eachUST) {
     void ustCalculation() {
       var oS = double.parse(ustsTextControllers['${eachUST['productName']}']
-      ['textControllers'][0]
-          .text ==
-          ''
+                      ['textControllers'][0]
+                  .text ==
+              ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-      [0]
-          .text);
+                  [0]
+              .text);
       var dNote = double.parse(ustsTextControllers['${eachUST['productName']}']
-      ['textControllers'][1]
-          .text ==
-          ''
+                      ['textControllers'][1]
+                  .text ==
+              ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-      [1]
-          .text);
+                  [1]
+              .text);
 
-      var sT = double.parse(ustsTextControllers['${eachUST['productName']}']
-      ['textControllers'][2]
-          .text ==
-          ''
+      var st = double.parse(ustsTextControllers['${eachUST['productName']}']
+                      ['textControllers'][2]
+                  .text ==
+              ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-      [2]
-          .text);
-      /* ustsTextControllers['${eachUST['productName']}']['textControllers'][2]
+                  [2]
+              .text);
+
+      /*ustsTextControllers['${eachUST['productName']}']['textControllers'][2]
           .text = "${oS + dNote}";*/
 
       ustsTextControllers['${eachUST['productName']}']['textControllers'][3]
-          .text = "${(oS + dNote - sT)}";
+          .text = "${(oS + dNote - st)}";
 
       var cS = double.parse(ustsTextControllers['${eachUST['productName']}']
-      ['textControllers'][4]
-          .text ==
-          ''
+                      ['textControllers'][4]
+                  .text ==
+              ''
           ? '0.0'
           : ustsTextControllers['${eachUST['productName']}']['textControllers']
-      [4]
-          .text);
+                  [4]
+              .text);
 
       ustsTextControllers['${eachUST['productName']}']['textControllers'][5]
           .text = "${(oS + dNote - cS)}";
@@ -1655,14 +1642,15 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachUST['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachUST['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1673,7 +1661,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text(
@@ -1681,19 +1669,21 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         ),
                         TextFormField(
                           controller:
-                          ustsTextControllers['${eachUST['productName']}']
-                          ['textControllers'][0],
+                              ustsTextControllers['${eachUST['productName']}']
+                                  ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                            ['textControllers'][0]
+                                    ['textControllers'][0]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1709,26 +1699,28 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(ΣH)->S of D-Note'),
                         TextFormField(
                           controller:
-                          ustsTextControllers['${eachUST['productName']}']
-                          ['textControllers'][1],
+                              ustsTextControllers['${eachUST['productName']}']
+                                  ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sum of D-Note',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           maxLines: 1,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                            ['textControllers'][1]
+                                    ['textControllers'][1]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1752,25 +1744,27 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('ST'),
                         TextFormField(
                           controller:
-                          ustsTextControllers['${eachUST['productName']}']
-                          ['textControllers'][2],
+                              ustsTextControllers['${eachUST['productName']}']
+                                  ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Stock Transfer',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                            ['textControllers'][2]
+                                    ['textControllers'][2]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1786,25 +1780,27 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(J=G+ΣH-I) ->T '),
                         TextFormField(
                           controller:
-                          ustsTextControllers['${eachUST['productName']}']
-                          ['textControllers'][3],
+                              ustsTextControllers['${eachUST['productName']}']
+                                  ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Total',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                            ['textControllers'][3]
+                                    ['textControllers'][3]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1827,25 +1823,27 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(K)->CS'),
                         TextFormField(
                           controller:
-                          ustsTextControllers['${eachUST['productName']}']
-                          ['textControllers'][4],
+                              ustsTextControllers['${eachUST['productName']}']
+                                  ['textControllers'][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Closing Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                            ['textControllers'][4]
+                                    ['textControllers'][4]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1861,25 +1859,27 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(L=J-K)->Sales/UST'),
                         TextFormField(
                           controller:
-                          ustsTextControllers['${eachUST['productName']}']
-                          ['textControllers'][5],
+                              ustsTextControllers['${eachUST['productName']}']
+                                  ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sales as per UST',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
-                            ['textControllers'][5]
+                                    ['textControllers'][5]
                                 .text = val;
                             ustCalculation();
                           },
@@ -1933,14 +1933,15 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachUST['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachUST['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1957,18 +1958,18 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         Text("OD - Nor. Ambient"),
                         TextFormField(
                           controller:
-                          qnqTextControllers["${eachUST['productName']}"]
-                          ['textControllers'][0],
+                              qnqTextControllers["${eachUST['productName']}"]
+                                  ['textControllers'][0],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'OD - Nor. Ambient',
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 5.0,
-                              vertical: 1.0,
-                            ),
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter DK Quality & Quantity Data';
@@ -1987,16 +1988,18 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                           const Text("Observed Temp."),
                           TextFormField(
                             controller:
-                            qnqTextControllers["${eachUST['productName']}"]
-                            ['textControllers'][1],
+                                qnqTextControllers["${eachUST['productName']}"]
+                                    ['textControllers'][1],
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 1.0),
                               hintText: 'Observed Temp.',
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 10.0),
+                              isDense: true,
                             ),
+                            style: TextStyle(fontSize: 12.0),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter DK Quality & Quantity Data';
@@ -2016,61 +2019,62 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      child: Column(
-                        children: [
-                          const Text("OD at 20deg C"),
-                          TextFormField(
-                            controller:
-                            qnqTextControllers["${eachUST['productName']}"]
-                            ['textControllers'][2],
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 1.0),
-                              hintText: 'OD at 20deg C',
-                              hintMaxLines: 3,
-                            ),
-                            onChanged: (value) {
-                              var od_val = qnqTextControllers[
-                              "${eachUST['productName']}"]
-                              ['textControllers'][2]
-                                  .text;
-
-                              var rd_val = qnqTextControllers[
-                              "${eachUST['productName']}"]
-                              ['textControllers'][3]
-                                  .text;
-
-                              if (od_val == '') {
-                                od_val = 0.0;
-                              } else {
-                                od_val = double.parse(od_val);
-                              }
-
-                              if (rd_val == '') {
-                                rd_val = 0.0;
-                              } else {
-                                rd_val = double.parse(rd_val);
-                              }
-
-                              var result = rd_val - od_val;
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    child: Column(
+                      children: [
+                        const Text("OD at 20deg C"),
+                        TextFormField(
+                          controller:
                               qnqTextControllers["${eachUST['productName']}"]
-                              ['textControllers'][4]
-                                  .text = '${result.toStringAsFixed(2)}';
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Enter DK Quality & Quantity Data';
-                              } else {
-                                return null;
-                              }
-                            },
+                                  ['textControllers'][2],
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'OD at 20deg C',
+                            hintMaxLines: 3,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
-                        ],
-                      )),
+                          style: TextStyle(fontSize: 12.0),
+                          onChanged: (value) {
+                            var od_val =
+                                qnqTextControllers["${eachUST['productName']}"]
+                                        ['textControllers'][2]
+                                    .text;
+
+                            var rd_val =
+                                qnqTextControllers["${eachUST['productName']}"]
+                                        ['textControllers'][3]
+                                    .text;
+
+                            if (od_val == '') {
+                              od_val = 0.0;
+                            } else {
+                              od_val = double.parse(od_val);
+                            }
+                            if (rd_val == '') {
+                              rd_val = 0.0;
+                            } else {
+                              rd_val = double.parse(rd_val);
+                            }
+                            var result = rd_val - od_val;
+                            qnqTextControllers["${eachUST['productName']}"]
+                                    ['textControllers'][4]
+                                .text = '${result.toStringAsFixed(2)}';
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter DK Quality & Quantity Data';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.33,
                     child: Column(
@@ -2078,40 +2082,42 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         const Text("RD at 20deg C"),
                         TextFormField(
                           controller:
-                          qnqTextControllers["${eachUST['productName']}"]
-                          ['textControllers'][3],
+                              qnqTextControllers["${eachUST['productName']}"]
+                                  ['textControllers'][3],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'RD at 20deg C',
                             hintMaxLines: 4,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (value) {
                             var od_val =
                                 qnqTextControllers["${eachUST['productName']}"]
-                                ['textControllers'][2]
+                                        ['textControllers'][2]
                                     .text;
                             var rd_val =
                                 qnqTextControllers["${eachUST['productName']}"]
-                                ['textControllers'][3]
+                                        ['textControllers'][3]
                                     .text;
 
                             if (od_val == '') {
                               od_val = 0.0;
                             } else {
-                              od_val = double.parse(od_val).toStringAsFixed(2);
+                              od_val = double.parse(od_val);
                             }
                             if (rd_val == '') {
                               rd_val = 0.0;
                             } else {
-                              rd_val = double.parse(rd_val).toStringAsFixed(2);
+                              rd_val = double.parse(rd_val);
                             }
                             var result = rd_val - od_val;
                             qnqTextControllers["${eachUST['productName']}"]
-                            ['textControllers'][4]
+                                    ['textControllers'][4]
                                 .text = '${result.toStringAsFixed(2)}';
                           },
                           validator: (value) {
@@ -2142,17 +2148,18 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         ),
                         TextFormField(
                           controller:
-                          qnqTextControllers["${eachUST['productName']}"]
-                          ['textControllers'][4],
+                              qnqTextControllers["${eachUST['productName']}"]
+                                  ['textControllers'][4],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Variation ( + / -)',
-                            hintMaxLines: 3,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter DK Quality & Quantity Data';
@@ -2177,16 +2184,18 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                         TextFormField(
                           readOnly: true,
                           controller:
-                          qnqTextControllers["${eachUST['productName']}"]
-                          ['textControllers'][5],
+                              qnqTextControllers["${eachUST['productName']}"]
+                                  ['textControllers'][5],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sales as per UST',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter DK Quality & Quantity Data';
@@ -2222,18 +2231,19 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     child: DropdownButtonFormField<String>(
                       value: "Select",
                       decoration: InputDecoration(
-                        contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 10.0),
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
                         border: const OutlineInputBorder(),
                         errorBorder: OutlineInputBorder(
                           borderSide:
-                          const BorderSide(width: 1, color: Colors.red),
+                              const BorderSide(width: 1, color: Colors.red),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       onChanged: (String? newValue) {
                         qnqTextControllers["${eachUST['productName']}"]
-                        ['textControllers'][6]
+                                ['textControllers'][6]
                             .text = newValue!;
                       },
                       validator: (String? value) {
@@ -2246,7 +2256,10 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 12.0),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -2262,7 +2275,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
 
   List<Widget> buildEachNozzleTapToExpandSectionDKDDRR(
       Map ddrrTextControllers, List ustList) {
-    if (ustList.length > 0) {
+    if (ustList.length > 0 && ddrrTextControllers.isNotEmpty) {
       return [
         ...ustList.map((eachNozzle) => buildNozzleTapToExpandSectionFuleDDRR(
             ddrrTextControllers, eachNozzle))
@@ -2289,14 +2302,15 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachNozzleDDRR['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachNozzleDDRR['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -2307,20 +2321,22 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                      "${eachNozzleDDRR['productName']}"]
-                      ['textControllers'][0],
+                              "${eachNozzleDDRR['productName']}"]
+                          ['textControllers'][0],
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Result ',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       onChanged: (val) async {
                         var final_result = 'Ok';
 
@@ -2334,7 +2350,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                           final_result = 'Short';
                         }
                         ddrrTextControllers["${eachNozzleDDRR['productName']}"]
-                        ['textControllers'][1]
+                                ['textControllers'][1]
                             .text = final_result;
                       },
                       validator: (String? value) {
@@ -2346,18 +2362,20 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                      "${eachNozzleDDRR['productName']}"]
-                      ['textControllers'][1],
+                              "${eachNozzleDDRR['productName']}"]
+                          ['textControllers'][1],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Results',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       textAlign: TextAlign.center,
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -2376,18 +2394,20 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                      "${eachNozzleDDRR['productName']}"]
-                      ['textControllers'][2],
+                              "${eachNozzleDDRR['productName']}"]
+                          ['textControllers'][2],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Qty(lts)',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       validator: (String? value) {
@@ -2399,18 +2419,20 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
-                      "${eachNozzleDDRR['productName']}"]
-                      ['textControllers'][3],
+                              "${eachNozzleDDRR['productName']}"]
+                          ['textControllers'][3],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Remarks',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       textAlign: TextAlign.center,
                       /*validator: (String? value) {
                         if (value == null || value.isEmpty) {

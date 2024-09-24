@@ -32,6 +32,28 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
   TextEditingController isNetStockVariationPermissionLimit =
   TextEditingController();
 
+  final _headerTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+    fontWeight: FontWeight.bold,
+  );
+
+  final _headerValueTextStyle = const TextStyle(
+    color: Colors.black,
+    fontFamily: 'Montserrat',
+    fontStyle: FontStyle.normal,
+    fontSize: 13.0,
+  );
+
+  final _expandHeaderTextStyle = TextStyle(
+    fontSize: 12,
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -111,46 +133,43 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Name"),
+                          Text(
+                            "Station Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['stationname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Code"),
+                          Text(
+                            "Station Code",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['stationcode']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Station Type"),
+                          Text(
+                            "Station Type",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['stationtype']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
@@ -175,46 +194,39 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("SM Name"),
+                          Text(
+                            "SM Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['smname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("RH Code"),
-                          Text(
-                            "-",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("CM Name"),
+                          /*Text("RH Code",style: _headerValueTextStyle,),
+                                  Text(
+                                    "${stockAuditsHeaderDetails['id']}",
+                                  ),*/
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "CM Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['cmname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
@@ -239,46 +251,42 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Auditor Name"),
+                          Text(
+                            "Auditor Name",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${stockAuditsHeaderDetails['auditorname']}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Audit Start Time"),
+                          Text(
+                            "Audit Start Time",
+                            style: _headerValueTextStyle,
+                          ),
                           Text(
                             "${DateFormat('dd-MM-yyy\nkk:mm:ss').format(DateTime.now())}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: _headerTextStyle,
                           ),
                         ],
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Audit End Time"),
                           Text(
+                            "Audit End Time",
+                            style: _headerValueTextStyle,
+                          ),
+                          const Text(
                             "-",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13.0,
-                              fontWeight: FontWeight.bold,
-                            ),
                           ),
                         ],
                       ),
@@ -290,6 +298,9 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,29 +311,17 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '1',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
-                          'Stock Reconciliation\n(All Figures in ltrs)',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: Text('Stock Reconciliation(All Figures in ltrs)',
+                            style: _expandHeaderTextStyle),
                       ),
                     ],
                   ),
@@ -337,15 +336,11 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       const SizedBox(
                         height: 15.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "Sales From Dispensing Units",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
@@ -363,13 +358,9 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               "Total as per Totaliser",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
@@ -379,8 +370,10 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 1.0),
+                                      horizontal: 10.0, vertical: 10.0),
+                                  isDense: true,
                                 ),
+                                style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
                                   nozzleTotalizers.text = val;
                                 },
@@ -399,15 +392,11 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "Sales From UST",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
@@ -425,13 +414,9 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               "Total as per UST",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
@@ -441,8 +426,10 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0, vertical: 1.0),
+                                      horizontal: 10.0, vertical: 10.0),
+                                  isDense: true,
                                 ),
+                                style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
                                   ustTotalizers.text = val;
                                 },
@@ -461,40 +448,28 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "LSD STOCK VARIATION(Ltrs)",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _headerTextStyle,
                         ),
                       ),
                       const SizedBox(
                         height: 10.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "Details",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             ),
                             Text(
                               "(+/-)",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: _headerTextStyle,
                             )
                           ],
                         ),
@@ -515,7 +490,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               "Gross Stock Variation(L)=Totalizer sales(Σ E)-UST sales(Σ J)  L",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -527,10 +502,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                   controller: grossStockVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -562,7 +539,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               "Sum of recoverable shortage from Transporter in (PODs) between at last audit & current audit date  Σ K",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -574,10 +551,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                   controller: sumOfRecoverable,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -622,7 +601,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               "Net Variation (M) = (L + ΣK)  M",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -634,10 +613,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                   controller: netVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -664,7 +645,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               "Stock Variation as %age  Of Totalizer sales M/ΣE= LSD %",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -676,12 +657,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                   controller: stockVariation,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 5.0,
-                                      vertical: 1.0,
-                                    ),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -700,14 +681,13 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Text(
-                          "Permissible Stock Variation (As per company's norms)",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
-                            fontWeight: FontWeight.bold,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .85,
+                          child: Text(
+                            "Permissible Stock Variation (As per company's norms)",
+                            style: _headerTextStyle,
                           ),
                         ),
                       ),
@@ -730,7 +710,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               "Permitted Evaporation / Handling loss as per control order  (only in case of negative stock variation)",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -742,10 +722,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                   controller: grossStockVariationS,
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 5.0, vertical: 1.0),
                                     hintText: 'Value',
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
                                   ),
+                                  style: TextStyle(fontSize: 12.0),
                                   keyboardType: TextInputType.number,
                                   textAlign: TextAlign.center,
                                   validator: (value) {
@@ -777,7 +759,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                               "Is Net Stock Variation within permissible limit (Q)",
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.0,
+                                fontSize: 13.0,
                               ),
                             ),
                             Align(
@@ -793,9 +775,10 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                   child: DropdownButtonFormField<String>(
                                     value: "Select",
                                     decoration: InputDecoration(
+                                      isDense: true,
                                       contentPadding:
                                       const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
+                                          horizontal: 10.0, vertical: 5.0),
                                       border: const OutlineInputBorder(),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
@@ -818,7 +801,10 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                             (String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
-                                            child: Text(value),
+                                            child: Text(
+                                              value,
+                                              style: TextStyle(fontSize: 12.0),
+                                            ),
                                           );
                                         }).toList(),
                                   ),
@@ -830,14 +816,15 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 2.0),
+                            horizontal: 10.0, vertical: 1.0),
                         margin: const EdgeInsets.symmetric(
-                            vertical: 1.0, horizontal: 15.0),
+                            vertical: 10.0, horizontal: 15.0),
                         child: const Text(
                           "If +ve or -ve variations not within permissible limits, Please provide analysis and action taken in bellow.",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black38,
-                            fontSize: 15.0,
+                            fontSize: 13.0,
                           ),
                         ),
                       ),
@@ -849,6 +836,9 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -859,28 +849,18 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '2',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
+                        child: Text(
                           'Quality & Quantity',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                     ],
@@ -906,6 +886,9 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 padding: const EdgeInsets.all(5.0),
                 child: TapToExpand(
                   backgroundcolor: AppColors.meruWhite,
+                  iconSize: 18.0,
+                  titlePadding: EdgeInsets.all(10.0),
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
                   iconColor: AppColors.meruBlack,
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -916,28 +899,18 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           color: AppColors.meruYellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        padding: const EdgeInsets.all(13.0),
-                        child: const Text(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
                           '3',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(right: 1.0),
                         width: MediaQuery.of(context).size.width * .55,
-                        child: const Text(
+                        child: Text(
                           'Daily Density Record Reconciliation',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.meruBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: _expandHeaderTextStyle,
                         ),
                       ),
                     ],
@@ -954,7 +927,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                         height: 15.0,
                       ),
                       ...buildEachNozzleTapToExpandSectionLSDDDRR(
-                          ((ddrrTextControllers ?? {} ) as Map),
+                          ((ddrrTextControllers ?? {}) as Map),
                           ((stockAuditsFuelLSDNozzleUSTDetails['NOZZLE'] ?? [])
                           as List)),
                     ],
@@ -1005,9 +978,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                     AlwaysStoppedAnimation<Color>(color!),
                                   );
                                 },
-                                onEnd: () {
-                                  // No need to do anything here
-                                },
+                                onEnd: () {},
                               ),
                             );
                           },
@@ -1138,15 +1109,14 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                                 content: Text('LSD $result'),
                                 actions: [
                                   TextButton(
-                                    child: const Text('Close'),
-                                    onPressed: () {
-                                      Provider.of<AuditProvider>(context,
-                                          listen: false)
-                                          .fetchStockAuditsList("Fuel");
-                                      ScaffoldMessenger.of(context)
-                                          .hideCurrentMaterialBanner();
-                                    },
-                                  ),
+                                      child: const Text('Close'),
+                                      onPressed: () {
+                                        Provider.of<AuditProvider>(context,
+                                            listen: false)
+                                            .fetchStockAuditsList("Fuel");
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentMaterialBanner();
+                                      }),
                                 ],
                               ),
                             );
@@ -1285,14 +1255,16 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachNozzle['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachNozzle['productName']}',
+            textAlign: TextAlign.start,
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1315,10 +1287,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
+                            hintText: 'Closing EMT',
                             contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
-                            hintText: 'Closing Reading of EMT',
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1340,7 +1314,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1352,10 +1326,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Reading of(EMT)',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1385,7 +1361,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1397,10 +1373,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Stock Transfer',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1422,7 +1400,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1434,10 +1412,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Gross Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1466,7 +1446,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1478,10 +1458,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][4],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Pump Test',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
@@ -1503,7 +1485,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1515,10 +1497,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Net Nozzle Sales',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
@@ -1601,7 +1585,8 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
 
     stockVariation.text =
     '${((double.parse(m) / double.parse(sum_E)) * 100).toStringAsFixed(2)} %';
-    grossStockVariationS.text = "${double.parse(sum_E) * (-0.003)}";
+
+    grossStockVariationS.text = "${double.parse(sum_E) * (-0.005)}";
   }
 
   Widget buildUSTTapToExpandSectionFule(Map ustsTextControllers, Map eachUST) {
@@ -1623,7 +1608,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
       [1]
           .text);
 
-      var sT = double.parse(ustsTextControllers['${eachUST['productName']}']
+      var st = double.parse(ustsTextControllers['${eachUST['productName']}']
       ['textControllers'][2]
           .text ==
           ''
@@ -1636,7 +1621,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
           .text = "${oS + dNote}";*/
 
       ustsTextControllers['${eachUST['productName']}']['textControllers'][3]
-          .text = "${(oS + dNote - sT)}";
+          .text = "${(oS + dNote - st)}";
 
       var cS = double.parse(ustsTextControllers['${eachUST['productName']}']
       ['textControllers'][4]
@@ -1657,14 +1642,15 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachUST['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachUST['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1675,7 +1661,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text(
@@ -1687,10 +1673,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][0],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Opening Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1711,7 +1699,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(ΣH)->S of D-Note'),
@@ -1721,10 +1709,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][1],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sum of D-Note',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                           maxLines: 1,
@@ -1754,20 +1744,22 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
-                        Text('ST'),
+                        const Text('ST'),
                         TextFormField(
                           controller:
                           ustsTextControllers['${eachUST['productName']}']
                           ['textControllers'][2],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Stock Transfer',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1788,7 +1780,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(J=G+ΣH-I) ->T '),
@@ -1798,10 +1790,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][3],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Total',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1829,7 +1823,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(K)->CS'),
@@ -1841,10 +1835,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Closing Stock',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (val) {
                             ustsTextControllers['${eachUST['productName']}']
                             ['textControllers'][4]
@@ -1863,7 +1859,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     child: Column(
                       children: [
                         const Text('(L=J-K)->Sales/UST'),
@@ -1873,10 +1869,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           ['textControllers'][5],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sales as per UST',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           onChanged: (val) {
@@ -1935,14 +1933,15 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachUST['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachUST['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -1967,10 +1966,10 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                             border: OutlineInputBorder(),
                             hintText: 'OD - Nor. Ambient',
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 5.0,
-                              vertical: 1.0,
-                            ),
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter LSD Quality & Quantity Data';
@@ -1995,10 +1994,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 1.0),
                               hintText: 'Observed Temp.',
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 10.0),
+                              isDense: true,
                             ),
+                            style: TextStyle(fontSize: 12.0),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter LSD Quality & Quantity Data';
@@ -2018,60 +2019,62 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      child: Column(
-                        children: [
-                          const Text("OD at 20deg C"),
-                          TextFormField(
-                            controller:
-                            qnqTextControllers["${eachUST['productName']}"]
-                            ['textControllers'][2],
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 5.0, vertical: 1.0),
-                              hintText: 'OD at 20deg C',
-                              hintMaxLines: 3,
-                            ),
-                            onChanged: (value) {
-                              var od_val = qnqTextControllers[
-                              "${eachUST['productName']}"]
-                              ['textControllers'][2]
-                                  .text;
-
-                              var rd_val = qnqTextControllers[
-                              "${eachUST['productName']}"]
-                              ['textControllers'][3]
-                                  .text;
-
-                              if (od_val == '') {
-                                od_val = 0.0;
-                              } else {
-                                od_val = double.parse(od_val);
-                              }
-                              if (rd_val == '') {
-                                rd_val = 0.0;
-                              } else {
-                                rd_val = double.parse(rd_val);
-                              }
-
-                              var result = rd_val - od_val;
-                              qnqTextControllers["${eachUST['productName']}"]
-                              ['textControllers'][4]
-                                  .text = '${result.toStringAsFixed(2)}';
-                            },
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Enter LSD Quality & Quantity Data';
-                              } else {
-                                return null;
-                              }
-                            },
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    child: Column(
+                      children: [
+                        const Text("OD at 20deg C"),
+                        TextFormField(
+                          controller:
+                          qnqTextControllers["${eachUST['productName']}"]
+                          ['textControllers'][2],
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'OD at 20deg C',
+                            hintMaxLines: 3,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
-                        ],
-                      )),
+                          style: TextStyle(fontSize: 12.0),
+                          onChanged: (value) {
+                            var od_val =
+                                qnqTextControllers["${eachUST['productName']}"]
+                                ['textControllers'][2]
+                                    .text;
+
+                            var rd_val =
+                                qnqTextControllers["${eachUST['productName']}"]
+                                ['textControllers'][3]
+                                    .text;
+
+                            if (od_val == '') {
+                              od_val = 0.0;
+                            } else {
+                              od_val = double.parse(od_val);
+                            }
+                            if (rd_val == '') {
+                              rd_val = 0.0;
+                            } else {
+                              rd_val = double.parse(rd_val);
+                            }
+                            var result = rd_val - od_val;
+                            qnqTextControllers["${eachUST['productName']}"]
+                            ['textControllers'][4]
+                                .text = '${result.toStringAsFixed(2)}';
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter LSD Quality & Quantity Data';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.33,
                     child: Column(
@@ -2085,11 +2088,13 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'RD at 20deg C',
                             hintMaxLines: 4,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           onChanged: (value) {
                             var od_val =
                                 qnqTextControllers["${eachUST['productName']}"]
@@ -2103,12 +2108,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                             if (od_val == '') {
                               od_val = 0.0;
                             } else {
-                              od_val = double.parse(od_val).toStringAsFixed(2);
+                              od_val = double.parse(od_val);
                             }
                             if (rd_val == '') {
                               rd_val = 0.0;
                             } else {
-                              rd_val = double.parse(rd_val).toStringAsFixed(2);
+                              rd_val = double.parse(rd_val);
                             }
                             var result = rd_val - od_val;
                             qnqTextControllers["${eachUST['productName']}"]
@@ -2149,11 +2154,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Variation ( + / -)',
-                            hintMaxLines: 3,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter LSD Quality & Quantity Data';
@@ -2184,10 +2190,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 1.0),
                             hintText: 'Sales as per UST',
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 10.0),
+                            isDense: true,
                           ),
+                          style: TextStyle(fontSize: 12.0),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Enter LSD Quality & Quantity Data';
@@ -2223,8 +2231,9 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     child: DropdownButtonFormField<String>(
                       value: "Select",
                       decoration: InputDecoration(
-                        contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 10.0),
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 5.0),
                         border: const OutlineInputBorder(),
                         errorBorder: OutlineInputBorder(
                           borderSide:
@@ -2247,7 +2256,10 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value),
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 12.0),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -2290,14 +2302,15 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
       padding: const EdgeInsets.only(bottom: 6.0),
       child: TapToExpand(
         backgroundcolor: AppColors.meruWhite,
+        iconSize: 18.0,
+        titlePadding: EdgeInsets.all(15.0),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
         iconColor: AppColors.meruBlack,
-        title: Text(
-          '${eachNozzleDDRR['productName']}',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: AppColors.meruBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
+        title: Container(
+          width: MediaQuery.of(context).size.width * .52,
+          child: Text(
+            '${eachNozzleDDRR['productName']}',
+            style: _expandHeaderTextStyle,
           ),
         ),
         content: Column(
@@ -2308,7 +2321,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2318,10 +2331,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Result ',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       onChanged: (val) async {
                         var final_result = 'Ok';
 
@@ -2347,7 +2362,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2355,10 +2370,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       ['textControllers'][1],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Results',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       textAlign: TextAlign.center,
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
@@ -2377,7 +2394,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2385,10 +2402,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       ['textControllers'][2],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Test Qty(lts)',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       validator: (String? value) {
@@ -2400,7 +2419,7 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * .32,
+                    width: MediaQuery.sizeOf(context).width * .33,
                     height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
@@ -2408,10 +2427,12 @@ class _LSDTechnicalCheckListState extends State<LSDTechnicalCheckList> {
                       ['textControllers'][3],
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 1.0),
                         hintText: 'Remarks',
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        isDense: true,
                       ),
+                      style: TextStyle(fontSize: 12.0),
                       textAlign: TextAlign.center,
                       /*validator: (String? value) {
                         if (value == null || value.isEmpty) {
