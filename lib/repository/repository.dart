@@ -9,8 +9,8 @@ class AppRepository {
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.37-SNAPSHOT";
-      // "http://103.235.106.117:8080/audit_management_system-UAT";
+      // "http://103.235.106.117:8080/audit_management_system-0.0.38-SNAPSHOT";
+      "http://103.235.106.117:8080/audit_management_system-UAT";
 
   //average cluster score
   Future<dynamic> getclusteravgscore() async {

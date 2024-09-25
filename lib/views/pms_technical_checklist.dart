@@ -354,39 +354,42 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         height: 10.0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Total as per Totaliser",
-                              style: _headerTextStyle,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * .30,
-                              height: 35.0,
-                              child: TextFormField(
-                                controller: nozzleTotalizers,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 10.0),
-                                  isDense: true,
-                                ),
-                                style: TextStyle(fontSize: 12.0),
-                                onChanged: (val) {
-                                  nozzleTotalizers.text = val;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Nozzle Totaliser is empty';
-                                  } else {
-                                    return null;
-                                  }
-                                },
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .90,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total as per Totaliser",
+                                style: _headerTextStyle,
                               ),
-                            ),
-                          ],
+                              Container(
+                                width: MediaQuery.of(context).size.width * .30,
+                                child: TextFormField(
+                                  controller: nozzleTotalizers,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
+                                    hintText: 'Value',
+                                  ),
+                                  style: const TextStyle(fontSize: 12.0),
+                                  onChanged: (val) {
+                                    nozzleTotalizers.text = val;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Nozzle Totaliser';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -410,39 +413,42 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                         height: 10.0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Total as per UST",
-                              style: _headerTextStyle,
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * .30,
-                              height: 35.0,
-                              child: TextFormField(
-                                controller: ustTotalizers,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 10.0),
-                                  isDense: true,
-                                ),
-                                style: TextStyle(fontSize: 12.0),
-                                onChanged: (val) {
-                                  ustTotalizers.text = val;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'UST Totaliser empty';
-                                  } else {
-                                    return null;
-                                  }
-                                },
+                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.90,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total as per UST",
+                                style: _headerTextStyle,
                               ),
-                            ),
-                          ],
+                              Container(
+                                width: MediaQuery.of(context).size.width * .30,
+                                child: TextFormField(
+                                  controller: ustTotalizers,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 10.0),
+                                    isDense: true,
+                                    hintText: "Value",
+                                  ),
+                                  style: TextStyle(fontSize: 12.0),
+                                  onChanged: (val) {
+                                    ustTotalizers.text = val;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'UST Totaliser';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -496,7 +502,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: grossStockVariation,
@@ -545,7 +550,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: sumOfRecoverable,
@@ -607,7 +611,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: netVariation,
@@ -651,7 +654,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: stockVariation,
@@ -716,7 +718,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: grossStockVariationS,
@@ -765,7 +766,6 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: Container(
                                   width:
@@ -791,7 +791,11 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                           newValue!;
                                     },
                                     validator: (String? value) {
-                                      if (value == null) {
+                                      if (value == null ||
+                                          value == "Select" ||
+                                          isNetStockVariationPermissionLimit
+                                                  .text ==
+                                              "Select") {
                                         return 'Please select an option';
                                       }
                                       return null;
@@ -1104,39 +1108,35 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                             Navigator.of(context)
                                 .pop(); // Close the CircularProgressIndicator dialog
 
-                            ScaffoldMessenger.of(context).showMaterialBanner(
-                              MaterialBanner(
-                                content: Text('PMS $result'),
-                                actions: [
-                                  TextButton(
-                                      child: const Text('Close'),
-                                      onPressed: () {
-                                        Provider.of<AuditProvider>(context,
-                                                listen: false)
-                                            .fetchStockAuditsList("Fuel");
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentMaterialBanner();
-                                      }),
-                                ],
-                              ),
-                            );
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  Future.delayed(Duration(seconds: 3), () {
+                                    Provider.of<AuditProvider>(context,
+                                            listen: false)
+                                        .fetchStockAuditsList("Fuel");
+                                    Navigator.of(context).pop(true);
+                                  });
+                                  return AlertDialog(
+                                    title: Text("Info"),
+                                    content: Text("$result"),
+                                  );
+                                });
                           } else {
                             Navigator.of(context)
                                 .pop(); // Close the CircularProgressIndicator dialog
-                            ScaffoldMessenger.of(context).showMaterialBanner(
-                              MaterialBanner(
-                                content: const Text(
-                                    'Please fill all the PMS Audit fields'),
-                                actions: [
-                                  TextButton(
-                                    child: const Text('Close'),
-                                    onPressed: () =>
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentMaterialBanner(),
-                                  ),
-                                ],
-                              ),
-                            );
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  Future.delayed(Duration(seconds: 3), () {
+                                    Navigator.of(context).pop(true);
+                                  });
+                                  return AlertDialog(
+                                    title: Text("Warning"),
+                                    content: Text(
+                                        "Please fill all the PMS Audit fields"),
+                                  );
+                                });
                           }
                         });
                       },
@@ -2320,9 +2320,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]
@@ -2361,9 +2360,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]
@@ -2393,9 +2391,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]
@@ -2418,9 +2415,8 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]

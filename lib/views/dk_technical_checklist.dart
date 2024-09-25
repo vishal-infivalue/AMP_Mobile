@@ -364,7 +364,6 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
-                              height: 35.0,
                               child: TextFormField(
                                 controller: nozzleTotalizers,
                                 decoration: const InputDecoration(
@@ -372,6 +371,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 10.0, vertical: 10.0),
                                   isDense: true,
+                                  hintText: "Value"
                                 ),
                                 style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
@@ -420,7 +420,6 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width * .30,
-                              height: 35.0,
                               child: TextFormField(
                                 controller: ustTotalizers,
                                 decoration: const InputDecoration(
@@ -428,6 +427,7 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 10.0, vertical: 10.0),
                                   isDense: true,
+                                  hintText: "Value"
                                 ),
                                 style: TextStyle(fontSize: 12.0),
                                 onChanged: (val) {
@@ -496,7 +496,6 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: grossStockVariation,
@@ -545,7 +544,6 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: sumOfRecoverable,
@@ -607,7 +605,6 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: netVariation,
@@ -651,7 +648,6 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: stockVariation,
@@ -716,7 +712,6 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: SizedBox(
-                                height: 40.0,
                                 width: 100.0,
                                 child: TextFormField(
                                   controller: grossStockVariationS,
@@ -1104,39 +1099,36 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                             Navigator.of(context)
                                 .pop(); // Close the CircularProgressIndicator dialog
 
-                            ScaffoldMessenger.of(context).showMaterialBanner(
-                              MaterialBanner(
-                                content: Text('DK $result'),
-                                actions: [
-                                  TextButton(
-                                      child: const Text('Close'),
-                                      onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  Future.delayed(Duration(seconds: 3),
+                                          () {
                                         Provider.of<AuditProvider>(context,
-                                                listen: false)
+                                            listen: false)
                                             .fetchStockAuditsList("Fuel");
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentMaterialBanner();
-                                      }),
-                                ],
-                              ),
-                            );
+                                        Navigator.of(context).pop(true);
+                                      });
+                                  return AlertDialog(
+                                    title: Text("Info"),
+                                    content: Text("$result"),
+                                  );
+                                });
                           } else {
                             Navigator.of(context)
                                 .pop(); // Close the CircularProgressIndicator dialog
-                            ScaffoldMessenger.of(context).showMaterialBanner(
-                              MaterialBanner(
-                                content: const Text(
-                                    'Please fill all the DK Audit fields'),
-                                actions: [
-                                  TextButton(
-                                    child: const Text('Close'),
-                                    onPressed: () =>
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentMaterialBanner(),
-                                  ),
-                                ],
-                              ),
-                            );
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  Future.delayed(Duration(seconds: 3),
+                                          () {
+                                        Navigator.of(context).pop(true);
+                                      });
+                                  return AlertDialog(
+                                    title: Text("Warning"),
+                                    content: Text("Please fill all the DK Audit fields"),
+                                  );
+                                });
                           }
                         });
                       },
@@ -2320,9 +2312,8 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]
@@ -2361,9 +2352,8 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]
@@ -2393,9 +2383,8 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]
@@ -2418,9 +2407,8 @@ class _DKTechnicalCheckListState extends State<DKTechnicalCheckList> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  Container(
                     width: MediaQuery.sizeOf(context).width * .33,
-                    height: 45.0,
                     child: TextFormField(
                       controller: ddrrTextControllers[
                               "${eachNozzleDDRR['productName']}"]

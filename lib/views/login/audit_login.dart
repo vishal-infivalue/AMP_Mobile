@@ -38,7 +38,7 @@ class _AuditLoginState extends State<AuditLogin> {
     final logInProvider = Provider.of<APIProvider>(context);
     _checkAndRequestPermissions();
     return Scaffold(
-      backgroundColor: AppColors.meruYellow,
+      backgroundColor: AppColors.meruWhite,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

@@ -8,8 +8,8 @@ import '../utils/shared_preference_helper.dart';
 
 class AuditProvider with ChangeNotifier {
   String baseUrl =
-      "http://103.235.106.117:8080/audit_management_system-0.0.37-SNAPSHOT";
-      // "http://103.235.106.117:8080/audit_management_system-UAT";
+      // "http://103.235.106.117:8080/audit_management_system-0.0.38-SNAPSHOT";
+      "http://103.235.106.117:8080/audit_management_system-UAT";
 
   final SharedPreferenceHelper _sharedPrefs = SharedPreferenceHelper();
 
@@ -135,7 +135,8 @@ class AuditProvider with ChangeNotifier {
       print("resData $resData");
 
       if (resData['status'] == "200" && resData['result'] == 'Successful') {
-        _isStockAuditCompleted = resData['data']['isAuditCompleted'];
+
+        _isStockAuditCompleted = "${resData['data']['isAuditCompleted']}";
 
         if (type == 'Fuel') {
           _stockAuditsTypeListFuel = [];
@@ -147,6 +148,9 @@ class AuditProvider with ChangeNotifier {
           resData['data']['productResponses'].forEach((eachData) {
             _stockAuditsTypeListLube.add(eachData);
           });
+
+          print("_stockAuditsTypeListLube 7777777777777  $_stockAuditsTypeListLube");
+
         } else if (type == 'Lpg') {
           _stockAuditsTypeListLpg = [];
           resData['data']['productResponses'].forEach((eachData) {
@@ -416,6 +420,8 @@ class AuditProvider with ChangeNotifier {
     final response =
         await http.get(url, headers: {'loginUserId': loginUserId!});
 
+    print(" reconciliation  &&&&&&&&&&  $type ---  ${json.decode(response.body)}");
+
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
       if (resData['status'] == "200" && resData['result'] == 'Successful') {
@@ -473,6 +479,9 @@ class AuditProvider with ChangeNotifier {
 
     String? userIdLoggedIn =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
+
+
+    print("^^^^^ saveStockAuditData stockAuditData: $stockAuditData");
 
     final response = await http.post(
       url,

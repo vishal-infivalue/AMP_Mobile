@@ -1,4 +1,5 @@
 import 'package:amp/routes/route_names.dart';
+import 'package:amp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow,
+      backgroundColor: AppColors.meruWhite,
       body: Center(
         child: SizedBox(
           height: 200,
