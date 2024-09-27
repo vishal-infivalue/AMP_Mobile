@@ -1063,7 +1063,7 @@ class _PMSTechnicalCheckListState extends State<PMSTechnicalCheckList> {
                                 "refDensity":
                                     "${list_ust_qnq[i]['textControllers'][3].text}",
                                 "variation":
-                                    "${list_ust_qnq[i]['textControllers'][5].text}",
+                                    "${list_ust_qnq[i]['textControllers'][4].text}",
                                 "isVariationWithinLimit":
                                     "${list_ust_qnq[i]['textControllers'][6].text}",
                               });
