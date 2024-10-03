@@ -138,9 +138,6 @@ class _StockAuditListPageState extends State<StockAuditListPage>
         Provider.of<AuditProvider>(context).stockAuditsTypeListFuel; // Fuel
     var stockAuditsTypeListLube =
         Provider.of<AuditProvider>(context).stockAuditsTypeListLube; // Lube
-
-    print("((()))))((((())))((((())))((((()))  $stockAuditsTypeListLube");
-
     var stockAuditsTypeListLpg =
         Provider.of<AuditProvider>(context).stockAuditsTypeListLpg; // Lpg
 
@@ -151,6 +148,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
         .lubeProductsTextControllers; // Text controllers Lube
     var lpgProductsTextControllers = Provider.of<AuditProvider>(context)
         .lpgProductsTextControllers; // Text controllers Lpg
+
 
     var isStockAuditCompleted = Provider.of<AuditProvider>(context)
         .isStockAuditCompleted; // isStockAuditCompleted for Submit To Station Button Enable
@@ -1261,35 +1259,35 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       "LPG": [],
                                       "hygieneChecklists": [
                                         {
-                                          "question": "LUBE_QUESTION_1", //
+                                          "question": "1", //
                                           "answer":
                                               "${_oneTextControllerLU.text}",
                                           "remark":
                                               "${_twoTextControllerLU.text}"
                                         },
                                         {
-                                          "question": "LUBE_QUESTION_1",
+                                          "question": "2",
                                           "answer":
                                               "${_threeTextControllerLU.text}",
                                           "remark":
                                               "${_fourTextControllerLU.text}"
                                         },
                                         {
-                                          "question": "LUBE_QUESTION_3",
+                                          "question": "3",
                                           "answer":
                                               "${_fiveTextControllerLU.text}",
                                           "remark":
                                               "${_sixTextControllerLU.text}"
                                         },
                                         {
-                                          "question": "LUBE_QUESTION_4",
+                                          "question": "4",
                                           "answer":
                                               "${_sevenTextControllerLU.text}",
                                           "remark":
                                               "${_eightTextControllerLU.text}"
                                         },
                                         {
-                                          "question": "LUBE_QUESTION_5",
+                                          "question": "5",
                                           "answer":
                                               "${_nineTextControllerLU.text}",
                                           "remark":
@@ -2419,42 +2417,42 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       "LPG": lpg_list,
                                       "hygieneChecklists": [
                                         {
-                                          "question": "LPG_QUESTION_1", //
+                                          "question": "1", //
                                           "answer":
                                               "${_oneTextControllerLP.text}",
                                           "remark":
                                               "${_twoTextControllerLP.text}"
                                         },
                                         {
-                                          "question": "LPG_QUESTION_2",
+                                          "question": "2",
                                           "answer":
                                               "${_threeTextControllerLP.text}",
                                           "remark":
                                               "${_fourTextControllerLP.text}"
                                         },
                                         {
-                                          "question": "LPG_QUESTION_3",
+                                          "question": "3",
                                           "answer":
                                               "${_fiveTextControllerLP.text}",
                                           "remark":
                                               "${_sixTextControllerLP.text}"
                                         },
                                         {
-                                          "question": "LPG_QUESTION_4",
+                                          "question": "4",
                                           "answer":
                                               "${_sevenTextControllerLP.text}",
                                           "remark":
                                               "${_eightTextControllerLP.text}"
                                         },
                                         {
-                                          "question": "LPG_QUESTION_5",
+                                          "question": "5",
                                           "answer":
                                               "${_nineTextControllerLP.text}",
                                           "remark":
                                               "${_tenTextControllerLP.text}"
                                         },
                                         {
-                                          "question": "LPG_QUESTION_6",
+                                          "question": "6",
                                           "answer":
                                               "${_elevenTextControllerLP.text}",
                                           "remark":
@@ -2617,7 +2615,6 @@ class _StockAuditListPageState extends State<StockAuditListPage>
 
   List<Widget> buildEachProductTapToExpandSectionLube(
       Map lubeProductsTextControllers, List<Map> productList) {
-    print("***************  $lubeProductsTextControllers");
 
     if (productList.length > 0 && !lubeProductsTextControllers.isEmpty) {
       return [
@@ -2988,6 +2985,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
 
   List<Widget> buildEachProductTapToExpandSectionLpg(
       Map lpgeProductsTextControllers, List<Map> productList) {
+
     if (productList.length > 0 && lpgeProductsTextControllers.isNotEmpty) {
       return [
         ...productList.map((eachProduct) => buildProductTapToExpandSectionLpg(
@@ -3009,8 +3007,11 @@ class _StockAuditListPageState extends State<StockAuditListPage>
     }
   }
 
-  Widget buildProductTapToExpandSectionLpg(
-      Map lpgProductsTextControllers, Map eachProduct) {
+  Widget buildProductTapToExpandSectionLpg(Map lpgProductsTextControllers, Map eachProduct) {
+
+
+    // print("LPG each ${lpgProductsTextControllers['${eachProduct['id']}']['textControllers'][0]}");
+
     calculate_product() {
       var f_o = lpgProductsTextControllers['${eachProduct['id']}']
               ["textControllers"][0]
@@ -3073,8 +3074,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                         ),
                         TextFormField(
                           controller:
-                              lpgProductsTextControllers['${eachProduct['id']}']
-                                  ["textControllers"][0],
+                              lpgProductsTextControllers['${eachProduct['id']}']["textControllers"][0],
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(

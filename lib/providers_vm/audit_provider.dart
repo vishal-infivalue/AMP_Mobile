@@ -420,8 +420,6 @@ class AuditProvider with ChangeNotifier {
     final response =
         await http.get(url, headers: {'loginUserId': loginUserId!});
 
-    print(" reconciliation  &&&&&&&&&&  $type ---  ${json.decode(response.body)}");
-
     if (response.statusCode == 200) {
       final resData = json.decode(response.body) as Map<String, dynamic>;
       if (resData['status'] == "200" && resData['result'] == 'Successful') {
@@ -480,8 +478,6 @@ class AuditProvider with ChangeNotifier {
     String? userIdLoggedIn =
         await _sharedPrefs.getString(ConstantStrings.userIdLoggedIn);
 
-
-    print("^^^^^ saveStockAuditData stockAuditData: $stockAuditData");
 
     final response = await http.post(
       url,
