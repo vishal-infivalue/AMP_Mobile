@@ -1237,6 +1237,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             "${eachData['textControllers'][6].text}",
                                         "remark":
                                             "${eachData['textControllers'][7].text}",
+                                        "stockTransfer": "test"
                                       });
                                     });
 
@@ -2395,6 +2396,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                             "${eachData['textControllers'][6].text}",
                                         "remark":
                                             "${eachData['textControllers'][7].text}",
+                                        "stockTransfer": "test"
                                       });
                                     });
 
@@ -2417,7 +2419,7 @@ class _StockAuditListPageState extends State<StockAuditListPage>
                                       "LPG": lpg_list,
                                       "hygieneChecklists": [
                                         {
-                                          "question": "1", //
+                                          "question": "1",
                                           "answer":
                                               "${_oneTextControllerLP.text}",
                                           "remark":

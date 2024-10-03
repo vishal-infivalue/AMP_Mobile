@@ -497,7 +497,7 @@ class AuditProvider with ChangeNotifier {
     } else if (response.statusCode == 201) {
       return 'Audit Data Saved Successfully';
     } else {
-      print('Failed to load fetchStockAuditsNozzelsUSTDetails');
+      print('Failed to load saveStockAuditData');
       return "Sorry!!!. Please try after sometime";
     }
   }
